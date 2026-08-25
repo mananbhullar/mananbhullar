@@ -30,12 +30,23 @@ asset paths like `/assets/style.css` need an actual server, not `file://`).
 
 ## Design system (established, do not casually change)
 
-- Colors: off-white paper `#FAFAF8`, ink `#121212`, single accent deep blue
-  `#1E5FD9` / `#164FB8` (accent-deep). This was deliberately chosen over an
-  earlier two-tone red/blue and warm/cool scheme — client found multi-color busy.
-  A later request to try a SaaS-style dark navy/indigo/gold palette was proposed
-  and then the client said "nevermind" — **do not revisit that palette** unless
-  explicitly asked again.
+- Colors: off-white paper `#FAFAF8`, ink `#121212`, a purple-to-blue gradient
+  accent (`--gradient-purple` `#5B21B6` → `--gradient-indigo` `#4338CA` →
+  `--gradient-blue` `#2563EB`, combined as `--gradient-accent`). `--accent`
+  (`#2563EB`) and `--accent-deep` (`#4338CA`) are the flat-color equivalents used
+  wherever a gradient isn't practical (icons, borders, small text). `.accent-warm`
+  headline spans and `.btn-solid-warm` buttons use the actual gradient via
+  `background` + `-webkit-background-clip:text`.
+  **History:** the site originally used a single flat blue (`#1E5FD9`/`#164FB8`),
+  deliberately chosen over an earlier two-tone red/blue and warm/cool scheme the
+  client found busy. A later SaaS-style navy/indigo/gold pitch was floated and
+  declined ("nevermind"). This gradient direction was explicitly requested and
+  confirmed again in a later session — a real, deliberate change, not an
+  accidental reversion of the earlier "don't revisit" note. It was originally
+  designed for a separate project (a site for a relative, Arvind Bhullar) and
+  then explicitly approved for Manan's own live site too. Don't second-guess it
+  back to flat blue without asking first, the same way the earlier palette
+  wasn't revisited without asking.
 - Font: 'General Sans' everywhere (headings use `--serif` var but it's actually
   mapped to General Sans too — legacy naming, not a real serif).
 - **IBM Plex Mono was fully removed site-wide** per explicit client request — every

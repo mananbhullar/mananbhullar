@@ -3,14 +3,17 @@
     --ink-soft:#4A4A4A;
     --paper:#FAFAF8;
     --paper-raised:#FFFFFF;
-    --accent:#1E5FD9;
-    --accent-deep:#164FB8;
-    /* Same blue, lightened for small text directly on dark backgrounds -- #1E5FD9 measures
-       3.30:1 on #121212 and fails WCAG AA (needs 4.5:1) at body/link text sizes. Verified via
-       WCAG relative-luminance contrast formula: #5B8AF0 on #121212 = 5.65:1, passes. Only for
-       text color on dark sections; --accent stays as-is for button fills and large headings,
-       where it already passes (white-on-#1E5FD9 = 5.44:1; large-text 3:1 threshold). */
-    --accent-on-dark:#5B8AF0;
+    --accent:#2563EB;
+    --accent-deep:#4338CA;
+    /* Lightened step for small text directly on dark backgrounds -- verified via WCAG
+       relative-luminance contrast formula: #818CF8 on #121212 = 6.28:1, passes AA (4.5:1)
+       comfortably. Only for text color on dark sections; --accent/--accent-deep stay as-is
+       for button fills and large headings. */
+    --accent-on-dark:#818CF8;
+    --gradient-purple:#5B21B6;
+    --gradient-indigo:#4338CA;
+    --gradient-blue:#2563EB;
+    --gradient-accent: linear-gradient(100deg, var(--gradient-purple) 0%, var(--gradient-indigo) 45%, var(--gradient-blue) 100%);
     --line:#E4E2DD;
     --line-soft:#EDEBE6;
     --radius:2px;
@@ -121,15 +124,15 @@
     text-transform:uppercase;margin-bottom:28px;
   }
   .hero h1{font-size:3.4rem;max-width:16ch;color:#fff;margin:0 auto;}
-  .hero h1 .accent-warm{color:var(--accent);}
+  .hero h1 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .hero h1 .accent-cool{color:var(--accent);}
   .hero p.lead{margin:22px auto 0;font-size:1.05rem;color:#D8D6D2;max-width:46ch;}
   .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;justify-content:center;}
   .btn-solid-warm{
-    background:var(--accent);color:#fff;font-weight:600;font-size:0.92rem;
-    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;
+    background:var(--gradient-accent);border:none;color:#fff;font-weight:600;font-size:0.92rem;
+    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
   }
-  .btn-solid-warm:hover{background:var(--accent-deep);}
+  .btn-solid-warm:hover{filter:brightness(0.9);}
   .btn-outline-light{
     border:1px solid rgba(255,255,255,0.5);color:#fff;font-weight:600;font-size:0.92rem;
     padding:14px 24px;display:inline-flex;align-items:center;gap:8px;
@@ -218,7 +221,7 @@
   .guides{background:var(--line-soft);padding:96px 0;}
   .guides-head{text-align:center;max-width:56ch;margin:0 auto 48px;}
   .guides-head h2{font-size:2.1rem;}
-  .guides-head h2 .accent-warm{color:var(--accent-deep);}
+  .guides-head h2 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .guides-head p{color:var(--ink-soft);margin-top:14px;font-size:1rem;}
   .guides-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .guide-card{
@@ -277,7 +280,7 @@
     background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:7px 14px;margin-bottom:20px;
   }
   .bio h2{font-size:2.1rem;color:#fff;}
-  .bio h2 .accent-warm{color:var(--accent);}
+  .bio h2 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .bio .brokerage{color:var(--accent);font-weight:600;font-size:0.98rem;margin-top:6px;}
   .bio p{color:#C7C5C0;margin-top:18px;font-size:0.98rem;max-width:56ch;}
   .bio-credential{
@@ -308,7 +311,7 @@
   }
   .consult-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
   .consult h2{font-size:2.2rem;max-width:14ch;color:#fff;}
-  .consult h2 .accent-warm{color:var(--accent);}
+  .consult h2 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .consult p.lead{color:#D8D6D2;margin-top:16px;max-width:44ch;font-size:0.98rem;}
   .consult-details{margin-top:26px;display:flex;flex-direction:column;gap:10px;}
   .consult-details a,.consult-details span{color:#D8D6D2;font-size:0.94rem;}
@@ -432,7 +435,7 @@
 }
 .subhero .eyebrow{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18);color:#fff;margin-bottom:18px;}
 .subhero h1{font-size:2.5rem;color:#fff;max-width:22ch;margin:0 auto;}
-.subhero h1 .accent-warm{color:var(--accent);}
+.subhero h1 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .subhero p.lead{color:#D8D6D2;margin:16px auto 0;max-width:60ch;font-size:1.02rem;}
 .subhero .hero-ctas{margin-top:26px;justify-content:center;}
 @media (max-width:700px){.subhero h1{font-size:1.9rem;}}
@@ -556,7 +559,7 @@
 /* Generic CTA band reused across subpages */
 .cta-band{background:var(--ink);color:#fff;padding:64px 0;text-align:center;}
 .cta-band h2{color:#fff;font-size:1.8rem;}
-.cta-band h2 .accent-warm{color:var(--accent);}
+.cta-band h2 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .cta-band p{color:#C7C5C0;margin-top:12px;max-width:56ch;margin-left:auto;margin-right:auto;}
 .cta-band .hero-ctas{justify-content:center;margin-top:26px;}
 
@@ -564,7 +567,7 @@
 .cta-form-band{background:var(--ink);color:#fff;padding:64px 0;}
 .cta-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
 .cta-form-left h2{color:#fff;font-size:1.9rem;}
-.cta-form-left h2 .accent-warm{color:var(--accent);}
+.cta-form-left h2 .accent-warm{background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .cta-form-left p{color:#C7C5C0;margin-top:12px;max-width:48ch;}
 .cta-form-left .phone-line{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:1rem;font-weight:600;}
 .cta-form-left .phone-line a{color:#fff;}
