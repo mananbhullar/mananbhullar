@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-25T21:11:42Z",
+  "title": "Design System: Manan Bhullar Real Estate",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#121212", "tonalRamp": ["#262626", "#474747", "#666666", "#858585", "#A3A3A3", "#BFBFBF", "#D9D9D9", "#F2F2F2"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#FAFAF8", "tonalRamp": ["#2D2D20", "#53533C", "#777755", "#999970", "#B2B294", "#CACAB5", "#DFDFD2", "#F4F4F0"] },
+      "accent": { "role": "primary", "displayName": "Signal Blue", "canonical": "#1E5FD9", "tonalRamp": ["#091D43", "#11377D", "#194EB3", "#2868E1", "#5E8EE9", "#8FB1F0", "#BCD0F6", "#E9EFFC"] },
+      "accent-deep": { "role": "primary", "displayName": "Signal Blue, Deep", "canonical": "#164FB8", "tonalRamp": ["#081D44", "#0F3780", "#164EB6", "#2468E5", "#5B8EEB", "#8DB0F1", "#BBD0F7", "#E8EFFC"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero/subhero h1 only, white on dark backgrounds." },
+      "headline": { "displayName": "Headline", "purpose": "Standard h2 inside content sections." },
+      "body": { "displayName": "Body", "purpose": "Running paragraph text, ink or ink-soft." }
+    },
+    "shadows": [
+      { "name": "floating-overlay", "value": "0 8px 20px rgba(0,0,0,0.18)", "purpose": "Reserved for genuinely floating UI (tooltips, dropdowns, mobile menu) -- not a general card style." },
+      { "name": "dropdown-menu", "value": "0 18px 40px rgba(21,24,28,0.10)", "purpose": "Mega-menu panel." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "760px" },
+      { "name": "tablet", "value": "860px" },
+      { "name": "small", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid accent-fill CTA. Used for the lowest-friction contact action (form, text) per this session's CTA-hierarchy fix.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Free Home Evaluation</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: #1E5FD9; color: #fff; font-weight: 600; font-size: 0.92rem; padding: 14px 24px; text-decoration: none; border: none; border-radius: 0; transition: background 0.15s ease; } .ds-btn-primary:hover { background: #164FB8; } .ds-btn-primary:focus-visible { outline: 2px solid #1E5FD9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Button (on dark)",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action on a dark section. Used for the higher-friction contact action (phone call) per the CTA-hierarchy fix.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Text Manan</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff; font-weight: 600; font-size: 0.92rem; padding: 14px 24px; border: 1px solid rgba(255,255,255,0.5); border-radius: 0; text-decoration: none; transition: background 0.15s ease; } .ds-btn-outline:hover { background: rgba(255,255,255,0.1); }"
+    },
+    {
+      "name": "Eyebrow Badge (light)",
+      "kind": "chip",
+      "refersTo": "eyebrow",
+      "description": "Small uppercase label above a heading. Light-mode default -- was missing as a base rule before this session, rendering invisibly outside the hero.",
+      "html": "<div class=\"ds-eyebrow\">Why Manan</div>",
+      "css": ".ds-eyebrow { display: inline-block; font-family: 'General Sans', sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.02em; text-transform: uppercase; background: #FFFFFF; border: 1px solid #E4E2DD; color: #4A4A4A; padding: 7px 14px; }"
+    },
+    {
+      "name": "Eyebrow Badge (dark)",
+      "kind": "chip",
+      "refersTo": "eyebrow-dark",
+      "description": "Eyebrow badge variant for dark/hero sections.",
+      "html": "<div class=\"ds-eyebrow-dark\">About Manan</div>",
+      "css": ".ds-eyebrow-dark { display: inline-block; font-family: 'General Sans', sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.02em; text-transform: uppercase; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 7px 14px; }"
+    },
+    {
+      "name": "Simple Card",
+      "kind": "card",
+      "refersTo": "simple-card",
+      "description": "Sharp-cornered content card with hairline border, no shadow.",
+      "html": "<a class=\"ds-card\" href=\"#\"><strong>Buy a Home</strong><span>Full buyer representation, from search to keys in hand.</span></a>",
+      "css": ".ds-card { display: block; border: 1px solid #E4E2DD; background: #FFFFFF; padding: 24px; border-radius: 0; text-decoration: none; color: #121212; transition: border-color 0.15s ease; } .ds-card:hover { border-color: #1E5FD9; } .ds-card strong { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 8px; } .ds-card span { display: block; font-size: 0.86rem; color: #4A4A4A; line-height: 1.55; }"
+    },
+    {
+      "name": "Form Field + Trust Line",
+      "kind": "input",
+      "refersTo": "consult-form",
+      "description": "Lead-capture form input styling plus the credential trust line added under the heading this session.",
+      "html": "<div class=\"ds-form\"><h3>Send a Message</h3><p class=\"ds-form-trust\">REALTOR® · BBA Marketing, SFU Beedie School of Business</p><input class=\"ds-input\" type=\"text\" placeholder=\"Full Name\"></div>",
+      "css": ".ds-form { background: #FFFFFF; padding: 36px; border: 1px solid #E4E2DD; } .ds-form h3 { font-size: 1.2rem; margin: 0 0 6px; } .ds-form-trust { font-size: 0.78rem; font-weight: 600; color: #164FB8; margin: 0 0 20px; letter-spacing: 0.01em; } .ds-input { width: 100%; border: 1px solid #E4E2DD; padding: 12px 14px; font-family: 'General Sans', sans-serif; font-size: 0.9rem; background: #FAFAF8; color: #121212; border-radius: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Property Brief",
+    "overview": "This is a site built to read like a well-organized, trustworthy briefing document, not a sales brochure. Off-white paper, near-black ink, a single confident blue used sparingly, and sharp, undecorated rectangles throughout -- the visual system gets out of the way of the facts. Every corner on the site is a hard 90 degrees; there is no radius token in use anywhere in the codebase, and that is deliberate, not an oversight. The palette was explicitly pared down from an earlier two-tone red/blue, warm/cool scheme the client found busy, and a later pitch for a SaaS-style dark navy/indigo/gold identity was proposed and declined. Dark sections (hero, nav, footer, closing CTAs) alternate with light and raised sections through every page for rhythm -- a page that stays one shade for its whole length is a defect, not a style.",
+    "keyCharacteristics": [
+      "One accent blue, used deliberately and sparingly",
+      "Hard, sharp corners everywhere -- no border-radius anywhere in the stylesheet",
+      "Off-white paper over pure white for body backgrounds",
+      "Alternating light/raised/dark section rhythm down every page",
+      "One typeface (General Sans) for everything, no monospace anywhere",
+      "Custom blue SVG line icons, never emoji"
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Signal Blue is the only hue on the site besides neutrals. It was chosen after two more colorful alternatives were built and rejected by the client as too busy.", "section": "colors" },
+      { "name": "The Off-White Rule", "body": "Page backgrounds are --paper (#FAFAF8), never pure white. Pure white (--paper-raised) is reserved for elements that need to visually lift off the page.", "section": "colors" },
+      { "name": "The No-Mono Rule", "body": "IBM Plex Mono was fully removed site-wide per explicit client request. Never reach for a monospace font on any new UI element, however digit-heavy.", "section": "typography" },
+      { "name": "The Sharp Corner Rule", "body": "Do not add border-radius to any new component. The absence of rounding is a confirmed, site-wide visual choice, not an inconsistency to fix.", "section": "elevation" },
+      { "name": "The Flat-Card Rule", "body": "Cards and content boxes are distinguished by a hairline border and/or background shift, not a shadow. Reserve box-shadow for genuinely floating UI.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every new section's background alternating with its neighbors rather than letting two-plus sections in a row share the same background.",
+      "Do use the Eyebrow Badge's light-mode default on any plain or raised section, and only reach for the dark override inside an actual dark-background section.",
+      "Do make the lowest-friction contact action (text/form) the visually primary button, and the highest-friction one (phone call) secondary.",
+      "Do use the established SVG icon set and its blue/line-icon convention for any new icon need."
+    ],
+    "donts": [
+      "Don't add border-radius to any element.",
+      "Don't introduce a second accent hue.",
+      "Don't reach for a monospace font for any digit-heavy content.",
+      "Don't add a drop-shadow-based card style as a general pattern.",
+      "Don't use emoji as UI icons."
+    ]
+  }
+}

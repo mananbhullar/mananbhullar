@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/mananbhullar/Downloads/MANAN WEBSITE/.claude/serve.py"],
+      "port": 8080
+    }
+  ]
+}

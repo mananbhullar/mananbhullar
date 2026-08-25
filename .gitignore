@@ -1,0 +1,13 @@
+.DS_Store
+__pycache__/
+*.pyc
+.claude/settings.local.json
+.impeccable/config.local.json
+
+# Impeccable / Claude Code tooling installed by `npx impeccable install` --
+# AI-agent infrastructure, not part of the website itself.
+.claude/skills/
+.claude/plugins/
+.claude/agents/
+.claude/commands/
+.claude/tools/
