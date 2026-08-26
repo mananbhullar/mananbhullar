@@ -2711,12 +2711,12 @@ for a in AREAS:
     <div class="guide-pills">{_pill_html}</div>
   </div>
 </section>"""
-    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
     body += cta_band(
         f'Thinking About {a["name"]}?',
         "Manan can share more on pricing, inventory, and what to expect in this market.",
         TEXT_CTA + CONTACT_CTA
     )
+    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
     title_name = a['name']
     if a['slug'] == 'sullivan-heights':
         title_name = 'Sullivan Heights (Surrey)'
