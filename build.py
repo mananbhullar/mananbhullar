@@ -2649,24 +2649,6 @@ for a in AREAS:
 </section>"""
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
-    # Neighbourhood Guides pills -- for cities whose AREA_GROUPS entry has
-    # sub-area slugs beyond the current page itself
-    _current_group = SLUG_TO_GROUP.get(a['slug'])
-    _group_slugs = AREA_GROUPS.get(_current_group, []) if _current_group else []
-    _sub_slugs = [s for s in _group_slugs if s != a['slug']]
-    if _sub_slugs:
-        _pill_html = ''
-        for ss in _sub_slugs:
-            _sub = _AREA_CARD_BY_SLUG.get(ss)
-            if _sub:
-                _pill_html += f'<a class="guide-pill" href="/communities/{ss}/"><span>{_sub["name"]}</span><span class="arrow">\u2192</span></a>'
-        if _pill_html:
-            body += f"""<section class="guides-section raised">
-  <div class="wrap">
-    <div class="content-head center"><h2>Neighbourhood Guides</h2><p>In-depth pages for specific {a['name'] if a['slug'] == _group_slugs[0] else _current_group} communities.</p></div>
-    <div class="guide-pills">{_pill_html}</div>
-  </div>
-</section>"""
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
@@ -2694,6 +2676,24 @@ for a in AREAS:
       </div>
       <p style="margin-top:14px;font-size:0.85rem;color:var(--ink-soft);">Prefer to talk now? Call <a href="tel:+16047279542" style="color:var(--accent-deep);font-weight:600;">(604) 727-9542</a></p>
     </div>
+  </div>
+</section>"""
+    # Neighbourhood Guides pills -- for cities whose AREA_GROUPS entry has
+    # sub-area slugs beyond the current page itself
+    _current_group = SLUG_TO_GROUP.get(a['slug'])
+    _group_slugs = AREA_GROUPS.get(_current_group, []) if _current_group else []
+    _sub_slugs = [s for s in _group_slugs if s != a['slug']]
+    if _sub_slugs:
+        _pill_html = ''
+        for ss in _sub_slugs:
+            _sub = _AREA_CARD_BY_SLUG.get(ss)
+            if _sub:
+                _pill_html += f'<a class="guide-pill" href="/communities/{ss}/"><span>{_sub["name"]}</span><span class="arrow">→</span></a>'
+        if _pill_html:
+            body += f"""<section class="guides-section raised">
+  <div class="wrap">
+    <div class="content-head center"><h2>Neighbourhood Guides</h2><p>In-depth pages for specific {a['name'] if a['slug'] == _group_slugs[0] else _current_group} communities.</p></div>
+    <div class="guide-pills">{_pill_html}</div>
   </div>
 </section>"""
     if a.get('area_faq'):
