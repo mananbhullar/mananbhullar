@@ -146,4 +146,36 @@ document.addEventListener('DOMContentLoaded', function(){
     recalc();
   }
 
+  // Blog index: search + category filter pills
+  var blogSearch = document.getElementById('blogSearch');
+  var pills = document.querySelectorAll('.filter-pill');
+  var cards = document.querySelectorAll('[data-blog-card]');
+  if(cards.length){
+    var activeCategory = 'All Posts';
+    function applyBlogFilter(){
+      var q = (blogSearch ? blogSearch.value : '').trim().toLowerCase();
+      var visibleCount = 0;
+      cards.forEach(function(card){
+        var cat = card.getAttribute('data-category');
+        var text = (card.getAttribute('data-search') || '').toLowerCase();
+        var matchesCategory = activeCategory === 'All Posts' || cat === activeCategory;
+        var matchesSearch = !q || text.indexOf(q) !== -1;
+        var show = matchesCategory && matchesSearch;
+        card.style.display = show ? '' : 'none';
+        if(show) visibleCount++;
+      });
+      var emptyEl = document.getElementById('blogEmptyState');
+      if(emptyEl) emptyEl.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    pills.forEach(function(pill){
+      pill.addEventListener('click', function(){
+        pills.forEach(function(p){ p.classList.remove('active'); });
+        pill.classList.add('active');
+        activeCategory = pill.getAttribute('data-pill');
+        applyBlogFilter();
+      });
+    });
+    if(blogSearch) blogSearch.addEventListener('input', applyBlogFilter);
+  }
+
 });

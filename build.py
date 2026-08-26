@@ -2922,20 +2922,115 @@ write_page(
 # ============================================================
 # /blog/  — index + articles
 # ============================================================
+BLOG_CATEGORIES = ['All Posts', 'Market Updates', 'Neighbourhood Guides', 'Commercial Real Estate', 'Buying Guide', 'Selling Guide']
+
 ARTICLES = [
-    dict(slug='first-time-buyer-programs-bc', tag='Buying',
+    dict(slug='fraser-valley-market-update-august-2026', tag='Market Updates',
+         title="Fraser Valley Real Estate Market Update \u2014 August 2026",
+         desc="Benchmark prices, interest rates, and how the US-Canada tariff dispute is showing up in the Fraser Valley housing market right now.",
+         tags=['Market Update', 'Interest Rates', 'Tariffs'],
+         img='blog-market-update-2026', featured=True),
+    dict(slug='first-time-buyer-programs-bc', tag='Buying Guide',
          title="BC First-Time Buyer Programs, Explained",
          desc="A plain-language walkthrough of the PTT exemption, FHSA, and RRSP Home Buyers' Plan.",
+         tags=['First-Time Buyers', 'BC Programs'],
          img='blog-first-time-buyers'),
-    dict(slug='preparing-your-home-to-sell', tag='Selling',
+    dict(slug='preparing-your-home-to-sell', tag='Selling Guide',
          title="Preparing Your Home to Sell: A Practical Checklist",
          desc="The prep work that actually helps a listing perform, without an unnecessary renovation budget.",
+         tags=['Selling', 'Home Prep'],
          img='blog-selling-checklist'),
+    dict(slug='top-5-surrey-neighbourhoods-families-2026', tag='Neighbourhood Guides',
+         title="Top 5 Neighbourhoods in Surrey for Families in 2026",
+         desc="Where families are actually buying in Surrey right now, and what makes each of these five neighbourhoods work for raising kids.",
+         tags=['Surrey', 'Family Homes'],
+         img='blog-surrey-family-neighbourhoods'),
+    dict(slug='commercial-real-estate-trends-fraser-valley-2026', tag='Commercial Real Estate',
+         title="Commercial Real Estate Trends in the Fraser Valley for 2026",
+         desc="How tariffs, interest rates, and industrial demand are shaping commercial and industrial real estate across the Fraser Valley.",
+         tags=['Commercial', 'Tariffs', 'Industrial'],
+         img='blog-commercial-trends-2026'),
+    dict(slug='first-time-home-buyer-guide-fraser-valley-2026', tag='Buying Guide',
+         title="First-Time Home Buyer Guide: Navigating the Fraser Valley Market in 2026",
+         desc="A start-to-finish guide for first-time buyers navigating today's buyer-favouring Fraser Valley market.",
+         tags=['First-Time Buyers', 'Fraser Valley'],
+         img='blog-first-time-buyer-guide'),
+    dict(slug='affordable-homes-surrey-bc-2026', tag='Buying Guide',
+         title="Affordable Homes in Surrey BC: Where to Find the Best Value in 2026",
+         desc="Where relative affordability actually exists in Surrey's housing market right now, property type by property type.",
+         tags=['Surrey', 'Affordability'],
+         img='blog-affordable-surrey'),
+    dict(slug='south-surrey-vs-white-rock', tag='Neighbourhood Guides',
+         title="South Surrey vs White Rock: Which Neighbourhood Is Right for You?",
+         desc="Two of the region's most desirable areas, compared honestly \u2014 pricing, lifestyle, and who each one actually suits.",
+         tags=['South Surrey', 'White Rock'],
+         img='blog-south-surrey-white-rock'),
+    dict(slug='townhouses-surrey-under-600k-2026', tag='Buying Guide',
+         title="Townhouses for Sale in Surrey Under $600,000: Your 2026 Guide",
+         desc="Where a sub-$600K townhome budget still goes in Surrey right now, and the trade-offs to expect at that price point.",
+         tags=['Townhomes', 'Surrey', 'Budget Buying'],
+         img='blog-surrey-townhomes-budget'),
+    dict(slug='surrey-bc-house-prices-2026', tag='Market Updates',
+         title="Surrey BC House Prices: What to Expect in 2026",
+         desc="Current benchmark prices across Surrey's property types, and the market forces likely to move them through the rest of the year.",
+         tags=['Surrey', 'Market Update'],
+         img='blog-surrey-house-prices'),
+    dict(slug='fleetwood-vs-cloverdale', tag='Neighbourhood Guides',
+         title="Fleetwood vs Cloverdale: Comparing Surrey's Best Family Neighbourhoods",
+         desc="Two established Surrey neighbourhoods, compared on schools, character, commute, and price.",
+         tags=['Fleetwood', 'Cloverdale'],
+         img='blog-fleetwood-cloverdale'),
+    dict(slug='newton-surrey-real-estate-guide', tag='Neighbourhood Guides',
+         title="Newton Surrey Real Estate: Your Guide to Affordable Family Living",
+         desc="What makes Newton one of Surrey's most accessible entry points for buyers, and what to know before you search there.",
+         tags=['Newton', 'Affordability'],
+         img='blog-newton-surrey'),
+    dict(slug='panorama-ridge-surrey-hidden-gem', tag='Neighbourhood Guides',
+         title="Panorama Ridge Surrey: A Hidden Gem for Homebuyers",
+         desc="An established, quieter Surrey neighbourhood that doesn't get the attention its elevated lots and central access deserve.",
+         tags=['Panorama Ridge'],
+         img='blog-panorama-ridge'),
+    dict(slug='surrey-condo-market-2026', tag='Buying Guide',
+         title="Surrey Condo Market 2026: Best Areas for First-Time Buyers",
+         desc="Where the condo inventory, incentives, and value currently sit across Surrey for a first-time buyer.",
+         tags=['Condos', 'Surrey', 'First-Time Buyers'],
+         img='blog-surrey-condo-market'),
+    dict(slug='how-to-get-first-access-new-listings-surrey', tag='Buying Guide',
+         title="How to Get First Access to New Listings in Surrey BC",
+         desc="What actually gets a buyer in front of a new listing before it's gone, beyond refreshing a public search site.",
+         tags=['Buying Strategy', 'Surrey'],
+         img='blog-first-access-listings'),
+    dict(slug='commercial-real-estate-surrey-investment-2026', tag='Commercial Real Estate',
+         title="Commercial Real Estate in Surrey: Investment Opportunities for 2026",
+         desc="Where Surrey's commercial and industrial investment opportunities currently sit, from industrial corridors to retail corners.",
+         tags=['Commercial', 'Investment', 'Surrey'],
+         img='blog-surrey-commercial-investment'),
+    dict(slug='how-to-buy-a-gas-station-bc-2026', tag='Commercial Real Estate',
+         title="How to Buy a Gas Station in BC: A Practical Guide for 2026",
+         desc="What actually goes into underwriting and closing on a BC gas station, from fuel supply agreements to environmental due diligence.",
+         tags=['Gas Stations', 'Commercial'],
+         img='blog-buy-gas-station'),
+    dict(slug='buying-a-motel-bc-due-diligence', tag='Commercial Real Estate',
+         title="Buying a Motel in BC: Due Diligence Checklist",
+         desc="The specific due-diligence items that matter most when underwriting a BC motel or small hotel purchase.",
+         tags=['Hotels & Motels', 'Due Diligence'],
+         img='blog-buying-motel-bc'),
+    dict(slug='convenience-store-acquisition-bc-guide', tag='Commercial Real Estate',
+         title="Convenience Store Acquisition in BC: A Buyer's Guide",
+         desc="What a buyer needs to underwrite before acquiring a BC convenience store, from lottery/tobacco licensing to lease terms.",
+         tags=['Convenience Stores', 'Commercial'],
+         img='blog-convenience-store-bc'),
+    dict(slug='buying-a-restaurant-bc-liquor-licence', tag='Commercial Real Estate',
+         title="Buying a Restaurant in BC: From Underwriting to Liquor Licence Transfer",
+         desc="How to underwrite a BC restaurant purchase and what the liquor licence transfer process actually involves.",
+         tags=['Restaurants', 'Liquor Licence'],
+         img='blog-buying-restaurant-bc'),
 ]
 
-blog_cards = ''
-for art in ARTICLES:
-    blog_cards += f"""<a class="blog-card" href="/updates/{art['slug']}/">
+def _blog_card_html(art):
+    tags_attr = ' '.join(art.get('tags', []))
+    search_attr = f"{art['title']} {art['desc']} {tags_attr}".replace('"', '&quot;')
+    return f"""<a class="blog-card" href="/updates/{art['slug']}/" data-blog-card data-category="{art['tag']}" data-search="{search_attr}">
       <img class="thumb" src="https://picsum.photos/seed/{art['img']}/500/310" alt="{art['title']} (sample photo)" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
       <div class="body">
         <span class="tag">{art['tag']}</span>
@@ -2944,6 +3039,27 @@ for art in ARTICLES:
         <span class="go">Read More \u2192</span>
       </div>
     </a>"""
+
+_featured_art = next((a for a in ARTICLES if a.get('featured')), ARTICLES[0])
+_rest_arts = [a for a in ARTICLES if a is not _featured_art]
+
+_featured_search_attr = f"{_featured_art['title']} {_featured_art['desc']} {' '.join(_featured_art.get('tags', []))}".replace('"', '&quot;')
+featured_html = f"""<a class="featured-post" href="/updates/{_featured_art['slug']}/" data-blog-card data-category="{_featured_art['tag']}" data-search="{_featured_search_attr}">
+  <img class="thumb" src="https://picsum.photos/seed/{_featured_art['img']}/700/500" alt="{_featured_art['title']} (sample photo)" loading="lazy" width="700" height="500">
+  <div class="body">
+    <div class="pin-label">Featured</div>
+    <span class="tag">{_featured_art['tag']}</span>
+    <strong>{_featured_art['title']}</strong>
+    <span class="desc">{_featured_art['desc']}</span>
+    <span class="go">Read More \u2192</span>
+  </div>
+</a>"""
+
+blog_cards = ''.join(_blog_card_html(a) for a in _rest_arts)
+_pills_html = ''.join(
+    f'<button class="filter-pill{" active" if c == "All Posts" else ""}" data-pill="{c}">{c}</button>'
+    for c in BLOG_CATEGORIES
+)
 
 blog_idx_body = f"""<header class="subhero">
   <div class="wrap">
@@ -2955,13 +3071,19 @@ blog_idx_body = f"""<header class="subhero">
 </header>"""
 blog_idx_body += f"""<section class="content-section">
   <div class="wrap">
+    <div class="blog-toolbar">
+      <input type="text" id="blogSearch" class="blog-search-input" placeholder="Search articles\u2026">
+      <div class="filter-pills">{_pills_html}</div>
+    </div>
+    {featured_html}
     <div class="blog-grid">{blog_cards}</div>
+    <div id="blogEmptyState">No articles match your search. Try a different keyword or category.</div>
   </div>
 </section>"""
 write_page(
     '/updates/',
     "Updates | Manan Bhullar Real Estate",
-    "Real estate guides and articles for buyers, sellers, and investors in Surrey and the Lower Mainland, from Manan Bhullar.",
+    "Real estate guides and market analysis for buyers, sellers, and investors in Surrey and the Lower Mainland, from Manan Bhullar.",
     crumbs(("Updates", None)),
     blog_idx_body
 )
@@ -2972,10 +3094,12 @@ def article_page(art, body_html):
         f"New Article Question \u2014 {art['title']} \u2014 mananbhullar.com",
         message_placeholder="Your Question"
     )
+    tags_html = ''.join(f'<span class="article-tag">{t}</span>' for t in art.get('tags', []))
     full = f"""<header class="subhero" style="padding:48px 0;">
   <div class="wrap" style="text-align:center;">
     <div class="eyebrow">{art['tag']}</div>
     <h1 style="max-width:32ch;margin:0 auto;">{art['title']}</h1>
+    <div class="article-tags">{tags_html}</div>
   </div>
 </header>
 <img class="article-hero-img" src="https://picsum.photos/seed/{art['img']}/1200/480" alt="{art['title']} (sample photo)" loading="lazy" width="1200" height="480">
@@ -3005,7 +3129,9 @@ def article_page(art, body_html):
         full
     )
 
-article_page(ARTICLES[0], """
+_art_by_slug = {a['slug']: a for a in ARTICLES}
+
+article_page(_art_by_slug['first-time-buyer-programs-bc'], """
 <p>Buying a first home in BC comes with more financial moving parts than most buyers expect. Here's a plain-language summary of the main programs currently available \u2014 always confirm current details with your mortgage broker or lawyer before relying on them.</p>
 <h2>BC Property Transfer Tax First-Time Home Buyers' Exemption</h2>
 <p>Eligible first-time buyers can receive a full exemption from BC's Property Transfer Tax on homes valued up to $835,000, with a partial exemption phasing out up to $860,000. To qualify, you generally need to be a Canadian citizen or permanent resident, have lived in BC or filed BC tax returns for a minimum period, and never have owned a principal residence anywhere in the world.</p>
@@ -3018,7 +3144,7 @@ article_page(ARTICLES[0], """
 <p>Every buyer's situation is different, and program rules do change. Manan can help you confirm exactly what you qualify for as part of a free, no-pressure consultation.</p>
 """)
 
-article_page(ARTICLES[1], """
+article_page(_art_by_slug['preparing-your-home-to-sell'], """
 <p>Good prep work doesn't have to mean a major renovation. Here's what actually tends to move the needle when it comes to how a home shows and how buyers respond to it.</p>
 <h2>Start With a Deep Clean and Declutter</h2>
 <p>Before anything else, a genuinely thorough clean and a significant decluttering pass \u2014 including closets and storage areas buyers will open \u2014 makes the single biggest visual difference for the least cost.</p>
@@ -3030,6 +3156,265 @@ article_page(ARTICLES[1], """
 <p>Clean windows, open curtains, and well-placed lighting for showings make a measurable difference in how bright and welcoming a home feels in photos and in person.</p>
 <h2>Talk to Your Agent Before Spending Money</h2>
 <p>Not every property benefits from the same prep work. Before committing to any repairs or upgrades, a conversation with Manan can help prioritize what's actually likely to affect your sale price versus what won't.</p>
+""")
+
+article_page(_art_by_slug['fraser-valley-market-update-august-2026'], """
+<p>Two things are shaping the Fraser Valley market right now: interest rates that have come down meaningfully from their peak, and a US-Canada tariff dispute that escalated sharply in the past week. Here's where things actually stand, as of late August 2026.</p>
+<h2>Where Prices Stand Right Now</h2>
+<p>The Fraser Valley Real Estate Board's composite benchmark price sits at $877,600, with single-family detached homes at $1,350,200, townhomes at $764,100, and apartments/condos at $469,500. Sales-to-active-listings ratios in the region are running well below the 12&ndash;20% range that typically defines a balanced market, which puts the Fraser Valley firmly in buyer's-market territory &mdash; inventory is elevated and prices have softened on a year-over-year basis across every property type. FVREB's own July release headline put it plainly: improving affordability is currently outpacing buyer demand.</p>
+<h2>Interest Rates Have Room, But Buyers Are Still Cautious</h2>
+<p>The Bank of Canada has held its overnight rate at 2.25% for six consecutive decisions, with the prime lending rate at most banks sitting around 4.45%. Advertised five-year fixed rates start near 4.04% and five-year variable rates near 3.35% through brokerages, though most major banks post somewhat higher headline rates. Lower borrowing costs than a couple of years ago haven't been enough on their own to pull buyers off the sidelines &mdash; affordability has improved, but confidence is the bigger constraint right now.</p>
+<h2>How the US-Canada Tariff Dispute Is Showing Up Here</h2>
+<p>This is the story to watch. Trade talks between the US and Canada broke down on August 21&ndash;22, 2026, and the US responded with 50% tariffs on roughly $20 billion of Canadian goods, including building materials. Canada is preparing retaliatory tariffs of 15&ndash;50% on a comparable value of US goods effective September 8, doubling its own steel and aluminum counter-tariffs to match. Separately, softwood lumber duties into the US were recently cut from a combined 35.16% to 24.83% &mdash; but a 10% Section 232 tariff layered on top still pushes the effective rate on Canadian lumber producers above 45%.</p>
+<p>For homebuilders and renovators, the practical effect is upward pressure on framing lumber, steel, and imported fixtures &mdash; several industry sources are reporting material cost increases on new construction, though exact figures vary and should be confirmed with your builder or contractor rather than taken as a fixed number. The Bank of Canada's own July Monetary Policy Report noted the Canadian economy "continues to adjust to US tariffs" with trade uncertainty remaining a key headwind &mdash; and that was written before this month's escalation.</p>
+<h2>What This Means If You're Buying</h2>
+<p>This is a genuine buyer's market: more selection, more negotiating room on price and conditions, and less pressure to waive subjects to compete. If tariff-driven construction costs are pushing up the price of new builds, resale inventory may look relatively more attractive by comparison &mdash; worth factoring into a build-versus-buy decision.</p>
+<h2>What This Means If You're Selling</h2>
+<p>Pricing realistically against actual recent comparables &mdash; not last year's numbers &mdash; matters more than ever in a market where buyers have options. Strong marketing and presentation help a listing stand out, but they can't substitute for a price that reflects where the market actually is today.</p>
+<p>Every situation is different depending on property type, area, and timeline. Manan can walk through what these numbers mean specifically for your street, not just the regional averages.</p>
+""")
+
+article_page(_art_by_slug['top-5-surrey-neighbourhoods-families-2026'], """
+<p>Surrey is BC's second-largest city, and its neighbourhoods vary enormously in character, price, and what they offer a family day-to-day. Here are five that consistently come up for buyers prioritizing schools, space, and community.</p>
+<h2>1. Fleetwood</h2>
+<p>One of Surrey's long-established residential neighbourhoods, Fleetwood offers tree-lined streets, a mix of single-family homes and newer townhome developments, and easy access to Fraser Highway and Highway 1. Families are drawn to Surrey Christian School (private, K-12) and the Surrey Sport &amp; Leisure Complex, with Fleetwood Park Village and Guildford Town Centre both a short drive away.</p>
+<h2>2. Cloverdale</h2>
+<p>Cloverdale blends small-town heritage character &mdash; it's home to the Cloverdale Rodeo and Country Fair &mdash; with rapid new-home development. Lord Tweedsmuir and Salish Secondary anchor the school catchments, and the historic downtown core is home to over 200 independent businesses, giving Cloverdale a genuine town-centre feel that's rare in Surrey.</p>
+<h2>3. South Surrey / White Rock</h2>
+<p>South Surrey, including Grandview Heights, offers oceanfront living along Semiahmoo Bay and is generally regarded as Surrey's premium residential tier. Families here have access to Earl Marriott, Semiahmoo, Elgin Park, and the newer Grandview Heights Secondary (opened 2021), plus private options like SouthRidge. It's a higher price point, but the school and lifestyle draw is real.</p>
+<h2>4. Panorama Ridge</h2>
+<p>An established, family-oriented neighbourhood known for elevated lots with valley views and a quieter, residential feel. It sits close to Bear Creek Park and Newton's recreation facilities without the density of Surrey's busiest corridors.</p>
+<h2>5. Sullivan Heights</h2>
+<p>Bordering Cloverdale, Sullivan Heights offers a mix of single-family homes in an established, quiet setting with easy access to Cloverdale's amenities and schools without paying a Cloverdale-core premium.</p>
+<p>Every family's priorities are different &mdash; school catchment, commute, lot size, and budget all pull in different directions. Manan can walk through which of these (or Surrey's other neighbourhoods) actually fits yours.</p>
+""")
+
+article_page(_art_by_slug['commercial-real-estate-trends-fraser-valley-2026'], """
+<p>Commercial real estate in the Fraser Valley is being shaped by the same forces hitting the broader Canadian economy right now &mdash; tariffs, interest rates, and cross-border trade uncertainty &mdash; layered on top of the region's own industrial and retail fundamentals.</p>
+<h2>The Tariff Situation Is Live and Fluid</h2>
+<p>US-Canada trade talks collapsed on August 21&ndash;22, 2026, triggering 50% US tariffs on roughly $20 billion of Canadian goods and a Canadian retaliatory package of 15&ndash;50% tariffs on a comparable value of US goods, effective September 8. The CUSMA/USMCA agreement is also up for its mandatory review this year, adding another layer of uncertainty to cross-border logistics and manufacturing decisions. For businesses considering industrial space in the Fraser Valley &mdash; particularly anything tied to cross-border trade, warehousing, or manufacturing &mdash; this is a genuinely fluid situation worth watching closely rather than a settled backdrop to plan around.</p>
+<h2>A Weaker Canadian Dollar Cuts Both Ways</h2>
+<p>The Canadian dollar has been trading in the 1.38&ndash;1.39 USD/CAD range, with some forecasts suggesting further softening. A weaker loonie tends to make Canadian commercial real estate comparatively cheaper for US-based investors and businesses leasing space here, even as it raises the cost of imported building materials and equipment for Canadian owners and tenants. Which effect dominates for a given deal depends heavily on the specific property and business.</p>
+<h2>Retail and Restaurant Operators Are Watching Labour Costs</h2>
+<p>BC's minimum wage rose from $17.85 to $18.25 per hour on June 1, 2026. For retail, restaurant, and hospitality tenants &mdash; a meaningful share of Fraser Valley commercial leasing activity &mdash; that's a real, ongoing pressure on operating margins that factors into how much rent a space can realistically support.</p>
+<h2>What This Means for Investors</h2>
+<p>None of this points to one clear direction &mdash; it points to the importance of underwriting each opportunity on its own fundamentals rather than assuming last year's playbook still applies. Industrial space tied to trade and logistics carries more near-term uncertainty than it did a year ago; well-located retail and service-based commercial real estate, less exposed to tariff swings, may look comparatively more stable right now.</p>
+<p>Manan works across the full range of commercial categories in the Fraser Valley and can talk through how current conditions apply to the specific type of property you're evaluating.</p>
+""")
+
+article_page(_art_by_slug['first-time-home-buyer-guide-fraser-valley-2026'], """
+<p>Buying your first home in the Fraser Valley in 2026 means navigating a market that's actually more favourable to buyers than it's been in years &mdash; but the financial programs and steps still take some untangling. Here's a start-to-finish guide.</p>
+<h2>Step 1: Understand the Programs You Qualify For</h2>
+<p>Eligible first-time buyers can get a full BC Property Transfer Tax exemption on homes up to $835,000 (partial exemption up to $860,000), contribute up to $8,000/year (to a $40,000 lifetime max) into a tax-advantaged First Home Savings Account, and withdraw from an RRSP tax-free through the Home Buyers' Plan, repayable over 15 years. The FHSA and HBP can generally be combined on the same purchase.</p>
+<h2>Step 2: Know the Financing Rules</h2>
+<p>Buyers putting down less than 20% need CMHC (or similar) mortgage default insurance, and lenders must qualify you at the stress-tested rate &mdash; the greater of your contract rate plus 2%, or 5.25%. First-time buyers and buyers of newly-built homes can access 30-year amortizations on insured mortgages, which lowers the monthly payment compared to the standard 25-year maximum, though you'll pay more interest over the life of the loan.</p>
+<h2>Step 3: Get Pre-Approved Before You Search</h2>
+<p>A mortgage pre-approval tells you your real budget and locks in a rate for a window of time &mdash; essential before you start seriously viewing properties, and non-negotiable if you want to move quickly on a home you like.</p>
+<h2>Step 4: Take Advantage of Today's Buyer's Market</h2>
+<p>Fraser Valley benchmark prices are down year-over-year across every property type, and sales-to-active-listings ratios point to a genuine buyer's market. That means more selection, more room to negotiate on price and conditions, and less pressure to waive your inspection or financing subjects just to compete.</p>
+<h2>Step 5: Budget for Closing Costs Beyond the Down Payment</h2>
+<p>Legal fees, property transfer tax (if not exempt), home inspection, appraisal, and moving costs all add up &mdash; a rough rule of thumb is 1.5&ndash;4% of the purchase price on top of your down payment.</p>
+<p>Every first-time buyer's situation is different. Manan offers a free, no-pressure consultation to walk through exactly what you qualify for and what a realistic search looks like on your budget.</p>
+""")
+
+article_page(_art_by_slug['affordable-homes-surrey-bc-2026'], """
+<p>"Affordable" is relative in the Fraser Valley, but real value still exists in Surrey if you know where to look. Here's an honest breakdown by property type and area.</p>
+<h2>Start With the Benchmark Numbers</h2>
+<p>As of the Fraser Valley Real Estate Board's most recent report, the composite benchmark across all residential types sits at $877,600, with apartments/condos at $469,500 &mdash; the single most accessible entry point &mdash; and townhomes at $764,100. Detached homes, at a $1,350,200 benchmark, are out of reach for most first-time buyers without a suite or a significant down payment.</p>
+<h2>Where Condos Offer the Best Relative Value</h2>
+<p>Surrey City Centre, near King George and Gateway SkyTrain stations, has some of the deepest condo inventory in the city, drawing steady demand from SFU Surrey students and young professionals &mdash; and correspondingly more competitive pricing than comparable stock in Vancouver or Burnaby. Newton and Whalley more broadly also offer accessible condo and townhome entry points.</p>
+<h2>Where Townhomes and Suited Homes Stretch Further</h2>
+<p>Newton is one of Surrey's most diverse and densely populated neighbourhoods, with a mix of older single-family homes, townhomes, and newer condo development at a relatively accessible price point given its central location. A detached home with a legal or conforming secondary suite &mdash; common in Newton and Whalley &mdash; is often the most realistic path to a detached home while offsetting the mortgage with rental income.</p>
+<h2>Don't Overlook the Buyer's Market Itself</h2>
+<p>Beyond specific neighbourhoods, the current market condition matters: with sales-to-active-listings ratios well below balanced-market territory, sellers across Surrey are generally more open to negotiating on price and conditions than they were a couple of years ago.</p>
+<p>"Affordable" always depends on what you're comparing it to and what trade-offs you're willing to make. Manan can walk through real, current comparables for your specific budget rather than general averages.</p>
+""")
+
+article_page(_art_by_slug['south-surrey-vs-white-rock'], """
+<p>South Surrey and White Rock are often mentioned in the same breath &mdash; and on FVREB's own reporting, they're grouped together &mdash; but they're genuinely different in feel, footprint, and price. Here's how to think about the choice.</p>
+<h2>White Rock: Small, Walkable, and Oceanfront</h2>
+<p>White Rock is compact &mdash; centred on its iconic pier and beach promenade, with a walkable downtown of cafes and shops. It draws downsizers, retirees, and buyers prioritizing a genuine small-town, seaside lifestyle within commuting distance of the rest of the Lower Mainland. Waterfront and hillside ocean-view properties here command a real premium, with direct ocean-view homes typically running $2.5M&ndash;$6M and the handful of true waterfront lots reaching considerably higher.</p>
+<h2>South Surrey: Larger, More Varied, More Family-Oriented</h2>
+<p>South Surrey is a much broader area, encompassing Morgan Creek, Grandview Heights, Elgin Chantrell, Ocean Park, and Crescent Beach &mdash; each with its own character. Morgan Creek offers estate homes from $2.5M&ndash;$5M+, often with golf-course frontage. Grandview Heights is one of the most active newer-build luxury markets in the region, with custom homes typically $2.2M&ndash;$4.5M. Elgin Chantrell offers acreage estates starting around $3M. This is a family-oriented, larger-lot alternative to White Rock's compact core, with strong school catchments including Earl Marriott, Semiahmoo, and the newer Grandview Heights Secondary.</p>
+<h2>Which One Fits You?</h2>
+<p>If a walkable, oceanfront small-town feel is the priority and you don't need a large lot, White Rock is hard to beat. If you want more space, a newer custom build, or a specific sub-area like a golf-course community, South Surrey's broader footprint likely has more of what you're looking for &mdash; often at a comparable or better price per square foot than White Rock's premium core.</p>
+<p>Both areas share excellent schools and a premium market position within Surrey. Manan can walk through specific sub-areas and current listings to help you compare directly.</p>
+""")
+
+article_page(_art_by_slug['townhouses-surrey-under-600k-2026'], """
+<p>Surrey's city-wide townhome benchmark price currently sits at $764,100 &mdash; well above a $600,000 budget. That doesn't mean a sub-$600K townhome search is hopeless, but it does mean being realistic about where and what you'll find.</p>
+<h2>Where a $600K Budget Actually Goes</h2>
+<p>Older townhome stock in Newton, Whalley/City Centre, and parts of North Surrey is where a sub-$600K budget is most likely to find real options &mdash; typically smaller units, older buildings, or complexes further from SkyTrain access. Newer, larger townhomes in Cloverdale, Fleetwood, or South Surrey are generally priced well above this range.</p>
+<h2>What You're Trading Off</h2>
+<p>At this budget, expect to weigh: older building age (meaning more attention to the depreciation report and reserve fund), smaller square footage, two bedrooms rather than three, and possibly a longer commute to SkyTrain or major employment centres. None of these are dealbreakers &mdash; they're just the realistic trade-offs at this price point in today's market.</p>
+<h2>Don't Skip the Strata Documents</h2>
+<p>Older, lower-priced buildings are exactly where strata due diligence matters most. Request at least two years of council meeting minutes, the current depreciation report, and the reserve fund balance before removing subjects &mdash; a building with deferred maintenance or an underfunded reserve can mean an inherited special levy down the road.</p>
+<h2>The Current Market Helps</h2>
+<p>With Surrey's overall market favouring buyers right now, sellers of older townhome stock are often more open to negotiating on price than list price alone suggests &mdash; worth factoring into how you approach an offer.</p>
+<p>A $600K townhome budget is tight but not unrealistic in the right pockets. Manan can point you toward current listings that actually fit, rather than searches that waste your time.</p>
+""")
+
+article_page(_art_by_slug['surrey-bc-house-prices-2026'], """
+<p>Surrey house prices have softened over the past year, in line with the broader Fraser Valley market. Here's where things stand across property types, and what's likely to move prices from here.</p>
+<h2>Current Benchmark Prices</h2>
+<p>The Fraser Valley Real Estate Board's composite benchmark &mdash; covering all residential property types across the board's territory, which includes Surrey &mdash; sits at $877,600. Broken down by type: single-family detached at $1,350,200, townhomes at $764,100, and apartments/condos at $469,500. Prices are down on a year-over-year basis across every category.</p>
+<h2>It's a Buyer's Market Right Now</h2>
+<p>Sales-to-active-listings ratios are running below the 12&ndash;20% range that typically signals a balanced market &mdash; inventory is elevated relative to buyer demand, which is the core reason prices have softened even as interest rates have come down from their peak.</p>
+<h2>What Could Move Prices From Here</h2>
+<p>A few forces are worth watching: the Bank of Canada's rate decisions (currently held at 2.25% for six straight decisions, with room to cut further if the economy weakens); the resolution &mdash; or further escalation &mdash; of the US-Canada tariff dispute, which affects both construction costs and broader economic confidence; and whether buyer demand responds to the affordability improvement that's already happened, or continues to wait on the sidelines.</p>
+<h2>Price Varies Enormously by Sub-Area</h2>
+<p>City-wide averages hide real variation &mdash; South Surrey and White Rock command a significant premium over Newton or Whalley, and even within a single neighbourhood, lot size, view, and condition can shift value substantially. Whole-city benchmark numbers are a useful starting point, not a substitute for an actual comparative market analysis on a specific property.</p>
+<p>Manan tracks these numbers monthly and can walk through what they mean for your specific street or property type, not just the city-wide average.</p>
+""")
+
+article_page(_art_by_slug['fleetwood-vs-cloverdale'], """
+<p>Fleetwood and Cloverdale are both established, family-oriented Surrey neighbourhoods that come up together in a lot of buyer searches. Here's how they actually compare.</p>
+<h2>Character and Feel</h2>
+<p>Fleetwood is known for tree-lined streets and a mix of single-family homes with newer townhome development woven in &mdash; a classic, quieter residential feel. Cloverdale blends small-town heritage charm &mdash; it's home to the Cloverdale Rodeo and Country Fair &mdash; with some of Surrey's fastest new-home development around its historic downtown core, which hosts over 200 independent businesses.</p>
+<h2>Schools</h2>
+<p>Fleetwood draws on multiple SD36 Surrey elementary and secondary schools plus Surrey Christian School (private, K-12). Cloverdale's secondary catchments are anchored by Lord Tweedsmuir and Salish Secondary, fed by several SD36 elementary schools. Both offer solid public school access &mdash; confirm your specific catchment address with the district, since boundaries can shift block to block.</p>
+<h2>Shopping and Amenities</h2>
+<p>Fleetwood residents lean on Fleetwood Park Village, Evergreen Mall, and Fresh St Market locally, with Guildford Town Centre a short drive away. Cloverdale offers Willowbrook Shopping Centre, Central City Shopping Centre (SkyTrain-accessible), and its own historic downtown retail core &mdash; giving Cloverdale a more distinct "town centre" feel than Fleetwood's more suburban layout.</p>
+<h2>Access and Commute</h2>
+<p>Fleetwood has easy access to Fraser Highway and Highway 1, making it a solid commuter location. Cloverdale similarly benefits from Highway 15 and Fraser Highway access, with the added draw of nearby SkyTrain access via Central City.</p>
+<h2>Which Fits You?</h2>
+<p>If you want a quieter, established residential feel, Fleetwood likely fits better. If you want small-town character with a genuine downtown core and faster-growing new-home inventory, Cloverdale is the stronger match.</p>
+<p>Both are strong, real options for families. Manan can walk through current listings and pricing in each to help you compare directly.</p>
+""")
+
+article_page(_art_by_slug['newton-surrey-real-estate-guide'], """
+<p>Newton is one of Surrey's most diverse, densely populated, and accessible neighbourhoods &mdash; a common starting point for buyers who want central Surrey access without South Surrey or Fleetwood pricing.</p>
+<h2>What Makes Newton Different</h2>
+<p>Newton offers a genuine mix of older single-family homes, townhomes, and newer condo development, reflecting decades of organic growth rather than a single master-planned identity. Its central location and relative affordability, compared to Surrey's premium neighbourhoods, make it a popular entry point for first-time buyers and growing families alike.</p>
+<h2>East Newton vs. West Newton</h2>
+<p>Newton splits into distinct East and West sub-areas with different school zones &mdash; East Newton offers family homes close to shopping and recreation with more established streets, while West Newton is a diverse, densely built pocket close to Scott Road and King George Boulevard, known for its South Asian grocers, sweet shops, and jewellers along the Scott Road corridor.</p>
+<h2>Shopping and Daily Life</h2>
+<p>King's Cross Shopping Centre, Newton Town Centre (anchored by Chalo FreshCo), and Strawberry Hill Shopping Centre cover most day-to-day needs, alongside the Scott Road corridor's concentration of South Asian grocers and restaurants &mdash; a genuine cultural and culinary draw, not just a practical amenity.</p>
+<h2>Recreation</h2>
+<p>Bear Creek Park and the Newton Recreation Centre give Newton residents solid access to green space and recreation facilities without leaving the neighbourhood.</p>
+<h2>Is Newton Right for You?</h2>
+<p>If central Surrey access, relative affordability, and a genuinely diverse community matter more to you than a premium address, Newton is worth serious consideration &mdash; particularly for a suited detached home that can help offset your mortgage.</p>
+<p>Manan can walk through current East and West Newton listings and school catchments specific to your search.</p>
+""")
+
+article_page(_art_by_slug['panorama-ridge-surrey-hidden-gem'], """
+<p>Panorama Ridge doesn't get the attention that Fleetwood or Cloverdale do in most Surrey buyer searches &mdash; but for the right buyer, that's part of the appeal.</p>
+<h2>What Panorama Ridge Offers</h2>
+<p>An established, family-oriented Surrey neighbourhood known for elevated lots with valley views and a quiet, residential feel. It's the kind of area where homes were largely built out a generation ago, giving it a settled, mature character that newer master-planned communities don't have yet.</p>
+<h2>Location and Access</h2>
+<p>Panorama Ridge sits close to Bear Creek Park and Newton's recreation facilities, with Newton Town Centre nearby for shopping and everyday needs. It's genuinely central within Surrey without carrying the density or traffic of Whalley or Newton's busiest corridors.</p>
+<h2>Why It Flies Under the Radar</h2>
+<p>Panorama Ridge doesn't have a single defining landmark or town centre the way Cloverdale has its rodeo grounds or White Rock has its pier &mdash; it's simply a solid, quiet residential neighbourhood, which means it doesn't generate the same search volume as more "branded" Surrey areas. For buyers who care more about the home and lot than the neighbourhood's profile, that's an opportunity rather than a drawback.</p>
+<h2>Who It Suits</h2>
+<p>Buyers who want an established, quiet, family-friendly setting with valley views and don't need to be walking distance to a bustling town centre tend to do well here &mdash; particularly those upgrading from a starter home who want more lot and more quiet without leaving Surrey.</p>
+<p>Because it's less searched, Panorama Ridge sometimes offers relative value compared to more heavily marketed neighbourhoods nearby. Manan can walk through current listings to see what's actually available.</p>
+""")
+
+article_page(_art_by_slug['surrey-condo-market-2026'], """
+<p>Surrey's condo market looks different than it did a couple of years ago &mdash; more inventory, more developer incentives, and genuinely better conditions for a first-time buyer than the peak-market years.</p>
+<h2>Current Benchmark Pricing</h2>
+<p>The Fraser Valley Real Estate Board's apartment/condo benchmark sits at $469,500 &mdash; the most accessible property type in the region, and down on a year-over-year basis along with every other category.</p>
+<h2>The Presale Market Has Softened Meaningfully</h2>
+<p>Greater Vancouver has a near-record number of completed, unsold condo units, and developers across the region &mdash; Surrey included, where well over 100 active presale developments are currently marketing &mdash; are responding with real incentives: price reductions, cash-back credits at closing, reduced deposit requirements, and in some cases furniture allowances or rental guarantees. Specific incentive terms vary by project and change frequently, so confirm current offers directly rather than assuming last month's promotion still applies.</p>
+<h2>Best Areas for a First-Time Buyer</h2>
+<p>Surrey City Centre, anchored by Central City Mall, SFU Surrey, and direct SkyTrain access via the Expo Line, remains the deepest and most liquid condo market in the city &mdash; strong for both resale value and rental demand from students and young professionals. Newton and Whalley more broadly also offer accessible entry points at a relative discount to City Centre's SkyTrain premium.</p>
+<h2>What to Watch For With Presale Purchases</h2>
+<p>Presale contracts carry real risk if your financing or life circumstances change before completion &mdash; some buyers in the current market have needed to assign their contracts, in some cases at a loss. Resale condos offer more certainty (you know exactly what you're buying, today) even if presale incentives look attractive on paper.</p>
+<p>Manan can walk through current resale and presale options in Surrey City Centre and beyond, and help you weigh the real trade-offs between them.</p>
+""")
+
+article_page(_art_by_slug['how-to-get-first-access-new-listings-surrey'], """
+<p>By the time a new listing shows up on a public search site, other buyers are often already looking at it. Here's what actually gets you ahead of that curve.</p>
+<h2>Get Pre-Approved Before You Start Looking</h2>
+<p>A current mortgage pre-approval isn't just a formality &mdash; it's what lets you move immediately when a strong listing appears, rather than losing days to financing logistics while another buyer gets there first.</p>
+<h2>Work With an Agent Who's Actively Networked</h2>
+<p>A meaningful share of listings get discussed among agents &mdash; at office meetings, through direct outreach, or informally &mdash; before or right as they hit the public market. An agent actively working the area you're searching in often hears about a listing earlier than a public portal search will surface it.</p>
+<h2>Set Up Real-Time Saved Searches, Not Manual Refreshing</h2>
+<p>Automated saved searches that notify you the moment a matching listing hits MLS® are far more reliable than manually checking a site once a day &mdash; the gap between "just listed" and "under offer" can be a matter of days in a competitive segment.</p>
+<h2>Be Ready to Move on Subjects</h2>
+<p>Even in today's more buyer-favouring market, well-priced listings in sought-after areas can still attract multiple offers. Knowing in advance what inspection, financing, and other conditions you're comfortable shortening &mdash; without cutting corners on genuinely important ones &mdash; puts you in a stronger position when it matters.</p>
+<h2>Ask About Coming-Soon and Off-Market Conversations</h2>
+<p>Not every property is publicly marketed from day one. Staying in regular contact with an agent means you sometimes hear about a seller's plans before a listing is formally live.</p>
+<p>None of this replaces a solid offer on a fairly priced home &mdash; but it does mean you're seeing the listing, and ready to act on it, before most other buyers are. Manan can walk through what this looks like in practice for your specific search.</p>
+""")
+
+article_page(_art_by_slug['commercial-real-estate-surrey-investment-2026'], """
+<p>Surrey's commercial and industrial market has real depth &mdash; from its industrial corridor to its rapidly densifying City Centre &mdash; and current conditions create some genuine opportunities for investors who underwrite carefully.</p>
+<h2>Industrial Corridor</h2>
+<p>Surrey's industrial corridor, spanning into Delta and Langley, continues to see steady demand for leasing and distribution space, driven by the region's role in Lower Mainland logistics. The live US-Canada tariff dispute adds real uncertainty here &mdash; particularly for tenants and buyers whose business is tied to cross-border trade &mdash; so underwriting on realistic, conservative assumptions matters more than usual right now.</p>
+<h2>Retail and Mixed-Use</h2>
+<p>Surrey City Centre's continued densification &mdash; anchored by Central City Mall, SFU Surrey, and direct SkyTrain access &mdash; keeps generating retail and mixed-use opportunity as residential density grows around it. Retail elsewhere in Surrey ranges from storefronts to strip-mall units suited to owner-operators and smaller investors.</p>
+<h2>Development Land</h2>
+<p>Subdivision and development potential across Surrey depends on current zoning, Official Community Plan designations, minimum lot sizes, and servicing availability &mdash; all requiring direct due diligence with the municipality before you can rely on a site's future potential. Properties within the Agricultural Land Reserve add a further layer of Agricultural Land Commission approval on top of standard municipal review.</p>
+<h2>What to Watch Right Now</h2>
+<p>Between tariff-driven uncertainty on the industrial side and BC's minimum wage increase to $18.25/hour affecting retail and service tenants' margins, this isn't a market to underwrite on last year's assumptions. Conservative, deal-specific analysis matters more than broad category trends.</p>
+<p>Manan works across Surrey's full commercial spectrum &mdash; industrial, retail, and land &mdash; and can talk through where current conditions create real opportunity for your specific investment goals.</p>
+""")
+
+article_page(_art_by_slug['how-to-buy-a-gas-station-bc-2026'], """
+<p>Buying a gas station in BC means underwriting three distinct things at once: the real estate, the operating business, and environmental risk from decades of underground fuel storage. Here's how to approach it.</p>
+<h2>Understand Branded vs. Independent</h2>
+<p>Branded stations (Esso, Shell, Petro-Canada, Chevron) come with supply agreements and marketing support but restrict your fuel supplier flexibility. Independents offer more pricing freedom on fuel but rely entirely on their own reputation and location to drive traffic. Neither is inherently better &mdash; it depends on your operating model and risk tolerance.</p>
+<h2>Environmental Due Diligence Is Non-Negotiable</h2>
+<p>A Phase I Environmental Site Assessment is the baseline requirement on any gas station purchase, checking for soil and groundwater contamination risk from underground storage tanks. If Phase I flags concerns, a Phase II assessment with further soil and groundwater testing follows before closing. Lenders typically won't finance a fuel retail site without a clean Phase I in hand.</p>
+<h2>Verify the Full Revenue Picture</h2>
+<p>Fuel volume and margin are only part of the picture &mdash; convenience store, car wash, and any liquor add-on revenue all factor into valuation. Cross-check convenience store financials against POS reports and supplier invoices rather than relying on owner-provided summaries alone.</p>
+<h2>Review the Supply Agreement and Tank Condition</h2>
+<p>For branded sites, understand the exclusivity terms and remaining length on the fuel supply agreement before you commit. Separately, review underground storage tank age, materials, and whether any upgrades are required under current regulations &mdash; this directly affects both environmental risk and your future capital budget.</p>
+<h2>Confirm Permits Are Transferable</h2>
+<p>Municipal and provincial fuel retail permits need to be current and properly transferable to you as the new owner &mdash; confirm this early rather than assuming it's automatic.</p>
+<p>Gas station transactions carry more moving parts than most commercial real estate purchases. Manan can walk through the specific due diligence for a property you're considering.</p>
+""")
+
+article_page(_art_by_slug['buying-a-motel-bc-due-diligence'], """
+<p>Buying a motel in BC means buying a business as much as a building &mdash; the due diligence checklist reflects that from the start.</p>
+<h2>Financial Performance, Not Just the List Price</h2>
+<p>Review at least three years of financial statements, occupancy rates by season, average daily rate (ADR), and revenue per available room (RevPAR) to assess true profitability &mdash; a motel's seasonal swings can make a single year's numbers misleading on their own.</p>
+<h2>Licensing and Permits</h2>
+<p>Confirm exactly which business licences, health authority permits, liquor licences (if applicable), and tourism accommodation compliance requirements transfer with the sale versus need fresh applications under your ownership &mdash; this can materially affect your closing timeline.</p>
+<h2>Zoning and Land Use</h2>
+<p>Confirm the property is properly zoned for hospitality use, and understand any restrictions on future expansion or rezoning potential if that factors into your investment plan.</p>
+<h2>Physical Condition and PIP Requirements</h2>
+<p>For branded properties, understand any Property Improvement Plan (PIP) requirements tied to the brand affiliation, along with deferred maintenance and whether the capital reserve is adequate for near-term repairs.</p>
+<h2>Staffing and Operational Continuity</h2>
+<p>Review staffing levels and management structure, and think through how operations continue through the ownership transition &mdash; a motel with strong repeat business can lose momentum fast if service quality dips during a changeover.</p>
+<h2>Financing Looks Different Here</h2>
+<p>Hospitality financing evaluates the operating business's income and management track record alongside the real estate itself &mdash; a different conversation than a standard commercial mortgage, so start that conversation with a lender who understands the category early.</p>
+<p>Fraser Valley hospitality demand is real &mdash; from Harrison Hot Springs and Cultus Lake tourism to steady Highway 1 corridor motel traffic. Manan can walk through what solid due diligence looks like for a specific property.</p>
+""")
+
+article_page(_art_by_slug['convenience-store-acquisition-bc-guide'], """
+<p>Most convenience stores in BC are leasehold businesses rather than real estate purchases, which shifts where the real due diligence work needs to happen.</p>
+<h2>The Lease Is Often the Most Important Document</h2>
+<p>Since most c-stores are leasehold businesses, review the remaining lease term, renewal options, and rent escalation clauses closely &mdash; a short remaining term or an unfavourable escalation clause can undermine an otherwise solid business.</p>
+<h2>Understand the Licensing Requirements</h2>
+<p>A tobacco retail licence, a lottery terminal agreement with BCLC if applicable, and a standard municipal business licence are all typically required &mdash; confirm what transfers automatically and what needs a fresh application.</p>
+<h2>Verify Sales the Right Way</h2>
+<p>Tobacco and lottery revenue carry structurally different, more predictable margins than general merchandise &mdash; and they're also easier to verify. Cross-check reported sales against supplier invoices and BCLC lottery commission statements, which are much harder for a seller to misstate than general retail figures.</p>
+<h2>Confirm Lease Assignment Is Actually Possible</h2>
+<p>Most commercial leases require landlord consent to assign the lease to a new tenant. Confirm this early in your process &mdash; a landlord can decline or attach conditions, and finding out late can derail an otherwise-agreed deal.</p>
+<h2>Check the Competitive Landscape</h2>
+<p>Nearby convenience and grocery competition, and any upcoming developments in the immediate area, can materially affect future sales &mdash; worth a genuine look at the surrounding block, not just the store's own numbers.</p>
+<h2>Timeline Expectations</h2>
+<p>Once financials are verified and lease assignment is confirmed, convenience store transactions typically move faster than real estate deals &mdash; often four to eight weeks to close.</p>
+<p>Manan works regularly with c-store buyers across the Fraser Valley and can walk through what to prioritize for a specific listing.</p>
+""")
+
+article_page(_art_by_slug['buying-a-restaurant-bc-liquor-licence'], """
+<p>Restaurant transactions weigh goodwill and location more heavily than most commercial categories &mdash; and if liquor is involved, the licence transfer process adds its own timeline to plan around.</p>
+<h2>Underwriting: Adjusted EBITDA, Not Owner Estimates</h2>
+<p>Restaurant valuation is generally based on a multiple of adjusted EBITDA (seller's discretionary earnings) from verified financials &mdash; not owner-provided summaries. Watch for cash-heavy sales that are hard to verify, declining year-over-year trends, and rent that represents a disproportionately high share of revenue.</p>
+<h2>Goodwill and Location Carry Real Weight</h2>
+<p>A strong location with an established customer base can represent a meaningful share of a restaurant's total value beyond the equipment and lease alone &mdash; which is also why a change of concept after purchase carries real risk if you're counting on that existing customer base.</p>
+<h2>Kitchen and Lease Condition</h2>
+<p>Confirm the remaining lease term, whether existing kitchen and hood infrastructure suits your concept without major buildout, and whether the landlord's use clause allows a change of concept if you're planning one.</p>
+<h2>The Liquor Licence Transfer Process</h2>
+<p>A liquor licence does not transfer automatically with a restaurant sale &mdash; it goes through a formal approval process with BC's Liquor and Cannabis Regulation Branch. The application fee is $330, the buyer doesn't need to be a Canadian citizen or resident but does need a CRA Business Number and Business BCeID, and the establishment can generally stay open during the transfer process. BC modernized its rules in 2026 to also permit licensee-to-licensee alcohol sales, worth asking about if that's relevant to your deal structure.</p>
+<h2>Franchise vs. Independent</h2>
+<p>Franchise purchases require franchisor approval of the buyer and come with ongoing royalty and marketing fees and brand-standard requirements, in exchange for established brand recognition and operational support. Independent restaurants offer full operational freedom but rely entirely on their own reputation.</p>
+<h2>Labour Costs Are a Real, Current Factor</h2>
+<p>BC's minimum wage rose to $18.25/hour on June 1, 2026 &mdash; a genuine, ongoing pressure on restaurant margins worth building into your underwriting rather than assuming last year's numbers still hold.</p>
+<p>Manan works across the Fraser Valley's restaurant and food-service market and can walk through underwriting and licence-transfer timelines for a specific opportunity.</p>
 """)
 
 # ============================================================
