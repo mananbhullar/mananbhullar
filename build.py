@@ -1179,62 +1179,6 @@ def _good_fit(name, note, tags):
     if not fits: fits.append("a range of buyers depending on budget and lifestyle priorities")
     return _oxford_join(sorted(set(fits), key=fits.index))
 
-def _auto_supplement_faqs(area, target=6):
-    faqs = list(area.get('area_faq') or [])
-    existing_q = ' '.join(q.lower() for q, _ in faqs)
-    name = area['name']
-    candidates = []
-    if area.get('schools') and 'school' not in existing_q:
-        candidates.append((
-            f"What schools serve {name}?",
-            f"{_oxford_join(area['schools'])}."
-        ))
-    if area.get('shopping') and 'shop' not in existing_q and 'grocery' not in existing_q:
-        candidates.append((
-            f"Where do {name} residents shop?",
-            f"{_oxford_join(area['shopping'])}."
-        ))
-    if area.get('recreation') and 'recreation' not in existing_q and 'park' not in existing_q:
-        candidates.append((
-            f"What recreation and parks are near {name}?",
-            f"{_oxford_join(area['recreation'])}."
-        ))
-    if 'type of home' not in existing_q and 'kind of home' not in existing_q and 'housing' not in existing_q:
-        candidates.append((
-            f"What type of homes will I find in {name}?",
-            f"{name} is mainly known for {_housing_type(area['desc'], area['tags'])}. {area['desc']}"
-        ))
-    if 'good fit' not in existing_q and 'good choice' not in existing_q and 'good area' not in existing_q and 'good for' not in existing_q:
-        candidates.append((
-            f"Who is {name} a good fit for?",
-            f"Based on the area's character \u2014 {area['note'].lower()} \u2014 {name} tends to suit {_good_fit(name, area['note'], area['tags'])}. Manan can talk through whether it fits your specific situation."
-        ))
-    candidates.append((
-        f"Is Manan familiar with {name} specifically?",
-        f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
-    ))
-    candidates.append((
-        f"How does pricing in {name} compare to the wider Fraser Valley market?",
-        f"As a general reference point, the Fraser Valley's composite benchmark price was $877,600 as of the most recent Fraser Valley Real Estate Board report, with detached homes at $1,350,200, townhomes at $764,100, and condos at $469,500. Where {name} sits relative to those figures depends on housing type, lot size, and age of construction \u2014 Manan can pull current comparables specific to this area."
-    ))
-    candidates.append((
-        f"Is now a good time to buy or sell in {name}?",
-        "Market conditions across the Fraser Valley have recently favoured buyers, with inventory near decade highs and sales activity below year-ago levels \u2014 which can mean more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions shift, so it's worth a direct, current conversation with Manan rather than relying on general trends alone."
-    ))
-    for q, a in candidates:
-        if len(faqs) >= target:
-            break
-        faqs.append((q, a))
-    area['area_faq'] = faqs
-
-for _area in AREAS:
-    _auto_supplement_faqs(_area)
-
-def area_href(slug):
-    return f'/communities/{slug}/'
-
-COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS]
-
 # ============================================================
 # Real geography groupings for "Other Communities" cross-links -- replaces a
 # static first-3-in-list slice that ignored proximity entirely (e.g. Kelowna's
@@ -1304,6 +1248,84 @@ GROUP_NEIGHBORS = {
     'Williams Lake': ['Kamloops', 'Prince George'],
     'Prince George': ['Williams Lake', 'Kamloops'],
 }
+# Areas the client called out as genuinely more remote from the Fraser Valley/
+# Lower Mainland core -- these lean more commercial/investment-focused in
+# content since they're less likely to be a typical Lower Mainland commuter's
+# residential search, and more likely a ranch, acreage, tourism, or investment
+# conversation.
+OUT_OF_TOWN_GROUPS = {'Hope', 'Harrison Hot Springs', 'Kelowna', 'Kamloops', 'Williams Lake', 'Prince George'}
+
+def _auto_supplement_faqs(area, target=6):
+    faqs = list(area.get('area_faq') or [])
+    existing_q = ' '.join(q.lower() for q, _ in faqs)
+    name = area['name']
+    is_out_of_town = SLUG_TO_GROUP.get(area['slug']) in OUT_OF_TOWN_GROUPS
+    candidates = []
+    if is_out_of_town and 'investment' not in existing_q and 'commercial' not in existing_q:
+        # Prioritized first (not appended at the end) so it reliably survives the
+        # target=6 cap even on information-rich pages like Kelowna, which already
+        # fill most slots with schools/shopping/recreation/custom FAQs.
+        candidates.append((
+            f"What investment or commercial opportunities exist in {name}?",
+            f"Areas like {name} often draw interest beyond a typical residential buyer — acreages, ranch or rural land, tourism-driven commercial space, and income properties can all be part of the picture depending on the specific property and zoning. Manan can walk through what's realistic for {name} specifically, residential or otherwise."
+        ))
+    if area.get('schools') and 'school' not in existing_q:
+        candidates.append((
+            f"What schools serve {name}?",
+            f"{_oxford_join(area['schools'])}."
+        ))
+    if area.get('shopping') and 'shop' not in existing_q and 'grocery' not in existing_q:
+        candidates.append((
+            f"Where do {name} residents shop?",
+            f"{_oxford_join(area['shopping'])}."
+        ))
+    if area.get('recreation') and 'recreation' not in existing_q and 'park' not in existing_q:
+        candidates.append((
+            f"What recreation and parks are near {name}?",
+            f"{_oxford_join(area['recreation'])}."
+        ))
+    if 'type of home' not in existing_q and 'kind of home' not in existing_q and 'housing' not in existing_q:
+        candidates.append((
+            f"What type of homes will I find in {name}?",
+            f"{name} is mainly known for {_housing_type(area['desc'], area['tags'])}. {area['desc']}"
+        ))
+    if 'good fit' not in existing_q and 'good choice' not in existing_q and 'good area' not in existing_q and 'good for' not in existing_q:
+        candidates.append((
+            f"Who is {name} a good fit for?",
+            f"Based on the area's character \u2014 {area['note'].lower()} \u2014 {name} tends to suit {_good_fit(name, area['note'], area['tags'])}. Manan can talk through whether it fits your specific situation."
+        ))
+    candidates.append((
+        f"Is Manan familiar with {name} specifically?",
+        f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
+    ))
+    if is_out_of_town:
+        candidates.append((
+            f"Is now a good time to buy or sell in {name}?",
+            f"Conditions in {name} can move differently than the Lower Mainland's \u2014 driven more by local tourism, resource, or agricultural economics than commuter demand. Rather than relying on general Lower Mainland trends, it's worth a direct, current conversation with Manan about what's happening specifically in {name}."
+        ))
+    else:
+        candidates.append((
+            f"How does pricing in {name} compare to the wider Fraser Valley market?",
+            f"As a general reference point, the Fraser Valley's composite benchmark price was $877,600 as of the most recent Fraser Valley Real Estate Board report, with detached homes at $1,350,200, townhomes at $764,100, and condos at $469,500. Where {name} sits relative to those figures depends on housing type, lot size, and age of construction \u2014 Manan can pull current comparables specific to this area."
+        ))
+        candidates.append((
+            f"Is now a good time to buy or sell in {name}?",
+            "Market conditions across the Fraser Valley have recently favoured buyers, with inventory near decade highs and sales activity below year-ago levels \u2014 which can mean more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions shift, so it's worth a direct, current conversation with Manan rather than relying on general trends alone."
+        ))
+    for q, a in candidates:
+        if len(faqs) >= target:
+            break
+        faqs.append((q, a))
+    area['area_faq'] = faqs
+
+for _area in AREAS:
+    _auto_supplement_faqs(_area)
+
+def area_href(slug):
+    return f'/communities/{slug}/'
+
+COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS]
+
 _AREA_CARD_BY_SLUG = {a['slug']: dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS}
 
 def related_area_cards(current_slug, count=3):
@@ -1340,7 +1362,6 @@ def related_area_cards(current_slug, count=3):
     # exactly the bug this function replaces. The grid layout handles 1-3
     # cards without leaving a gap (see .community-grid's auto-fit rule).
     return picked[:count]
-
 
 # ============================================================
 # /buyers/  — Buy a Home hub
@@ -2467,15 +2488,26 @@ for a in AREAS:
 </section>"""
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
+    _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
+    _buy_sell_lead = (
+        f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
+        if _is_out_of_town else
+        f"Whether you're searching for a home in {a['name']} or thinking about listing one, local context matters \u2014 what a property is actually worth here, how quickly comparable homes have been moving, and which streets or buildings tend to hold their value. Manan works across both the residential and commercial sides of {a['name']}'s market and can walk you through what's realistic for your specific goals."
+    )
+    _investor_point = (
+        f'<div class="point"><div class="dot">\U0001F4BC</div><div><strong>Investors</strong><span>Acreage, ranch, tourism, and commercial opportunities that {a["name"]}\'s market supports beyond a typical family home search.</span></div></div>'
+        if _is_out_of_town else ''
+    )
     body += f"""<section class="content-section">
   <div class="wrap two-col">
     <img class="imgblock" src="https://picsum.photos/seed/{a['slug']}-street/800/600" alt="{a['name']} street view (sample photo)" loading="lazy" width="800" height="600">
     <div>
       <h2>Buying or Selling in {a['name']}</h2>
-      <p style="color:var(--ink-soft);margin-top:14px;">Whether you're searching for a home in {a['name']} or thinking about listing one, local context matters \u2014 what a property is actually worth here, how quickly comparable homes have been moving, and which streets or buildings tend to hold their value. Manan works across both the residential and commercial sides of {a['name']}'s market and can walk you through what's realistic for your specific goals.</p>
+      <p style="color:var(--ink-soft);margin-top:14px;">{_buy_sell_lead}</p>
       <div class="point-list">
         <div class="point"><div class="dot">\U0001F3E1</div><div><strong>Buyers</strong><span>A tailored search and honest guidance on what {a['name']} actually offers for your budget and lifestyle.</span></div></div>
         <div class="point"><div class="dot">\U0001F511</div><div><strong>Sellers</strong><span>A free evaluation grounded in current comparable activity in {a['name']}, not a generic estimate.</span></div></div>
+        {_investor_point}
       </div>
       <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;">
         <a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Homes in {a['name']}</a>
