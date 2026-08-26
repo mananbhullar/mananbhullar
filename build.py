@@ -1125,6 +1125,26 @@ AREAS = [
             ("Which Kamloops neighbourhoods are most central?", "Sahali is the largest and most central, home to TRU, major shopping, and a range of housing from condos to single-family homes, just minutes from downtown."),
          ],
          entertainment=["Restaurants along Tranquille Road (North Kamloops) and at Sahali"]),
+    dict(slug='williams-lake', name='Williams Lake', note='Stampede Capital of BC',
+         tags=['Cariboo Region', 'Stampede Capital of BC', 'Lakeside Living'],
+         desc="Williams Lake is a central Cariboo hub built around its namesake freshwater lake, known across BC as the Stampede Capital for its world-famous annual rodeo, with a real estate market spanning in-town family homes to rural acreages and ranches just beyond the city limits.",
+         schools=["Williams Lake Junior Secondary (Grades 8\u201310)", "Williams Lake Secondary (Grades 11\u201312)"],
+         recreation=["Williams Lake itself \u2014 boating, kayaking, paddleboarding, and fishing", "Extensive walking and trail networks", "Home of the annual Williams Lake Stampede"],
+         area_faq=[
+            ("What is Williams Lake known for?", "It's proudly known as the Stampede Capital of BC, home to the world-famous Williams Lake Stampede, alongside lakeside recreation and easy access to Cariboo ranch country."),
+            ("What kind of properties are available in Williams Lake?", "The market spans in-town family homes close to schools and parks to expansive rural acreages and ranches just outside town \u2014 a genuinely different mix than the Lower Mainland."),
+         ]),
+    dict(slug='prince-george', name='Prince George', note="Northern BC's largest city",
+         tags=['Northern BC Hub', 'University of Northern BC', 'Four-Season Recreation'],
+         desc="Prince George is northern BC's largest city and regional hub, home to the University of Northern British Columbia, with neighbourhoods ranging from established family areas to newer developments built around the university.",
+         schools=["University of Northern British Columbia (UNBC)", "Lakewood Elementary &amp; Westwood Secondary (College Heights)"],
+         shopping=["College Heights' big-box retail, banks, and restaurants"],
+         recreation=["Hart Highlands Ski Hill", "Aberdeen Glen Golf Course", "Extensive hiking, biking, and trail networks (Old Summit Lake area)", "Riverside parks and trails near South Fort George"],
+         entertainment=["Restaurants and pubs in College Heights", "Park Drive-In (Old Summit Lake area)"],
+         area_faq=[
+            ("What neighbourhoods are popular for families in Prince George?", "College Heights (served by Lakewood Elementary and Westwood Secondary) and University Heights, a newer development of craftsman-style homes a short walk from UNBC, are both commonly highlighted family areas."),
+            ("Is Prince George a university town?", "Yes \u2014 it's home to the University of Northern British Columbia, and the University Heights neighbourhood was built specifically around it."),
+         ]),
 ]
 
 def _oxford_join(items):
@@ -1214,6 +1234,112 @@ def area_href(slug):
     return f'/communities/{slug}/'
 
 COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS]
+
+# ============================================================
+# Real geography groupings for "Other Communities" cross-links -- replaces a
+# static first-3-in-list slice that ignored proximity entirely (e.g. Kelowna's
+# page was suggesting Surrey/Fleetwood as "other communities"). Neighbourhoods
+# are grouped under their real parent city; standalone cities are their own
+# group. GROUP_NEIGHBORS gives real-world adjacent cities to fall back on when
+# a group has too few (or zero) siblings of its own -- e.g. Hope has no
+# neighbourhood pages of its own, so it falls back to Chilliwack/Harrison.
+# ============================================================
+AREA_GROUPS = {
+    'Surrey': ['surrey', 'fleetwood', 'cloverdale', 'city-centre', 'newton', 'industrial-corridor',
+               'guildford', 'east-newton', 'west-newton', 'east-clayton', 'clayton', 'fraser-heights',
+               'panorama-ridge', 'sullivan-heights', 'grandview-heights', 'sunnyside',
+               'king-george-corridor', 'port-kells', 'bridgeview', 'bolivar-heights', 'cedar-hills',
+               'royal-heights', 'johnston-heights', 'green-timbers', 'tynehead', 'hazelmere',
+               'campbell-heights', 'chimney-hill', 'bear-creek', 'strawberry-hill', 'south-westminster'],
+    'South Surrey / White Rock': ['south-surrey', 'morgan-creek', 'elgin-chantrell', 'ocean-park', 'crescent-beach'],
+    'Langley': ['langley', 'fort-langley', 'willoughby', 'walnut-grove', 'langley-city', 'brookswood',
+                'murrayville', 'aldergrove', 'willowbrook', 'yorkson', 'salmon-river', 'campbell-valley',
+                'highpoint', 'otter-district', 'milner', 'glen-valley'],
+    'Delta': ['delta', 'ladner', 'tsawwassen', 'north-delta', 'sunshine-hills', 'annieville',
+              'scottsdale', 'boundary-bay', 'uplands'],
+    'Burnaby': ['burnaby', 'metrotown', 'brentwood', 'lougheed', 'deer-lake', 'capitol-hill', 'edmonds',
+                'burnaby-heights', 'south-slope', 'highgate', 'central-park-burnaby', 'government-road',
+                'cariboo', 'big-bend', 'sperling-duthie', 'willingdon-heights', 'forest-grove',
+                'suncrest', 'montecito', 'univercity-sfu', 'lochdale', 'westridge', 'sullivan-heights-burnaby'],
+    'Coquitlam': ['coquitlam'],
+    'Port Coquitlam': ['port-coquitlam'],
+    'New Westminster': ['new-westminster'],
+    'Vancouver': ['vancouver'],
+    'Richmond': ['richmond'],
+    'Port Moody': ['port-moody'],
+    'Pitt Meadows': ['pitt-meadows'],
+    'Abbotsford': ['abbotsford'],
+    'Maple Ridge': ['maple-ridge'],
+    'Mission': ['mission'],
+    'Chilliwack': ['chilliwack'],
+    'Hope': ['hope'],
+    'Harrison Hot Springs': ['harrison-hot-springs'],
+    'Kelowna': ['kelowna'],
+    'Kamloops': ['kamloops'],
+    'Williams Lake': ['williams-lake'],
+    'Prince George': ['prince-george'],
+}
+SLUG_TO_GROUP = {slug: group for group, slugs in AREA_GROUPS.items() for slug in slugs}
+GROUP_NEIGHBORS = {
+    'Surrey': ['Delta', 'Langley', 'South Surrey / White Rock', 'New Westminster'],
+    'South Surrey / White Rock': ['Surrey', 'Delta', 'Langley'],
+    'Langley': ['Surrey', 'Abbotsford', 'Maple Ridge'],
+    'Delta': ['Surrey', 'Richmond', 'South Surrey / White Rock'],
+    'Burnaby': ['Vancouver', 'New Westminster', 'Coquitlam'],
+    'Coquitlam': ['Port Coquitlam', 'Port Moody', 'Burnaby'],
+    'Port Coquitlam': ['Coquitlam', 'Port Moody', 'Pitt Meadows'],
+    'New Westminster': ['Burnaby', 'Coquitlam', 'Surrey'],
+    'Vancouver': ['Burnaby', 'Richmond', 'New Westminster'],
+    'Richmond': ['Vancouver', 'Delta'],
+    'Port Moody': ['Coquitlam', 'Port Coquitlam', 'Burnaby'],
+    'Pitt Meadows': ['Maple Ridge', 'Port Coquitlam'],
+    'Abbotsford': ['Langley', 'Mission', 'Chilliwack'],
+    'Maple Ridge': ['Pitt Meadows', 'Langley', 'Mission'],
+    'Mission': ['Abbotsford', 'Maple Ridge', 'Chilliwack'],
+    'Chilliwack': ['Abbotsford', 'Mission', 'Hope'],
+    'Hope': ['Chilliwack', 'Harrison Hot Springs'],
+    'Harrison Hot Springs': ['Hope', 'Chilliwack'],
+    'Kelowna': ['Kamloops'],
+    'Kamloops': ['Kelowna', 'Williams Lake', 'Prince George'],
+    'Williams Lake': ['Kamloops', 'Prince George'],
+    'Prince George': ['Williams Lake', 'Kamloops'],
+}
+_AREA_CARD_BY_SLUG = {a['slug']: dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS}
+
+def related_area_cards(current_slug, count=3):
+    """Geography-aware 'Other Communities' picks: same-city siblings first,
+    then real adjacent cities, so Fleetwood (a Surrey neighbourhood) only ever
+    shows up next to other Surrey pages instead of next to Kelowna or Vancouver."""
+    picked, seen = [], {current_slug}
+    current_group = SLUG_TO_GROUP.get(current_slug)
+    if current_group:
+        for slug in AREA_GROUPS[current_group]:
+            if len(picked) >= count:
+                break
+            if slug not in seen and slug in _AREA_CARD_BY_SLUG:
+                picked.append(_AREA_CARD_BY_SLUG[slug])
+                seen.add(slug)
+        # Round-robin one pick per neighbouring city first, so a city with no
+        # sub-neighbourhood pages of its own (Vancouver, Coquitlam, etc.) gets
+        # geographic variety -- e.g. Burnaby + Richmond + New Westminster --
+        # instead of exhausting one neighbour's whole sub-area list first.
+        neighbor_queues = [list(AREA_GROUPS.get(g, [])) for g in GROUP_NEIGHBORS.get(current_group, [])]
+        while len(picked) < count and any(neighbor_queues):
+            for queue in neighbor_queues:
+                if len(picked) >= count:
+                    break
+                while queue:
+                    slug = queue.pop(0)
+                    if slug not in seen and slug in _AREA_CARD_BY_SLUG:
+                        picked.append(_AREA_CARD_BY_SLUG[slug])
+                        seen.add(slug)
+                        break
+    # Deliberately no generic fallback beyond real groups/neighbours -- a remote
+    # area like Kelowna or Kamloops genuinely only has one or two honest
+    # "nearby" picks, and padding with an unrelated Surrey neighbourhood is
+    # exactly the bug this function replaces. The grid layout handles 1-3
+    # cards without leaving a gap (see .community-grid's auto-fit rule).
+    return picked[:count]
 
 
 # ============================================================
@@ -2314,7 +2440,7 @@ write_page(
 )
 
 for a in AREAS:
-    others = [c for c in COMMUNITY_CARDS if c['href'] != area_href(a['slug'])][:3]
+    others = related_area_cards(a['slug'])
     tags_html = ''.join(f'<span>{t}</span>' for t in a.get('tags', []))
     body = subhero(
         "Areas I Serve",

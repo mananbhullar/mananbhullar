@@ -583,6 +583,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.mananbhullar.com/communities/prince-george/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.mananbhullar.com/communities/richmond/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
@@ -716,6 +722,12 @@
   </url>
   <url>
     <loc>https://www.mananbhullar.com/communities/westridge/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.mananbhullar.com/communities/williams-lake/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
