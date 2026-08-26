@@ -348,14 +348,16 @@ def local_info_section(name, schools=None, shopping=None, recreation=None, enter
           <ul>{lis}</ul>
         </div>"""
     cols = ''
-    if schools: cols += col("Schools", "\U0001F3EB", schools)
-    if shopping: cols += col("Shopping &amp; Grocery", "\U0001F6D2", shopping)
-    if entertainment: cols += col("Entertainment &amp; Dining", "\U0001F37D\uFE0F", entertainment)
-    if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation)
+    col_count = 0
+    if schools: cols += col("Schools", "\U0001F3EB", schools); col_count += 1
+    if shopping: cols += col("Shopping &amp; Grocery", "\U0001F6D2", shopping); col_count += 1
+    if entertainment: cols += col("Entertainment &amp; Dining", "\U0001F37D\uFE0F", entertainment); col_count += 1
+    if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation); col_count += 1
+    grid_cls = 'local-info-grid even-cols' if col_count == 4 else 'local-info-grid'
     return f"""<section class="content-section">
   <div class="wrap">
     <div class="content-head center"><h2>Life in {name}</h2><p>Schools, shopping, dining, and recreation in {name}.</p></div>
-    <div class="local-info-grid">{cols}</div>
+    <div class="{grid_cls}">{cols}</div>
   </div>
 </section>"""
 

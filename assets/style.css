@@ -562,13 +562,14 @@
 
 /* Local info (schools / shopping / recreation) */
 .local-info-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:28px;margin-top:8px;}
+.local-info-grid.even-cols{grid-template-columns:1fr 1fr;}
 .local-info-col ul{margin:0;padding:0;list-style:none;}
 .local-info-col li{padding:10px 0;border-bottom:1px solid var(--line);font-size:0.88rem;color:var(--ink-soft);}
 .local-info-col li:last-child{border-bottom:none;}
 .local-info-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .local-info-head .ico{font-size:1.2rem;color:var(--accent-deep);}
 .local-info-head strong{font-size:1rem;}
-@media (max-width:860px){.local-info-grid{grid-template-columns:1fr;gap:32px;}}
+@media (max-width:860px){.local-info-grid, .local-info-grid.even-cols{grid-template-columns:1fr;gap:32px;}}
 
 /* Pro tip callout */
 .pro-tip{border-left:3px solid var(--accent);background:var(--paper);padding:22px 26px;margin-top:24px;}
