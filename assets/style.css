@@ -75,9 +75,8 @@
   .nav-links a:hover::after{transform:scaleX(1);}
   .nav-cta{
     font-family:var(--sans);font-weight:600;font-size:0.85rem;padding:9px 16px;border:1px solid #FAFAF8;
-    white-space:nowrap;grid-column:3;justify-self:end;
+    white-space:nowrap;grid-column:3;justify-self:end;position:relative;
   }
-  .nav-cta:hover{box-shadow:0 0 0 3px rgba(250,250,248,0.25);}
   .nav-mobile-hide{display:flex;}
   .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:11px;flex-direction:column;gap:5px;min-width:44px;min-height:44px;align-items:center;justify-content:center;grid-column:3;justify-self:end;}
   .nav-toggle span{display:block;width:22px;height:2px;background:#FAFAF8;}
@@ -127,14 +126,13 @@
   .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;justify-content:center;}
   .btn-solid-warm{
     background:var(--accent);color:#fff;font-weight:600;font-size:0.92rem;
-    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;
+    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;position:relative;
   }
-  .btn-solid-warm:hover{box-shadow:0 0 0 3px rgba(30,95,217,0.35);}
   .btn-outline-light{
     border:1px solid rgba(255,255,255,0.5);color:#fff;font-weight:600;font-size:0.92rem;
-    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;
+    padding:14px 24px;display:inline-flex;align-items:center;gap:8px;position:relative;
   }
-  .btn-outline-light:hover{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.18);}
+  .btn-outline-light:hover{border-color:#fff;}
 
   /* De-emphasized relative to .hero-ctas (Call / Free Home Evaluation) -- this is a secondary,
      browse-it-yourself path that hands visitors off to Realtor.ca, not the primary conversion
@@ -156,9 +154,8 @@
   .search-bar select:focus{outline:none;}
   .search-bar button{
     background:transparent;color:var(--ink);border:1.5px solid var(--ink);font-family:var(--sans);font-weight:600;
-    font-size:0.85rem;padding:10px 18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;white-space:nowrap;min-height:42px;
+    font-size:0.85rem;padding:10px 18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;white-space:nowrap;min-height:42px;position:relative;
   }
-  .search-bar button:hover{box-shadow:0 0 0 3px rgba(18,18,18,0.18);}
   .search-note{font-size:0.78rem;color:#B9B7B2;margin-top:10px;}
   .hero-showing-strip{
     margin:28px auto 0;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);
@@ -261,9 +258,8 @@
   .areas-cta{text-align:center;margin-top:44px;}
   .btn-outline-dark{
     border:1px solid var(--ink);color:var(--ink);font-weight:600;font-size:0.9rem;
-    padding:13px 22px;display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;display:inline-flex;align-items:center;gap:8px;position:relative;
   }
-  .btn-outline-dark:hover{box-shadow:0 0 0 3px rgba(18,18,18,0.18);}
   @media (max-width:900px){.areas-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:600px){.areas-grid{grid-template-columns:1fr;}}
 
@@ -325,9 +321,8 @@
   .consult-form select{margin-bottom:12px;}
   .btn-block-dark{
     width:100%;background:var(--ink);color:#fff;border:none;padding:14px;font-family:var(--sans);
-    font-weight:600;font-size:0.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:600;font-size:0.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;
   }
-  .btn-block-dark:hover{box-shadow:0 0 0 3px rgba(18,18,18,0.25);}
   .btn-block-dark:disabled{opacity:0.6;cursor:default;}
   .form-disclaimer{font-size:0.76rem;color:var(--ink-soft);margin-top:12px;text-align:center;}
   .form-error{font-size:0.82rem;color:#B3261E;margin-top:12px;text-align:center;}
@@ -459,9 +454,8 @@
 .hero-search select option{color:var(--ink);background:var(--paper);}
 .hero-search button{
   border:1px solid rgba(255,255,255,0.2);padding:12px 18px;background:var(--accent);color:#fff;
-  font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;white-space:nowrap;
+  font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;white-space:nowrap;position:relative;
 }
-.hero-search button:hover{box-shadow:0 0 0 3px rgba(30,95,217,0.35);}
 .hero-search .search-micro{font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:6px;text-align:center;}
 @media (max-width:500px){.hero-search{flex-direction:column;gap:0;}.hero-search select{border-right:1px solid rgba(255,255,255,0.2);border-bottom:none;}.hero-search button{border-top:none;}}
 
@@ -623,9 +617,8 @@
 .cta-form-pills{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
 .cta-form-pills a{
   border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:0.82rem;font-weight:600;
-  padding:9px 16px;display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;display:inline-flex;align-items:center;gap:6px;position:relative;
 }
-.cta-form-pills a:hover{box-shadow:0 0 0 3px rgba(255,255,255,0.15);}
 @media (max-width:860px){.cta-form-grid{grid-template-columns:1fr;gap:32px;}}
 
 /* Market context section with photo + floating fact badge */
@@ -649,6 +642,21 @@
 .blog-card span{display:block;font-size:0.85rem;color:var(--ink-soft);margin-top:8px;line-height:1.6;}
 .blog-card .go{display:block;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--accent-deep);}
 @media (max-width:560px){.blog-grid{grid-template-columns:1fr;}}
+
+/* Homepage "Latest Market Insights" strip */
+.insights{padding:80px 0;}
+.insights-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:32px;flex-wrap:wrap;gap:12px;}
+.insights-head h2{margin:0;}
+.insights-head a{font-size:0.9rem;font-weight:600;color:var(--accent-deep);position:relative;}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.insight-grid > *{min-width:0;}
+.insight-card{display:block;border:1px solid var(--line);background:var(--paper-raised);}
+.insight-card .thumb{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;}
+.insight-card .body{padding:18px 20px;}
+.insight-card .tag{font-family:var(--sans);font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent-deep);}
+.insight-card strong{display:block;margin-top:8px;font-size:0.98rem;line-height:1.4;}
+@media (max-width:860px){.insight-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.insight-grid{grid-template-columns:1fr;}}
 
 .blog-toolbar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:36px;}
 .blog-search-input{flex:1;min-width:220px;max-width:340px;padding:12px 16px;border:1px solid var(--line);background:var(--paper-raised);font-family:var(--sans);font-size:0.9rem;color:var(--ink);}
@@ -687,7 +695,6 @@
 .sidebar-call-box strong{display:block;font-size:1rem;margin-bottom:8px;}
 .sidebar-call-box p{font-size:0.86rem;color:var(--ink-soft);line-height:1.55;margin-bottom:16px;}
 .sidebar-call-box .btn-outline-light{border-color:var(--line);color:var(--ink);width:100%;justify-content:center;}
-.sidebar-call-box .btn-outline-light:hover{box-shadow:0 0 0 3px var(--line-soft);}
 @media (max-width:900px){.article-layout{grid-template-columns:1fr;}.article-sidebar{position:static;max-width:72ch;margin:40px auto 0;}}
 
 /* Generic light-background tag pills (community pages, etc.) */
@@ -733,4 +740,17 @@
   }
   .mobile-cta-bar .cta-text{color:#fff;border-right:1px solid #2A2A2A;}
   .mobile-cta-bar .cta-primary{background:var(--accent);color:#fff;}
+}
+
+/* Shared button hover: underline sweep -- same left-to-right reveal motion as
+   .nav-links a::after, so every button and nav link on the site shares one
+   consistent hover language instead of a background-fill invert. */
+.btn-solid-warm::after, .btn-outline-light::after, .btn-outline-dark::after, .nav-cta::after, .btn-block-dark::after,
+.search-bar button::after, .hero-search button::after, .cta-form-pills a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:currentColor;
+  transform:scaleX(0);transform-origin:left;transition:transform .22s ease;
+}
+.btn-solid-warm:hover::after, .btn-outline-light:hover::after, .btn-outline-dark:hover::after, .nav-cta:hover::after, .btn-block-dark:hover::after,
+.search-bar button:hover::after, .hero-search button:hover::after, .cta-form-pills a:hover::after{
+  transform:scaleX(1);
 }
