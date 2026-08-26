@@ -12,7 +12,7 @@
        where it already passes (white-on-#1E5FD9 = 5.44:1; large-text 3:1 threshold). */
     --accent-on-dark:#5B8AF0;
     --line:#E4E2DD;
-    --line-soft:#EDEBE6;
+    --line-soft:#E2E2E2;
     --radius:2px;
     --serif: 'General Sans', sans-serif;
     --sans: 'General Sans', sans-serif;
