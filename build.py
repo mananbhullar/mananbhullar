@@ -1191,7 +1191,7 @@ def _auto_supplement_faqs(area, target=6):
         ))
     candidates.append((
         f"Is Manan familiar with {name} specifically?",
-        f"Yes \u2014 {name} is one of the communities in Manan's core Fraser Valley and Lower Mainland service area, and he can speak directly to current inventory, pricing, and what makes this area different from its neighbours."
+        f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
     ))
     candidates.append((
         f"How does pricing in {name} compare to the wider Fraser Valley market?",

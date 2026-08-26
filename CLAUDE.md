@@ -101,9 +101,12 @@ asset paths like `/assets/style.css` need an actual server, not `file://`).
 - Real past result: a record-breaking price-per-sqft sale in Fleetwood, Surrey
   (no exact figure available — never fabricate a number for this).
 - Phone: (604) 727-9542. Email: mb_realestate@outlook.com.
-- Client stated he was **born in Vancouver** and his office is in Vancouver —
-  use this to write confident, non-limiting "is Manan familiar with [area]"
-  copy. Client was explicit: don't artificially limit his expertise to just the
+- Client does **not** want his birthplace mentioned anywhere on the site (a
+  personal detail, not for public copy) — this superseded an earlier note that
+  suggested using it. For confident, non-limiting "is Manan familiar with
+  [area]" copy, use the real, universally-true justification instead: as a
+  licensed REALTOR® in BC, he can work with clients anywhere in the province.
+  Client was explicit: don't artificially limit his expertise to just the
   Fraser Valley in FAQ answers — he's comfortable being positioned as
   knowledgeable across the whole Lower Mainland/BC, not boxed into one sub-region.
 - Client is also a **marketing specialist** — a dedicated Marketing page is
