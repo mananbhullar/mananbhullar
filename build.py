@@ -341,7 +341,7 @@ def local_info_section(name, schools=None, shopping=None, recreation=None, enter
     if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation)
     return f"""<section class="content-section raised">
   <div class="wrap">
-    <div class="content-head center"><h2>Life in {name}</h2><p>Real schools, shopping, dining, and recreation \u2014 not a generic list. Always confirm current school catchments directly with the school district before making a decision based on address.</p></div>
+    <div class="content-head center"><h2>Life in {name}</h2><p>Schools, shopping, dining, and recreation in {name}.</p></div>
     <div class="local-info-grid">{cols}</div>
   </div>
 </section>"""
@@ -2631,6 +2631,11 @@ for a in AREAS:
             break
     _amenities_html = ''.join(f'<div class="amenity-item"><span class="a-icon">{ic}</span>{lb}</div>' for ic, lb in _amenity_items) if _amenity_items else ''
 
+    _map_q = f"{a['name']}, BC, Canada".replace(' ', '+').replace('&amp;', '%26')
+    if GOOGLE_MAPS_KEY:
+        _area_visual_html = f'<iframe class="imgblock area-map" style="aspect-ratio:16/11;" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of {a["name"]}, BC"></iframe>'
+    else:
+        _area_visual_html = f'<img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}" alt="{a["name"]} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">'
     body += f"""<section class="content-section" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
@@ -2639,13 +2644,8 @@ for a in AREAS:
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
-    <img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}" alt="{a['name']} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">
+    {_area_visual_html}
   </div>
-</section>"""
-    if GOOGLE_MAPS_KEY:
-        _map_q = f"{a['name']}, BC, Canada".replace(' ', '+').replace('&amp;', '%26')
-        body += f"""<section class="content-section tight" style="padding:32px 0 40px;">
-  <div class="wrap"><iframe class="area-map" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" width="100%" height="340" style="border:0;width:100%;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 </section>"""
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
