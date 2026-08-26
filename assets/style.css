@@ -728,6 +728,8 @@
   font-size:0.76rem;background:var(--line-soft);border:1px solid var(--line);color:var(--ink-soft);
   padding:6px 12px;
 }
+.content-section.dark .tags span{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);color:#C7C5C0;}
+.content-section.dark .amenity-item{color:#C7C5C0;}
 
 /* Safety net: prevent any grid track from blowing out to an image's intrinsic
    width/height attributes. Without this, a fixed-ratio grid (e.g. 1fr 1fr) can

@@ -265,14 +265,14 @@ def step_section(title, sub, steps, raised=False):
   </div>
 </section>"""
 
-def faq_section(title, items, dark=False):
+def faq_section(title, items, dark=False, raised=False):
     items_html = ''
     for q, a in items:
         items_html += f"""<div class="faq-item">
         <button class="faq-q"><span>{q}</span><span class="chev">\u25BE</span></button>
         <div class="faq-a"><p>{a}</p></div>
       </div>"""
-    cls = 'content-section dark' if dark else 'content-section'
+    cls = 'content-section dark' if dark else ('content-section raised' if raised else 'content-section')
     return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center">
@@ -339,7 +339,7 @@ def local_info_section(name, schools=None, shopping=None, recreation=None, enter
     if shopping: cols += col("Shopping &amp; Grocery", "\U0001F6D2", shopping)
     if entertainment: cols += col("Entertainment &amp; Dining", "\U0001F37D\uFE0F", entertainment)
     if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation)
-    return f"""<section class="content-section raised">
+    return f"""<section class="content-section">
   <div class="wrap">
     <div class="content-head center"><h2>Life in {name}</h2><p>Schools, shopping, dining, and recreation in {name}.</p></div>
     <div class="local-info-grid">{cols}</div>
@@ -2610,7 +2610,7 @@ for a in AREAS:
         "Areas I Serve",
         a['name'],
         a['note'] + ".",
-        CONTACT_CTA + _area_search_html + _stat_bar_html
+        _area_search_html + _stat_bar_html
     )
     # picsum seeds are opaque hashes, not content-aware -- "surrey" happened to hash to an
     # unrelated astronaut/spacewalk stock photo, so it needs a pinned override (see also index.html's
@@ -2636,11 +2636,11 @@ for a in AREAS:
         _area_visual_html = f'<iframe class="imgblock area-map" style="aspect-ratio:16/11;" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of {a["name"]}, BC"></iframe>'
     else:
         _area_visual_html = f'<img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}" alt="{a["name"]} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">'
-    body += f"""<section class="content-section" style="padding:48px 0 56px;">
+    body += f"""<section class="content-section dark" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
       <h2>About {a['name']}</h2>
-      <p style="color:var(--ink-soft);margin-top:14px;">{a['desc']}</p>
+      <p style="margin-top:14px;">{a['desc']}</p>
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
@@ -2649,6 +2649,8 @@ for a in AREAS:
 </section>"""
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
+    if a.get('area_faq'):
+        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'], raised=True)
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
@@ -2659,12 +2661,12 @@ for a in AREAS:
         f'<div class="point"><div class="dot">\U0001F4BC</div><div><strong>Investors</strong><span>Acreage, ranch, tourism, and commercial opportunities that {a["name"]}\'s market supports beyond a typical family home search.</span></div></div>'
         if _is_out_of_town else ''
     )
-    body += f"""<section class="content-section">
+    body += f"""<section class="content-section dark">
   <div class="wrap two-col">
     <img class="imgblock" src="https://picsum.photos/seed/{a['slug']}-street/800/600" alt="{a['name']} street view (sample photo)" loading="lazy" width="800" height="600">
     <div>
       <h2>Buying or Selling in {a['name']}</h2>
-      <p style="color:var(--ink-soft);margin-top:14px;">{_buy_sell_lead}</p>
+      <p style="margin-top:14px;">{_buy_sell_lead}</p>
       <div class="point-list">
         <div class="point"><div class="dot">\U0001F3E1</div><div><strong>Buyers</strong><span>A tailored search and honest guidance on what {a['name']} actually offers for your budget and lifestyle.</span></div></div>
         <div class="point"><div class="dot">\U0001F511</div><div><strong>Sellers</strong><span>A free evaluation grounded in current comparable activity in {a['name']}, not a generic estimate.</span></div></div>
@@ -2672,9 +2674,9 @@ for a in AREAS:
       </div>
       <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;">
         <a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Homes in {a['name']}</a>
-        <a class="btn-outline-dark" href="/sellers/home-evaluation/">\U0001F4CB Free Home Evaluation</a>
+        <a class="btn-outline-light" href="/sellers/home-evaluation/">\U0001F4CB Free Home Evaluation</a>
       </div>
-      <p style="margin-top:14px;font-size:0.85rem;color:var(--ink-soft);">Prefer to talk now? Call <a href="tel:+16047279542" style="color:var(--accent-deep);font-weight:600;">(604) 727-9542</a></p>
+      <p style="margin-top:14px;font-size:0.85rem;">Prefer to talk now? Call <a href="tel:+16047279542" style="color:var(--accent-on-dark);font-weight:600;">(604) 727-9542</a></p>
     </div>
   </div>
 </section>"""
@@ -2690,14 +2692,12 @@ for a in AREAS:
             if _sub:
                 _pill_html += f'<a class="guide-pill" href="/communities/{ss}/"><span>{_sub["name"]}</span><span class="arrow">→</span></a>'
         if _pill_html:
-            body += f"""<section class="guides-section raised">
+            body += f"""<section class="guides-section">
   <div class="wrap">
     <div class="content-head center"><h2>Neighbourhood Guides</h2><p>In-depth pages for specific {a['name'] if a['slug'] == _group_slugs[0] else _current_group} communities.</p></div>
     <div class="guide-pills">{_pill_html}</div>
   </div>
 </section>"""
-    if a.get('area_faq'):
-        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'])
     body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others)
     body += cta_band(
         f'Thinking About {a["name"]}?',
@@ -2948,109 +2948,114 @@ ARTICLES = [
          title="Fraser Valley Real Estate Market Update \u2014 August 2026",
          desc="Benchmark prices, interest rates, and how the US-Canada tariff dispute is showing up in the Fraser Valley housing market right now.",
          tags=['Market Update', 'Interest Rates', 'Tariffs'],
-         img='blog-market-update-2026', featured=True),
+         img='blog-market-update-2026', img_id=864, featured=True),
     dict(slug='first-time-buyer-programs-bc', tag='Buying Guide',
          title="BC First-Time Buyer Programs, Explained",
          desc="A plain-language walkthrough of the PTT exemption, FHSA, and RRSP Home Buyers' Plan.",
          tags=['First-Time Buyers', 'BC Programs'],
-         img='blog-first-time-buyers'),
+         img='blog-first-time-buyers', img_id=206),
     dict(slug='preparing-your-home-to-sell', tag='Selling Guide',
          title="Preparing Your Home to Sell: A Practical Checklist",
          desc="The prep work that actually helps a listing perform, without an unnecessary renovation budget.",
          tags=['Selling', 'Home Prep'],
-         img='blog-selling-checklist'),
+         img='blog-selling-checklist', img_id=764),
     dict(slug='top-5-surrey-neighbourhoods-families-2026', tag='Neighbourhood Guides',
          title="Top 5 Neighbourhoods in Surrey for Families in 2026",
          desc="Where families are actually buying in Surrey right now, and what makes each of these five neighbourhoods work for raising kids.",
          tags=['Surrey', 'Family Homes'],
-         img='blog-surrey-family-neighbourhoods'),
+         img='blog-surrey-family-neighbourhoods', img_id=259),
     dict(slug='commercial-real-estate-trends-fraser-valley-2026', tag='Commercial Real Estate',
          title="Commercial Real Estate Trends in the Fraser Valley for 2026",
          desc="How tariffs, interest rates, and industrial demand are shaping commercial and industrial real estate across the Fraser Valley.",
          tags=['Commercial', 'Tariffs', 'Industrial'],
-         img='blog-commercial-trends-2026'),
+         img='blog-commercial-trends-2026', img_id=948),
     dict(slug='first-time-home-buyer-guide-fraser-valley-2026', tag='Buying Guide',
          title="First-Time Home Buyer Guide: Navigating the Fraser Valley Market in 2026",
          desc="A start-to-finish guide for first-time buyers navigating today's buyer-favouring Fraser Valley market.",
          tags=['First-Time Buyers', 'Fraser Valley'],
-         img='blog-first-time-buyer-guide'),
+         img='blog-first-time-buyer-guide', img_id=424),
     dict(slug='affordable-homes-surrey-bc-2026', tag='Buying Guide',
          title="Affordable Homes in Surrey BC: Where to Find the Best Value in 2026",
          desc="Where relative affordability actually exists in Surrey's housing market right now, property type by property type.",
          tags=['Surrey', 'Affordability'],
-         img='blog-affordable-surrey'),
+         img='blog-affordable-surrey', img_id=76),
     dict(slug='south-surrey-vs-white-rock', tag='Neighbourhood Guides',
          title="South Surrey vs White Rock: Which Neighbourhood Is Right for You?",
          desc="Two of the region's most desirable areas, compared honestly \u2014 pricing, lifestyle, and who each one actually suits.",
          tags=['South Surrey', 'White Rock'],
-         img='blog-south-surrey-white-rock'),
+         img='blog-south-surrey-white-rock', img_id=47),
     dict(slug='townhouses-surrey-under-600k-2026', tag='Buying Guide',
          title="Townhouses for Sale in Surrey Under $600,000: Your 2026 Guide",
          desc="Where a sub-$600K townhome budget still goes in Surrey right now, and the trade-offs to expect at that price point.",
          tags=['Townhomes', 'Surrey', 'Budget Buying'],
-         img='blog-surrey-townhomes-budget'),
+         img='blog-surrey-townhomes-budget', img_id=308),
     dict(slug='surrey-bc-house-prices-2026', tag='Market Updates',
          title="Surrey BC House Prices: What to Expect in 2026",
          desc="Current benchmark prices across Surrey's property types, and the market forces likely to move them through the rest of the year.",
          tags=['Surrey', 'Market Update'],
-         img='blog-surrey-house-prices'),
+         img='blog-surrey-house-prices', img_id=448),
     dict(slug='fleetwood-vs-cloverdale', tag='Neighbourhood Guides',
          title="Fleetwood vs Cloverdale: Comparing Surrey's Best Family Neighbourhoods",
          desc="Two established Surrey neighbourhoods, compared on schools, character, commute, and price.",
          tags=['Fleetwood', 'Cloverdale'],
-         img='blog-fleetwood-cloverdale'),
+         img='blog-fleetwood-cloverdale', img_id=164),
     dict(slug='newton-surrey-real-estate-guide', tag='Neighbourhood Guides',
          title="Newton Surrey Real Estate: Your Guide to Affordable Family Living",
          desc="What makes Newton one of Surrey's most accessible entry points for buyers, and what to know before you search there.",
          tags=['Newton', 'Affordability'],
-         img='blog-newton-surrey'),
+         img='blog-newton-surrey', img_id=448),
     dict(slug='panorama-ridge-surrey-hidden-gem', tag='Neighbourhood Guides',
          title="Panorama Ridge Surrey: A Hidden Gem for Homebuyers",
          desc="An established, quieter Surrey neighbourhood that doesn't get the attention its elevated lots and central access deserve.",
          tags=['Panorama Ridge'],
-         img='blog-panorama-ridge'),
+         img='blog-panorama-ridge', img_id=973),
     dict(slug='surrey-condo-market-2026', tag='Buying Guide',
          title="Surrey Condo Market 2026: Best Areas for First-Time Buyers",
          desc="Where the condo inventory, incentives, and value currently sit across Surrey for a first-time buyer.",
          tags=['Condos', 'Surrey', 'First-Time Buyers'],
-         img='blog-surrey-condo-market'),
+         img='blog-surrey-condo-market', img_id=887),
     dict(slug='how-to-get-first-access-new-listings-surrey', tag='Buying Guide',
          title="How to Get First Access to New Listings in Surrey BC",
          desc="What actually gets a buyer in front of a new listing before it's gone, beyond refreshing a public search site.",
          tags=['Buying Strategy', 'Surrey'],
-         img='blog-first-access-listings'),
+         img='blog-first-access-listings', img_id=6),
     dict(slug='commercial-real-estate-surrey-investment-2026', tag='Commercial Real Estate',
          title="Commercial Real Estate in Surrey: Investment Opportunities for 2026",
          desc="Where Surrey's commercial and industrial investment opportunities currently sit, from industrial corridors to retail corners.",
          tags=['Commercial', 'Investment', 'Surrey'],
-         img='blog-surrey-commercial-investment'),
+         img='blog-surrey-commercial-investment', img_id=743),
     dict(slug='how-to-buy-a-gas-station-bc-2026', tag='Commercial Real Estate',
          title="How to Buy a Gas Station in BC: A Practical Guide for 2026",
          desc="What actually goes into underwriting and closing on a BC gas station, from fuel supply agreements to environmental due diligence.",
          tags=['Gas Stations', 'Commercial'],
-         img='blog-buy-gas-station'),
+         img='blog-buy-gas-station', img_id=948),
     dict(slug='buying-a-motel-bc-due-diligence', tag='Commercial Real Estate',
          title="Buying a Motel in BC: Due Diligence Checklist",
          desc="The specific due-diligence items that matter most when underwriting a BC motel or small hotel purchase.",
          tags=['Hotels & Motels', 'Due Diligence'],
-         img='blog-buying-motel-bc'),
+         img='blog-buying-motel-bc', img_id=743),
     dict(slug='convenience-store-acquisition-bc-guide', tag='Commercial Real Estate',
          title="Convenience Store Acquisition in BC: A Buyer's Guide",
          desc="What a buyer needs to underwrite before acquiring a BC convenience store, from lottery/tobacco licensing to lease terms.",
          tags=['Convenience Stores', 'Commercial'],
-         img='blog-convenience-store-bc'),
+         img='blog-convenience-store-bc', img_id=948),
     dict(slug='buying-a-restaurant-bc-liquor-licence', tag='Commercial Real Estate',
          title="Buying a Restaurant in BC: From Underwriting to Liquor Licence Transfer",
          desc="How to underwrite a BC restaurant purchase and what the liquor licence transfer process actually involves.",
          tags=['Restaurants', 'Liquor Licence'],
-         img='blog-buying-restaurant-bc'),
+         img='blog-buying-restaurant-bc', img_id=437),
 ]
+
+def _photo_url(art, w, h):
+    if art.get('img_id'):
+        return f"https://picsum.photos/id/{art['img_id']}/{w}/{h}"
+    return f"https://picsum.photos/seed/{art['img']}/{w}/{h}"
 
 def _blog_card_html(art):
     tags_attr = ' '.join(art.get('tags', []))
     search_attr = f"{art['title']} {art['desc']} {tags_attr}".replace('"', '&quot;')
     return f"""<a class="blog-card" href="/updates/{art['slug']}/" data-blog-card data-category="{art['tag']}" data-search="{search_attr}">
-      <img class="thumb" src="https://picsum.photos/seed/{art['img']}/500/310" alt="{art['title']} (sample photo)" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
+      <img class="thumb" src="{_photo_url(art, 500, 310)}" alt="{art['title']} (sample photo)" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
       <div class="body">
         <span class="tag">{art['tag']}</span>
         <strong>{art['title']}</strong>
@@ -3064,7 +3069,7 @@ _rest_arts = [a for a in ARTICLES if a is not _featured_art]
 
 _featured_search_attr = f"{_featured_art['title']} {_featured_art['desc']} {' '.join(_featured_art.get('tags', []))}".replace('"', '&quot;')
 featured_html = f"""<a class="featured-post" href="/updates/{_featured_art['slug']}/" data-blog-card data-category="{_featured_art['tag']}" data-search="{_featured_search_attr}">
-  <img class="thumb" src="https://picsum.photos/seed/{_featured_art['img']}/700/500" alt="{_featured_art['title']} (sample photo)" loading="lazy" width="700" height="500">
+  <img class="thumb" src="{_photo_url(_featured_art, 700, 500)}" alt="{_featured_art['title']} (sample photo)" loading="lazy" width="700" height="500">
   <div class="body">
     <div class="pin-label">Featured</div>
     <span class="tag">{_featured_art['tag']}</span>
@@ -3121,7 +3126,7 @@ def article_page(art, body_html):
     <div class="article-tags">{tags_html}</div>
   </div>
 </header>
-<img class="article-hero-img" src="https://picsum.photos/seed/{art['img']}/1200/480" alt="{art['title']} (sample photo)" loading="lazy" width="1200" height="480">
+<img class="article-hero-img" src="{_photo_url(art, 1200, 480)}" alt="{art['title']} (sample photo)" loading="lazy" width="1200" height="480">
 <section class="content-section">
   <div class="wrap article-layout">
     <div class="article-body">
