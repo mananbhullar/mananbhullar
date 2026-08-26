@@ -172,6 +172,7 @@
   .cat-strip h3{color:#fff;font-size:1.5rem;max-width:20ch;}
   .cat-strip p{color:#B9B7B2;margin-top:12px;font-size:0.94rem;max-width:34ch;}
   .cat-strip .hero-ctas{margin-top:20px;justify-content:flex-start;}
+  .cat-strip-cta-mobile{display:none;}
   .cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-column:span 2;}
   .cat-card{
     background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);
@@ -182,6 +183,8 @@
   @media (max-width:900px){
     .cat-strip-grid{grid-template-columns:1fr;}
     .cat-cards{grid-column:span 1;grid-template-columns:1fr 1fr;}
+    .cat-strip-cta-desktop{display:none;}
+    .cat-strip-cta-mobile{display:flex;margin-top:24px;}
   }
 
   /* ---------- HOW CAN I HELP YOU ---------- */
@@ -207,19 +210,19 @@
   @media (max-width:600px){.help-grid{grid-template-columns:1fr;}}
 
   /* ---------- BUYING GUIDES ---------- */
-  .guides{background:var(--line-soft);padding:96px 0;}
+  .guides{background:var(--ink);padding:96px 0;}
   .guides-head{text-align:center;max-width:56ch;margin:0 auto 48px;}
-  .guides-head h2{font-size:2.1rem;}
-  .guides-head h2 .accent-warm{color:var(--accent-deep);}
-  .guides-head p{color:var(--ink-soft);margin-top:14px;font-size:1rem;}
+  .guides-head h2{font-size:2.1rem;color:#fff;}
+  .guides-head h2 .accent-warm{color:var(--accent-on-dark);}
+  .guides-head p{color:#B8B6B0;margin-top:14px;font-size:1rem;}
   .guides-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .guide-card{
-    background:var(--paper-raised);border:1px solid var(--line);padding:28px 24px;
+    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.14);padding:28px 24px;
     display:flex;flex-direction:column;
   }
-  .guide-card strong{font-size:1.02rem;font-weight:600;}
-  .guide-card span{display:block;font-size:0.86rem;color:var(--ink-soft);margin-top:10px;line-height:1.6;flex-grow:1;}
-  .guide-card .go{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:0.82rem;font-weight:600;color:var(--accent-deep);}
+  .guide-card strong{font-size:1.02rem;font-weight:600;color:#fff;}
+  .guide-card span{display:block;font-size:0.86rem;color:#B8B6B0;margin-top:10px;line-height:1.6;flex-grow:1;}
+  .guide-card .go{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:0.82rem;font-weight:600;color:var(--accent-on-dark);}
   .guide-card--start{background:var(--accent);border-color:var(--accent);color:#fff;}
   .guide-card--start strong{color:#fff;}
   .guide-card--start span{color:rgba(255,255,255,0.82);}
