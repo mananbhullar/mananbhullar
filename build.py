@@ -246,6 +246,24 @@ def point_list_section(dark, eyebrow, heading, lead, points, img_first=False, im
   </div>
 </section>"""
 
+def checklist_section(title, sub, items, raised=False, dark=False):
+    cls = 'content-section dark' if dark else ('content-section raised' if raised else 'content-section')
+    rows_html = ''
+    for it in items:
+        rows_html += f"""<div class="point">
+        <div class="dot">{it['icon']}</div>
+        <div><strong>{it['title']}</strong><span>{it['desc']}</span></div>
+      </div>"""
+    return f"""<section class="{cls}">
+  <div class="wrap">
+    <div class="content-head center">
+      <h2>{title}</h2>
+      <p>{sub}</p>
+    </div>
+    <div class="point-list point-list-grid">{rows_html}</div>
+  </div>
+</section>"""
+
 def step_section(title, sub, steps, raised=False):
     cls = 'content-section raised' if raised else 'content-section'
     steps_html = ''
@@ -2025,8 +2043,9 @@ write_page(
 # ============================================================
 # /commercial/  — Commercial Real Estate hub
 # ============================================================
-def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=None, fact_value=None):
-    paras_html = ''.join(f'<p style="color:var(--ink-soft);margin-top:14px;">{p}</p>' for p in paragraphs)
+def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=None, fact_value=None, dark=False, tight=False):
+    para_style = ' style="color:#C7C5C0;margin-top:14px;"' if dark else ' style="color:var(--ink-soft);margin-top:14px;"'
+    paras_html = ''.join(f'<p{para_style}>{p}</p>' for p in paragraphs)
     if img_seed in REAL_PHOTOS:
         src, w, h = REAL_PHOTOS[img_seed]
     else:
@@ -2034,7 +2053,10 @@ def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=No
     badge_html = ''
     if fact_label:
         badge_html = f'<div class="market-fact-badge"><span>{fact_label}</span><strong>{fact_value}</strong></div>'
-    return f"""<section class="content-section">
+    cls = 'content-section dark' if dark else 'content-section'
+    if tight:
+        cls += ' tight'
+    return f"""<section class="{cls}">
   <div class="wrap two-col">
     <div>
       <h2>{heading}</h2>
@@ -2074,15 +2096,16 @@ COMMERCIAL_CATEGORIES = [
 ]
 def cc_href(slug): return f"/commercial/{slug}/"
 
-def commercial_cta_form(category_name, related_slugs, form_title=None):
+def commercial_cta_form(category_name, related_slugs, form_title=None, gradient=False):
     ft = form_title or f"{category_name} Inquiry"
     pills = ''.join(f'<a href="{cc_href(s)}">{next(c["title"] for c in COMMERCIAL_CATEGORIES if c["slug"]==s)} \u2192</a>' for s in related_slugs)
     pills += '<a href="/commercial/">All Commercial \u2192</a>'
     form = lead_form(ft, f"New {category_name} Inquiry \u2014 mananbhullar.com")
+    accent_cls = 'gradient-text' if gradient else 'accent-warm'
     return f"""<section class="cta-form-band">
   <div class="wrap cta-form-grid">
     <div class="cta-form-left">
-      <h2>Buying or Selling <span class="accent-warm">{category_name}</span>?</h2>
+      <h2>Buying or Selling <span class="{accent_cls}">{category_name}</span>?</h2>
       <p>Every transaction in this category has its own rhythm and considerations \u2014 let's have a direct conversation about yours.</p>
       <div class="phone-line">\U0001F4DE <a href="tel:+16047279542">(604) 727-9542</a></div>
       <div class="cta-form-pills">{pills}</div>
@@ -2132,24 +2155,31 @@ def commercial_sub(path, label, icon, eyebrow_tag, h1, lead,
                     market_heading, market_paragraphs, market_photo_seed,
                     valued_title, valued_sub, valued_items,
                     dd_title, dd_sub, dd_items,
-                    middle_section="", faq=None, related_slugs=None):
+                    middle_section="", faq=None, related_slugs=None,
+                    valued_raised=True, valued_dark=False, dd_dark=False, faq_dark=False, market_dark=False, faq_before_dd=False,
+                    dd_as_steps=False, market_tight=False, h1_gradient=False):
     slug = path.strip('/').split('/')[-1]
-    body = f"""<section class="subhero">
+    h1_html = f'<span class="gradient-text">{h1}</span>' if h1_gradient else h1
+    subhero_cls = 'subhero flat-dark' if h1_gradient else 'subhero'
+    body = f"""<section class="{subhero_cls}">
   <div class="wrap">
     <div class="eyebrow">{icon} {eyebrow_tag}</div>
-    <h1>{h1}</h1>
+    <h1>{h1_html}</h1>
     <p class="lead">{lead}</p>
-    <div class="hero-ctas">{TEXT_CTA}{CONTACT_CTA}</div>
+    <div class="hero-ctas">{CONTACT_CTA}</div>
   </div>
 </section>"""
-    body += market_context_section(market_heading, market_paragraphs, market_photo_seed, f"{label} (sample photo)")
-    body += info_cards(valued_title, valued_sub, valued_items, cols=2, raised=True)
+    body += market_context_section(market_heading, market_paragraphs, market_photo_seed, f"{label} (sample photo)", dark=market_dark, tight=market_tight)
+    body += info_cards(valued_title, valued_sub, valued_items, cols=2, raised=valued_raised, dark=valued_dark)
     body += middle_section
-    body += info_cards(dd_title, dd_sub, dd_items, cols=3, raised=False)
-    if faq:
-        body += faq_section(f"{label} Questions, Answered", faq)
+    if dd_as_steps:
+        dd_html = checklist_section(dd_title, dd_sub, dd_items, raised=False, dark=dd_dark)
+    else:
+        dd_html = info_cards(dd_title, dd_sub, dd_items, cols=3, raised=False, dark=dd_dark)
+    faq_html = faq_section(f"{label} Questions, Answered", faq, dark=faq_dark) if faq else ''
+    body += (faq_html + dd_html) if faq_before_dd else (dd_html + faq_html)
     rel = related_slugs or [c['slug'] for c in COMMERCIAL_CATEGORIES if c['slug'] != slug][:2]
-    body += commercial_cta_form(label, rel)
+    body += commercial_cta_form(label, rel, gradient=h1_gradient)
     write_page(
         path,
         f"{label} | Commercial Real Estate | Manan Bhullar",
@@ -2564,6 +2594,8 @@ dict(slug='farms-alr-land', label='Farms &amp; ALR Land', icon='\U0001F69C', tag
 ]
 
 for p in COMMERCIAL_PAGES:
+    # "Mostly black" theme, rolled out to all commercial category pages (approved on banquet-halls first).
+    _theme_b = True
     commercial_sub(
         f"/commercial/{p['slug']}/", p['label'], p['icon'], p['tag'], p['label'], p['lead'],
         p['m_heading'], p['m_paras'], p['m_photo'],
@@ -2572,7 +2604,16 @@ for p in COMMERCIAL_PAGES:
         f"{p['label'].replace('&amp;','&')} Due Diligence", "What to verify before you commit",
         p['dd_items'],
         faq=p['faq'],
-        related_slugs=p['related']
+        related_slugs=p['related'],
+        valued_raised=not _theme_b,
+        valued_dark=_theme_b,
+        dd_dark=False,
+        faq_dark=False,
+        market_dark=_theme_b,
+        faq_before_dd=False,
+        dd_as_steps=_theme_b,
+        market_tight=_theme_b,
+        h1_gradient=_theme_b
     )
 
 # ============================================================
@@ -2859,14 +2900,14 @@ contact_lead_form = lead_form(
     message_placeholder="Your Message (optional)"
 )
 contact_body += f"""<section class="content-section">
-  <div class="wrap two-col">
+  <div class="wrap two-col contact-two-col">
     <div>
       <h2>Contact Details</h2>
       <div class="point-list">
         <div class="point"><div class="dot">\U0001F4DE</div><div><strong>Phone</strong><span><a href="tel:+16047279542" style="color:var(--accent-deep);">(604) 727-9542</a></span></div></div>
         <div class="point"><div class="dot">\U0001F4CD</div><div><strong>Office</strong><span>201-2010 E 48th Ave, Vancouver, BC V5P 1R8</span></div></div>
         <div class="point"><div class="dot">\u2709\uFE0F</div><div><strong>Email</strong><span><a href="mailto:mb_realestate@outlook.com" style="color:var(--accent-deep);">mb_realestate@outlook.com</a></span></div></div>
-        <div class="point"><div class="dot">\U0001F3E2</div><div><strong>Service Area</strong><span>Surrey &amp; the Lower Mainland</span></div></div>
+        <div class="point"><div class="dot">\U0001F3E2</div><div><strong>Service Area</strong><span>Lower Mainland, BC</span></div></div>
       </div>
     </div>
     {contact_lead_form}

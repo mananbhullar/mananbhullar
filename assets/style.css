@@ -116,6 +116,11 @@
     filter:drop-shadow(0 2px 18px rgba(0,0,0,0.55)) drop-shadow(0 1px 3px rgba(0,0,0,0.65));
   }
   .hero-tagline{display:block;font-size:1.6rem;font-weight:600;color:#fff;margin-top:12px;letter-spacing:-0.01em;}
+  .gradient-text{
+    background:linear-gradient(100deg, #2563EB 0%, #4338CA 68%, #5B21B6 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 18px rgba(0,0,0,0.55)) drop-shadow(0 1px 3px rgba(0,0,0,0.65));
+  }
   .hero p.lead{margin:20px auto 0;font-size:1.05rem;color:#D8D6D2;max-width:46ch;}
   .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;justify-content:center;}
   .btn-solid-warm{
@@ -327,7 +332,7 @@
   @media (max-width:900px){.consult-grid{grid-template-columns:1fr;gap:36px;}.form-row{grid-template-columns:1fr;}}
 
   /* ---------- FOOTER ---------- */
-  .footer{background:var(--ink);color:#B9B7B2;padding:72px 0 32px;}
+  .footer{background:var(--ink);color:#B9B7B2;padding:72px 0 32px;margin-top:-1px;}
   .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;}
   .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
   .footer-brand .mark{
@@ -433,6 +438,7 @@
   position:relative;color:#fff;padding:64px 0 60px;text-align:center;
   background:linear-gradient(180deg, rgba(18,18,18,0.82), rgba(18,18,18,0.9)), linear-gradient(135deg,#2b2f36,#0d0e10);
 }
+.subhero.flat-dark{background:var(--ink);}
 .subhero .eyebrow{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18);color:#fff;margin-bottom:18px;}
 .subhero h1{font-size:2.5rem;color:#fff;max-width:22ch;margin:0 auto;}
 .subhero h1 .accent-warm{color:var(--accent);}
@@ -493,8 +499,10 @@
 
 .content-section{padding:80px 0;}
 .content-section.tight{padding:56px 0;}
+.content-section.dark.tight + .content-section.dark{margin-top:-1px;}
 .content-section.raised{background:var(--line-soft);}
 .content-section.dark{background:var(--ink);color:#fff;}
+.subhero + .content-section.dark{margin-top:-1px;}
 .content-section.dark.charcoal{background:#202020;}
 .content-section h2{font-size:1.9rem;}
 .content-section.dark h2{color:#fff;}
@@ -521,6 +529,7 @@
    (single class) whenever a .bio-photo image sits inside a .two-col -- this re-asserts it. */
 .two-col .bio-photo{aspect-ratio:3/4;background:linear-gradient(150deg,#3a3f47,#15171a);}
 @media (max-width:860px){.two-col{grid-template-columns:1fr;gap:28px;}}
+@media (max-width:860px){.contact-two-col .consult-form{order:-1;}}
 
 .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step-card{border:1px solid var(--line);background:var(--paper-raised);padding:26px;}
@@ -537,6 +546,9 @@
 .point strong{display:block;font-size:0.96rem;}
 .point span{display:block;font-size:0.86rem;color:var(--ink-soft);margin-top:4px;line-height:1.6;}
 .content-section.dark .point span{color:#C7C5C0;}
+.point-list-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;}
+.content-section:not(.dark) .point-list-grid .dot{background:transparent;border-color:rgba(18,18,18,0.35);}
+@media (max-width:700px){.point-list-grid{grid-template-columns:1fr;}}
 
 .grid-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .grid-cards.cols-2{grid-template-columns:1fr 1fr;}
