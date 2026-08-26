@@ -171,7 +171,7 @@
   .cat-strip-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:40px;align-items:center;}
   .cat-strip h3{color:#fff;font-size:1.5rem;max-width:20ch;}
   .cat-strip p{color:#B9B7B2;margin-top:12px;font-size:0.94rem;max-width:34ch;}
-  .cat-strip .hero-ctas{margin-top:20px;}
+  .cat-strip .hero-ctas{margin-top:20px;justify-content:flex-start;}
   .cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-column:span 2;}
   .cat-card{
     background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);
