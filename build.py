@@ -3069,7 +3069,7 @@ blog_idx_body = f"""<header class="subhero">
     {google_follow_card()}
   </div>
 </header>"""
-blog_idx_body += f"""<section class="content-section">
+blog_idx_body += f"""<section class="content-section dark">
   <div class="wrap">
     <div class="blog-toolbar">
       <input type="text" id="blogSearch" class="blog-search-input" placeholder="Search articles\u2026">
