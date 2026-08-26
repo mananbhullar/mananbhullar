@@ -2963,7 +2963,7 @@ ARTICLES = [
          title="Fraser Valley Real Estate Market Update \u2014 August 2026",
          desc="Benchmark prices, interest rates, and how the US-Canada tariff dispute is showing up in the Fraser Valley housing market right now.",
          tags=['Market Update', 'Interest Rates', 'Tariffs'],
-         img='blog-market-update-2026', img_id=864, featured=True),
+         img='blog-market-update-2026', img_real='/assets/photos/blog-market-update.jpg', featured=True),
     dict(slug='first-time-buyer-programs-bc', tag='Buying Guide',
          title="BC First-Time Buyer Programs, Explained",
          desc="A plain-language walkthrough of the PTT exemption, FHSA, and RRSP Home Buyers' Plan.",
@@ -2978,7 +2978,7 @@ ARTICLES = [
          title="Top 5 Neighbourhoods in Surrey for Families in 2026",
          desc="Where families are actually buying in Surrey right now, and what makes each of these five neighbourhoods work for raising kids.",
          tags=['Surrey', 'Family Homes'],
-         img='blog-surrey-family-neighbourhoods', img_id=259),
+         img='blog-surrey-family-neighbourhoods', img_real='/assets/photos/blog-surrey-neighbourhoods.jpg'),
     dict(slug='commercial-real-estate-trends-fraser-valley-2026', tag='Commercial Real Estate',
          title="Commercial Real Estate Trends in the Fraser Valley for 2026",
          desc="How tariffs, interest rates, and industrial demand are shaping commercial and industrial real estate across the Fraser Valley.",
@@ -3043,7 +3043,7 @@ ARTICLES = [
          title="How to Buy a Gas Station in BC: A Practical Guide for 2026",
          desc="What actually goes into underwriting and closing on a BC gas station, from fuel supply agreements to environmental due diligence.",
          tags=['Gas Stations', 'Commercial'],
-         img='blog-buy-gas-station', img_id=948),
+         img='blog-buy-gas-station', img_real='/assets/photos/blog-gas-station.jpg'),
     dict(slug='buying-a-motel-bc-due-diligence', tag='Commercial Real Estate',
          title="Buying a Motel in BC: Due Diligence Checklist",
          desc="The specific due-diligence items that matter most when underwriting a BC motel or small hotel purchase.",
@@ -3062,15 +3062,20 @@ ARTICLES = [
 ]
 
 def _photo_url(art, w, h):
+    if art.get('img_real'):
+        return art['img_real']
     if art.get('img_id'):
         return f"https://picsum.photos/id/{art['img_id']}/{w}/{h}"
     return f"https://picsum.photos/seed/{art['img']}/{w}/{h}"
+
+def _photo_alt(art):
+    return art['title'] if art.get('img_real') else f"{art['title']} (sample photo)"
 
 def _blog_card_html(art):
     tags_attr = ' '.join(art.get('tags', []))
     search_attr = f"{art['title']} {art['desc']} {tags_attr}".replace('"', '&quot;')
     return f"""<a class="blog-card" href="/updates/{art['slug']}/" data-blog-card data-category="{art['tag']}" data-search="{search_attr}">
-      <img class="thumb" src="{_photo_url(art, 500, 310)}" alt="{art['title']} (sample photo)" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
+      <img class="thumb" src="{_photo_url(art, 500, 310)}" alt="{_photo_alt(art)}" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
       <div class="body">
         <span class="tag">{art['tag']}</span>
         <strong>{art['title']}</strong>
@@ -3084,7 +3089,7 @@ _rest_arts = [a for a in ARTICLES if a is not _featured_art]
 
 _featured_search_attr = f"{_featured_art['title']} {_featured_art['desc']} {' '.join(_featured_art.get('tags', []))}".replace('"', '&quot;')
 featured_html = f"""<a class="featured-post" href="/updates/{_featured_art['slug']}/" data-blog-card data-category="{_featured_art['tag']}" data-search="{_featured_search_attr}">
-  <img class="thumb" src="{_photo_url(_featured_art, 700, 500)}" alt="{_featured_art['title']} (sample photo)" loading="lazy" width="700" height="500">
+  <img class="thumb" src="{_photo_url(_featured_art, 700, 500)}" alt="{_photo_alt(_featured_art)}" loading="lazy" width="700" height="500">
   <div class="body">
     <div class="pin-label">Featured</div>
     <span class="tag">{_featured_art['tag']}</span>
@@ -3141,7 +3146,7 @@ def article_page(art, body_html):
     <div class="article-tags">{tags_html}</div>
   </div>
 </header>
-<img class="article-hero-img" src="{_photo_url(art, 1200, 480)}" alt="{art['title']} (sample photo)" loading="lazy" width="1200" height="480">
+<img class="article-hero-img" src="{_photo_url(art, 1200, 480)}" alt="{_photo_alt(art)}" loading="lazy" width="1200" height="480">
 <section class="content-section">
   <div class="wrap article-layout">
     <div class="article-body">
