@@ -156,12 +156,14 @@
     transform:scaleX(0);transform-origin:left;transition:transform .22s ease;
   }
   .hero-secondary-link:hover::after{transform:scaleX(1);}
+  .mobile-break{display:none;}
   @media (max-width:760px){
     .hero{min-height:auto;}
     .hero-content{padding:100px 0 48px;}
     .hero-name{font-size:2.4rem;}
     .hero-tagline{font-size:1.2rem;}
     .hero-path-ctas{flex-direction:column;align-items:center;}
+    .mobile-break{display:inline;}
   }
 
   /* ---------- CATEGORY STRIP ---------- */
