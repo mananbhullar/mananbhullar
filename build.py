@@ -162,8 +162,8 @@ def simple_cards(title, sub, cards, cols=3, raised=True):
   </div>
 </section>"""
 
-def info_cards(title, sub, cards, cols=3, raised=True):
-    cls = 'raised' if raised else ''
+def info_cards(title, sub, cards, cols=3, raised=True, dark=False):
+    cls = 'dark' if dark else ('raised' if raised else '')
     grid_cls = 'grid-cards' if cols == 3 else f'grid-cards cols-{cols}'
     cards_html = ''
     for c in cards:
@@ -265,14 +265,15 @@ def step_section(title, sub, steps, raised=False):
   </div>
 </section>"""
 
-def faq_section(title, items):
+def faq_section(title, items, dark=False):
     items_html = ''
     for q, a in items:
         items_html += f"""<div class="faq-item">
         <button class="faq-q"><span>{q}</span><span class="chev">\u25BE</span></button>
         <div class="faq-a"><p>{a}</p></div>
       </div>"""
-    return f"""<section class="content-section">
+    cls = 'content-section dark' if dark else 'content-section'
+    return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center">
       <h2>{title}</h2>
@@ -2696,6 +2697,58 @@ for a in AREAS:
         crumbs(("Areas I Serve", "/communities/"), (a['name'], None)),
         body
     )
+
+# ============================================================
+# /marketing/
+# ============================================================
+marketing_body = subhero(
+    "Marketing Strategy",
+    'How Your Property Gets <span class="accent-warm">Marketed</span>',
+    "Manan holds a BBA in Marketing from SFU's Beedie School of Business — that background shapes a real, structured marketing plan behind every listing, not just an MLS® upload and a lawn sign.",
+    TEXT_CTA + EVAL_CTA
+)
+marketing_body += info_cards(
+    "The Marketing Plan Behind Every Listing",
+    "Five pieces that work together, scaled to fit the property and the market it's competing in.",
+    [
+        dict(icon="\U0001F4F8", title="Property Visuals", desc="Professional photography on every listing, with drone/aerial photography and walkthrough video added for larger or higher-value properties where the lot, layout, or setting benefits from it."),
+        dict(icon="\U0001F6CB", title="Staging &amp; Design", desc="A walkthrough before photography to flag what to declutter, depersonalize, or rearrange — and a referral to a professional stager when a vacant or awkwardly-furnished property needs it."),
+        dict(icon="\U0001F4F1", title="Social Media Marketing", desc="Every listing is promoted across social channels with property-specific content, not a single generic post — built to put the listing in front of active local buyers, not just past clients."),
+        dict(icon="\U0001F30D", title="Global Reach", desc="Beyond local promotion, listings are positioned to reach international buyer interest from India, China, and Europe — markets with an established history of investment in Fraser Valley and Lower Mainland real estate."),
+        dict(icon="\U0001F4CA", title="Strategic Pricing", desc="Pricing built from actual comparable sales and current absorption rates in the immediate area, not a round number — priced to attract genuine offers instead of sitting and going stale."),
+    ],
+    cols=3, dark=True
+)
+marketing_body += point_list_section(
+    True, "Global Reach", "Marketing Beyond the Local Market",
+    "Surrey and the Lower Mainland have long drawn real estate interest from international buyers, particularly from India, China, and across Europe. Manan's marketing approach accounts for that reality from the start — positioning a listing for the buyers actually active in this market, wherever they're searching from, rather than assuming every buyer is local.",
+    [
+        dict(icon="\U0001F1EE\U0001F1F3", title="South Asian Buyer Network", desc="Surrey has one of the largest South Asian communities in Canada — Manan's own network and community ties are a genuine asset when a listing is a strong fit for that buyer pool."),
+        dict(icon="\U0001F30F", title="Broader International Exposure", desc="Listings are syndicated to the international real estate portals and channels that reach active Chinese and European buyer audiences, alongside standard MLS® and Realtor-network distribution."),
+        dict(icon="\U0001F91D", title="Matched to the Right Listings", desc="Not every property benefits equally from international marketing — Manan will tell you plainly whether a listing is a strong fit for that exposure or whether local marketing is the better use of the budget."),
+    ],
+    img_first=False, img_seed='marketing-global-reach', img_alt="International real estate marketing"
+)
+marketing_body += faq_section("Marketing Questions, Answered", [
+    ("Does professional photography actually make a difference?", "Yes — buyers browse listing photos before they decide whether to even click in for details, let alone book a showing. Professional photography, and drone or video for properties where it adds real value, is standard on every listing Manan takes on, not an upsell."),
+    ("Do I need to stage my home to sell it?", "Not always. An occupied, well-kept, and reasonably decluttered home often doesn't need formal staging — a walkthrough with styling suggestions is usually enough. Vacant homes and awkward layouts benefit the most from professional staging, and Manan will say plainly when it's worth the cost versus when it isn't."),
+    ("How does international marketing actually reach buyers overseas?", "Through a combination of international listing syndication, Manan's own network within Surrey's South Asian community, and targeted digital promotion. It's a supplement to strong local marketing, not a replacement for it — most buyers for most properties are still local or regional."),
+    ("How is my home's asking price actually determined?", "From a comparative market analysis of recently sold and currently active comparable properties in your immediate area — adjusted for condition, lot, and finishes — not a formula or an automated online estimate. Manan will walk through the actual comparables with you before you set a number."),
+    ("What social media platforms are listings promoted on?", "Promotion is tailored to the property and the audience most likely to be searching for it, rather than a single fixed platform list for every listing — Manan will walk you through the specific plan for your property before it goes live."),
+    ("Does more marketing spend always mean a better sale price?", "No — pricing and condition drive the outcome far more than marketing spend alone. Strong marketing matters because it makes sure the right buyers actually see a well-priced, well-presented property; it can't fix a property that's priced above what the comparables support."),
+], dark=True)
+marketing_body += cta_band(
+    'See the Plan for <span class="accent-warm">Your Property</span>',
+    "Every marketing plan is built around the specific property — book a free home evaluation to see what Manan would propose for yours.",
+    TEXT_CTA + EVAL_CTA
+)
+write_page(
+    '/marketing/',
+    "Marketing Strategy | Manan Bhullar Real Estate",
+    "Professional photography, staging, social media, international buyer reach, and strategic pricing — the marketing plan behind every Manan Bhullar listing.",
+    crumbs(("Marketing", None)),
+    marketing_body
+)
 
 # ============================================================
 # /why-manan/ (formerly split across /about/ + /why-manan/ -- merged into one

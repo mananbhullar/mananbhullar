@@ -494,6 +494,12 @@
 .content-head.center{margin:0 auto 44px;text-align:center;}
 .content-head p{color:var(--ink-soft);margin-top:12px;font-size:0.98rem;}
 .content-section.dark .content-head p{color:#C7C5C0;}
+.content-section.dark .simple-card{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
+.content-section.dark .simple-card strong{color:#fff;}
+.content-section.dark .simple-card span:not(.card-icon){color:#C7C5C0;}
+.content-section.dark .faq-item{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
+.content-section.dark .faq-q{color:#fff;}
+.content-section.dark .faq-a p{color:#C7C5C0;}
 
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .two-col > *{min-width:0;}

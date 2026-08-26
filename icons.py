@@ -80,6 +80,10 @@ ICON_PATHS = {
     'graduation-cap': '<path d="M2 9 12 4l10 5-10 5-10-5Z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/>',
     'lightbulb': '<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/>',
     'cart': '<circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2.5l2.6 12.4a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L21 8H6.5"/>',
+    'camera': '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.4-2.6a1 1 0 0 1 .9-.5h3.4a1 1 0 0 1 .9.5L16 7"/><circle cx="12" cy="13.5" r="4"/>',
+    'couch': '<path d="M5 12V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M3 12h18v5.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V12Z"/><path d="M5 18.5v2M19 18.5v2"/>',
+    'mobile': '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 19h3"/>',
+    'train': '<rect x="5" y="3" width="14" height="13" rx="4"/><path d="M5 11h14"/><circle cx="9" cy="14" r="0.1"/><circle cx="15" cy="14" r="0.1"/><path d="M8 20l-2 2M16 20l2 2"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="15.5" cy="7.5" r="1"/>',
 }
 
 def icon_svg(name):
@@ -119,6 +123,10 @@ EMOJI_ICON = [
     ('\U0001F4BC', 'briefcase'), ('\U0001F310', 'globe'), ('\U0001F3D7', 'construction'),
     ('\U0001F6B6', 'pedestrian'), ('\U0001F6AC', 'smoking'), ('\U0001F321', 'thermometer'),
     ('\U0001F414', 'wheat'), ('\U0001F393', 'graduation-cap'),
+    ('\U0001F1EE\U0001F1F3', 'users'),
+    ('\U0001F4F8', 'camera'), ('\U0001F6CB', 'couch'), ('\U0001F4F1', 'mobile'),
+    ('\U0001F30D', 'globe'), ('\U0001F30F', 'globe'),
+    ('\U0001F689', 'train'),
 ]
 
 def apply_icons(html):
