@@ -1319,6 +1319,34 @@ AREA_GROUPS = {
     'Prince George': ['prince-george'],
 }
 SLUG_TO_GROUP = {slug: group for group, slugs in AREA_GROUPS.items() for slug in slugs}
+# Real city-center coordinates for the hero/area-page Realtor.ca deep-link search dropdown.
+GROUP_COORDS = [
+    ("Delta", "49.0847,-123.0587"),
+    ("Surrey", "49.1913,-122.8490"),
+    ("Langley", "49.1042,-122.6604"),
+    ("South Surrey / White Rock", "49.0189,-122.8025"),
+    ("Burnaby", "49.2488,-122.9805"),
+    ("Coquitlam", "49.2838,-122.7932"),
+    ("Port Coquitlam", "49.2626,-122.7811"),
+    ("Port Moody", "49.2838,-122.8519"),
+    ("Pitt Meadows", "49.2213,-122.6892"),
+    ("New Westminster", "49.2057,-122.9110"),
+    ("Vancouver", "49.2827,-123.1207"),
+    ("North Vancouver", "49.3200,-123.0724"),
+    ("West Vancouver", "49.3280,-123.1598"),
+    ("Richmond", "49.1666,-123.1336"),
+    ("Abbotsford", "49.0504,-122.3045"),
+    ("Maple Ridge", "49.2193,-122.6019"),
+    ("Mission", "49.1337,-122.3255"),
+    ("Chilliwack", "49.1579,-121.9514"),
+    ("Hope", "49.3831,-121.4416"),
+    ("Harrison Hot Springs", "49.3003,-121.7857"),
+    ("Kelowna", "49.8880,-119.4960"),
+    ("Kamloops", "50.6745,-120.3273"),
+    ("Williams Lake", "52.1417,-122.1417"),
+    ("Prince George", "53.9171,-122.7497"),
+]
+GROUP_COORD_MAP = dict(GROUP_COORDS)
 GROUP_NEIGHBORS = {
     'Surrey': ['Delta', 'Langley', 'South Surrey / White Rock', 'New Westminster'],
     'South Surrey / White Rock': ['Surrey', 'Delta', 'Langley'],
@@ -2560,24 +2588,15 @@ write_page(
 for a in AREAS:
     others = related_area_cards(a['slug'])
     tags_html = ''.join(f'<span>{t}</span>' for t in a.get('tags', []))
+    _area_group = SLUG_TO_GROUP.get(a['slug'])
+    _area_coord = GROUP_COORD_MAP.get(_area_group, GROUP_COORD_MAP['Surrey'])
+    _area_options_html = ''.join(
+        f'<option value="{coord}"{" selected" if group == _area_group else ""}>{group}</option>'
+        for group, coord in GROUP_COORDS
+    )
     _area_search_html = f"""<div class="hero-search">
         <select id="areaHeroSearch">
-          <option value="49.1913,-122.8490">All Fraser Valley</option>
-          <option value="49.0847,-123.0587">Delta</option>
-          <option value="49.1913,-122.8490">Surrey</option>
-          <option value="49.1042,-122.6604">Langley</option>
-          <option value="49.0189,-122.8025">White Rock / South Surrey</option>
-          <option value="49.2488,-122.9805">Burnaby</option>
-          <option value="49.2838,-122.7932">Coquitlam</option>
-          <option value="49.2057,-122.9110">New Westminster</option>
-          <option value="49.2827,-123.1207">Vancouver</option>
-          <option value="49.3200,-123.0724">North Vancouver</option>
-          <option value="49.3280,-123.1598">West Vancouver</option>
-          <option value="49.1666,-123.1336">Richmond</option>
-          <option value="49.0504,-122.3045">Abbotsford</option>
-          <option value="49.2193,-122.6019">Maple Ridge</option>
-          <option value="49.1337,-122.3255">Mission</option>
-          <option value="49.1579,-121.9514">Chilliwack</option>
+{_area_options_html}
         </select>
         <button type="button" data-realtor-search="areaHeroSearch">\U0001F50D Search</button>
       </div>"""
@@ -2591,7 +2610,7 @@ for a in AREAS:
         "Areas I Serve",
         a['name'],
         a['note'] + ".",
-        TEXT_CTA + CONTACT_CTA + _area_search_html + _stat_bar_html
+        CONTACT_CTA + _area_search_html + _stat_bar_html
     )
     # picsum seeds are opaque hashes, not content-aware -- "surrey" happened to hash to an
     # unrelated astronaut/spacewalk stock photo, so it needs a pinned override (see also index.html's
