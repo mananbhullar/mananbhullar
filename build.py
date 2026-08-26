@@ -289,14 +289,19 @@ def faq_section(title, items, dark=False, raised=False, charcoal=False):
   </div>
 </section>"""
 
-def community_grid_section(title, sub, areas, charcoal=False):
+def community_grid_section(title, sub, areas, charcoal=False, dark=False):
     cards = ''
     for a in areas:
         cards += f"""<a class="community-card" href="{a['href']}">
         <div><div class="name">{a['name']}</div><div class="note">{a['note']}</div></div>
         <span class="arrow">\u2192</span>
       </a>"""
-    cls = 'content-section dark charcoal' if charcoal else 'content-section raised'
+    if charcoal:
+        cls = 'content-section dark charcoal'
+    elif dark:
+        cls = 'content-section dark'
+    else:
+        cls = 'content-section raised'
     return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center"><h2>{title}</h2><p>{sub}</p></div>
@@ -2658,7 +2663,7 @@ for a in AREAS:
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
     if a.get('area_faq'):
-        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'], charcoal=True)
+        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'])
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
@@ -2700,13 +2705,13 @@ for a in AREAS:
             if _sub:
                 _pill_html += f'<a class="guide-pill" href="/communities/{ss}/"><span>{_sub["name"]}</span><span class="arrow">→</span></a>'
         if _pill_html:
-            body += f"""<section class="guides-section">
+            body += f"""<section class="guides-section dark">
   <div class="wrap">
     <div class="content-head center"><h2>Neighbourhood Guides</h2><p>In-depth pages for specific {a['name'] if a['slug'] == _group_slugs[0] else _current_group} communities.</p></div>
     <div class="guide-pills">{_pill_html}</div>
   </div>
 </section>"""
-    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, charcoal=True)
+    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
     body += cta_band(
         f'Thinking About {a["name"]}?',
         "Manan can share more on pricing, inventory, and what to expect in this market.",

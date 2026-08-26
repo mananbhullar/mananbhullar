@@ -488,6 +488,12 @@
 }
 .guide-pill:hover{border-color:var(--accent);color:var(--accent-deep);}
 .guide-pill .arrow{color:var(--accent-deep);font-family:var(--sans);}
+.guides-section.dark{background:var(--ink);color:#fff;}
+.guides-section.dark h2{color:#fff;}
+.guides-section.dark .content-head p{color:#C7C5C0;}
+.guides-section.dark .guide-pill{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);color:#fff;}
+.guides-section.dark .guide-pill:hover{border-color:var(--accent-on-dark);color:var(--accent-on-dark);}
+.guides-section.dark .guide-pill .arrow{color:var(--accent-on-dark);}
 
 .content-section{padding:80px 0;}
 .content-section.tight{padding:56px 0;}
