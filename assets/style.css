@@ -391,11 +391,24 @@
   .mega-list .txt strong{display:block;font-size:0.92rem;font-weight:600;color:var(--ink);}
   .mega-list .txt span{display:block;font-size:0.78rem;color:var(--ink-soft);margin-top:2px;}
   .mega-list a:hover .txt strong{color:var(--accent-deep);}
+  .mega-list--plain a{display:block;font-size:0.92rem;font-weight:600;color:var(--ink);padding:2px 0;}
+  .mega-list--plain a:hover{color:var(--accent-deep);}
+  .mega-viewall{display:block;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:0.82rem;font-weight:600;color:var(--accent-deep);}
+
+  /* Anchored dropdown variant -- narrower, positioned under its own trigger
+     instead of the full-viewport-width mega bar used elsewhere. */
+  .mega--anchored{
+    position:absolute;left:0;right:auto;top:calc(100% + 14px);border:1px solid var(--line);
+  }
+  .mega--anchored .mega-inner{max-width:none;margin:0;padding:24px;display:block;width:280px;}
+  .mega--anchored.mega--cols-2 .mega-inner{display:grid;grid-template-columns:1fr 1fr;gap:28px;width:560px;}
+  .mega--anchored .mega-col-head{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-family:var(--sans);padding-bottom:10px;margin-bottom:12px;}
 
   @media (max-width:900px){
     .mega{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;display:none;transition:none;}
     .nav-item.open .mega{display:block;}
     .mega-inner{grid-template-columns:1fr;padding:24px;gap:28px;}
+    .mega--anchored .mega-inner, .mega--anchored.mega--cols-2 .mega-inner{width:auto;grid-template-columns:1fr;}
   }
 
 /* ---------- SUBPAGE SHARED PATTERNS ---------- */
