@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "static-site",
-      "runtimeExecutable": "python3",
+      "runtimeExecutable": "/usr/bin/python3",
       "runtimeArgs": ["/Users/mananbhullar/Downloads/MANAN WEBSITE/.claude/serve.py"],
-      "port": 8080
+      "port": 8080,
+      "autoPort": true
     }
   ]
 }
