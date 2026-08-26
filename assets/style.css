@@ -105,14 +105,14 @@
 
   /* ---------- HERO: full-bleed with search ---------- */
   .hero{
-    position:relative;min-height:62vh;display:flex;align-items:center;
+    position:relative;min-height:74vh;display:flex;align-items:center;
     background:
       linear-gradient(180deg, rgba(18,18,18,0.72) 0%, rgba(18,18,18,0.55) 45%, rgba(18,18,18,0.82) 100%),
       linear-gradient(120deg, #2b2f36 0%, #14161a 60%, #0d0e10 100%);
     background-size:cover;background-position:center;
     color:#fff;overflow:hidden;
   }
-  .hero-content{position:relative;z-index:2;padding:88px 0 48px;width:100%;text-align:center;}
+  .hero-content{position:relative;z-index:2;padding:104px 0 56px;width:100%;text-align:center;}
   .hero h1{margin:0 auto;max-width:28ch;}
   .hero-name{
     display:block;font-size:3.4rem;font-weight:800;letter-spacing:-0.02em;line-height:1.1;
@@ -231,10 +231,11 @@
   @media (max-width:600px){.guides-grid{grid-template-columns:1fr;}}
 
   /* ---------- AREAS SERVED ---------- */
-  .areas{padding:100px 0;}
+  .areas{padding:100px 0;background:var(--ink);}
   .areas-head{text-align:center;max-width:52ch;margin:0 auto 56px;}
-  .areas-head h2{font-size:2.1rem;}
-  .areas-head p{color:var(--ink-soft);margin-top:14px;font-size:1rem;}
+  .areas-head h2{font-size:2.1rem;color:#fff;}
+  .areas-head p{color:#B8B6B0;margin-top:14px;font-size:1rem;}
+  .areas-cta .btn-outline-dark{border-color:rgba(255,255,255,0.5);color:#fff;}
   .areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .area-card{
     position:relative;aspect-ratio:4/3;overflow:hidden;
