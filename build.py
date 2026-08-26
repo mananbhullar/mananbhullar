@@ -3,6 +3,11 @@ import hashlib
 from icons import apply_icons
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Google Maps Embed API key -- get one free at https://console.cloud.google.com/
+# Enable "Maps Embed API", create a key, restrict to mananbhullar.com/*, paste here.
+# Leave empty to skip map embeds.
+GOOGLE_MAPS_KEY = "AIzaSyD-SmCc6jn7X2w2IUI6P0lk90c5KVOUBZo"
 NAV = open(os.path.join(ROOT, 'assets/_nav.html')).read().strip()
 FOOTER = open(os.path.join(ROOT, 'assets/_footer.html')).read().strip()
 # Cache-busting query string for style.css, derived from the file's own content so it only
@@ -361,6 +366,7 @@ print("helpers ready")
 # ============================================================
 AREAS = [
     dict(slug='surrey', name='Surrey', note='BC\'s second-largest city',
+         stats={'population': '732,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
          tags=['SkyTrain Connectivity', 'Cultural Diversity', 'Growing Tech Hub'],
          desc="Surrey is British Columbia's second-largest city, offering diverse neighbourhoods, excellent transit connectivity, and a booming local economy. From established family neighbourhoods to rapidly densifying town centres, Surrey covers an enormous range of housing types and price points.",
          schools=["SFU Surrey and KPU Civic Plaza campuses in City Centre", "School District 36 Surrey \u2014 the province's largest, with 50+ elementary and nearly 30 secondary schools"],
@@ -437,6 +443,7 @@ AREAS = [
             ("What areas make up Surrey's industrial corridor?", "Campbell Heights is the flagship large-format industrial park, alongside established industrial land around Cloverdale and the Highway 10 corridor \u2014 see Manan's dedicated Industrial &amp; Warehouse commercial page for full detail on this market."),
          ]),
     dict(slug='delta', name='Delta', note='Three distinct communities',
+         stats={'population': '115,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
          tags=['Waterfront Living', 'BC Ferries Terminal', 'Ladner & Tsawwassen'],
          desc="Delta is a diverse municipality comprising three distinct communities — Ladner, Tsawwassen, and North Delta — offering everything from waterfront living and rural acreages to the Tsawwassen ferry terminal connecting to Vancouver Island.",
          schools=["Delta School District (SD37) \u2014 24 elementary and 7 secondary schools, including District French Immersion"],
@@ -444,6 +451,7 @@ AREAS = [
          entertainment=["Restaurants in Ladner Village and dining at Tsawwassen Mills"],
          shopping=["Ladner Village shops", "Tsawwassen Mills and Tsawwassen Commons"]),
     dict(slug='langley', name='Langley', note='Small-town charm, modern amenities',
+         stats={'population': '198,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
          tags=['Fort Langley Heritage', 'Wine Country', 'Equestrian Community'],
          desc="Langley combines small-town charm with modern amenities, featuring the historic Fort Langley village, an established wine and agritourism scene, and a strong equestrian community alongside newer master-planned residential development.",
          schools=["School District 35 Langley covers all of Langley Township and City", "Willoughby's newer schools include Lynn Fripps, Richard Bulpitt, and Yorkson Creek Middle \u2014 confirm your specific catchment with SD35"],
@@ -456,6 +464,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Langley", "Restaurants in Fort Langley's historic village and Willoughby Town Centre"]),
     dict(slug='burnaby', name='Burnaby', note='Geographic centre of Metro Vancouver',
+         stats={'population': '310,000+', 'benchmark': '$1,011,900', 'benchmark_label': 'Composite Benchmark (REBGV 2026)'},
          tags=['Metrotown', 'SFU & BCIT', 'SkyTrain Lines'],
          desc="Burnaby sits at the geographic centre of Metro Vancouver, offering everything from Metrotown's high-rise energy to quieter, tree-lined family neighbourhoods, with two major universities (SFU and BCIT) and extensive SkyTrain coverage.",
          schools=["Burnaby South Secondary (IB Diploma Programme &amp; French Immersion)", "Simon Fraser University (Burnaby Mountain campus)", "British Columbia Institute of Technology (BCIT)", "School District 41 Burnaby covers the whole city \u2014 elementary catchment depends on exact address"],
@@ -468,6 +477,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Metropolis at Metrotown", "Cineplex VIP Cinemas &amp; The Rec Room (bowling, arcade, dining) at The Amazing Brentwood"]),
     dict(slug='coquitlam', name='Coquitlam', note='SkyTrain-connected, mountain-backed',
+         stats={'population': '160,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
          tags=['Evergreen SkyTrain Line', 'Coquitlam Centre', 'Lafarge Lake'],
          desc="Coquitlam pairs SkyTrain-connected town centres with mountain-backed family neighbourhoods, from Burquitlam's newer towers to the established communities around Lafarge Lake and Westwood Plateau.",
          shopping=["Coquitlam Centre Mall (200+ shops, restaurants, and services)", "Austin Heights, Sunwood Square, and Burquitlam Plaza shopping areas", "Como Lake Village and Pinetree Village"],
@@ -500,12 +510,14 @@ AREAS = [
          ],
          entertainment=["Restaurants throughout Uptown and along Columbia Street"]),
     dict(slug='vancouver', name='Vancouver', note="BC's largest city",
+         stats={'population': '700,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
          tags=['Diverse Neighbourhoods', 'Downtown Core', 'Transit-Connected'],
          desc="Vancouver real estate spans an enormous range, from dense downtown condo towers and Yaletown lofts to established west-side neighbourhoods like Shaughnessy and Point Grey, plus east-side communities like Mount Pleasant — each with its own character, price point, and community feel.",
          area_faq=[
             ("Does Manan work in Vancouver specifically, or mainly the Fraser Valley?", "Manan is a licensed BC REALTOR® who works with buyers and sellers across the Lower Mainland, including Vancouver and all of its neighbourhoods. Given how varied Vancouver's dozens of communities are, it's worth a direct conversation about the specific area you're considering."),
          ]),
     dict(slug='north-vancouver', name='North Vancouver', note='Mountains meet the waterfront',
+         stats={'population': '170,000+', 'benchmark': '$779,700', 'benchmark_label': 'Condo Benchmark (REBGV 2026)'},
          tags=['North Shore Mountains', 'Lonsdale Quay', 'SeaBus Connected'],
          desc="North Vancouver spans the City and District of North Vancouver on the North Shore, from the urban waterfront energy of Lower Lonsdale and the SeaBus terminal to mountain-backed family neighbourhoods in Lynn Valley, Edgemont Village, and Deep Cove.",
          schools=["Carson Graham Secondary (IB World School — Middle Years and Diploma Programmes)", "Handsworth Secondary (North Vancouver's largest, ~1,600 students)", "Sutherland Secondary", "Seycove Secondary (Deep Cove area)", "Windsor Secondary", "Argyle Secondary", "SD44 North Vancouver serves the whole district"],
@@ -517,6 +529,7 @@ AREAS = [
          ],
          entertainment=["Lonsdale Quay Market food hall", "Restaurants and cafés along Lonsdale Avenue", "Deep Cove's waterfront cafés (Arms Reach Bistro, Deep Cove Pizza)"]),
     dict(slug='west-vancouver', name='West Vancouver', note="Metro Vancouver's premium North Shore",
+         stats={'population': '46,000+', 'benchmark': '$3,060,000', 'benchmark_label': 'Detached Benchmark (REBGV 2026)'},
          tags=['Waterfront Living', 'Park Royal', 'Cypress Mountain'],
          desc="West Vancouver is one of Metro Vancouver's most established luxury residential communities, stretching along the North Shore waterfront from Ambleside and Dundarave through the British Properties and out to Horseshoe Bay's BC Ferries terminal.",
          schools=["Rockridge Secondary (IB Middle Years Programme, Advanced Placement)", "Sentinel Secondary (French Immersion, Advanced Placement, ~1,160 students)", "West Vancouver Secondary (IB Diploma, Arts, Trades)", "West Vancouver Schools (SD45) — 14 elementary and 3 secondary schools district-wide"],
@@ -583,6 +596,7 @@ AREAS = [
          ],
          entertainment=["South Granville's restaurants and galleries", "VanDusen Festival of Lights (seasonal)", "Queen Elizabeth Park's Seasons in the Park restaurant"]),
     dict(slug='richmond', name='Richmond', note='Historic charm meets urban energy',
+         stats={'population': '225,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
          tags=['Steveston Village', 'Canada Line', 'YVR Access'],
          desc="Richmond pairs the historic charm of Steveston Village with City Centre's urban energy along the Canada Line, plus proximity to YVR and Highway 99 — a diverse, well-connected city on the Fraser River delta.",
          schools=["Steveston-London Secondary (public, grades 8-12)", "School District 38 Richmond serves the whole city \u2014 confirm your specific catchment"],
@@ -611,6 +625,7 @@ AREAS = [
          entertainment=["Restaurants along the Harris Road commercial strip"],
          shopping=["Pitt Meadows' town centre shops along Harris Road"]),
     dict(slug='abbotsford', name='Abbotsford', note="'City in the Country'",
+         stats={'population': '160,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
          tags=['Mountain Views', 'University Town', 'International Airport'],
          desc="Known as the 'City in the Country,' Abbotsford offers mountain views and relatively more affordable housing than Vancouver, alongside a growing urban centre, University of the Fraser Valley, and its own international airport.",
          schools=["Abbotsford Senior Secondary", "Robert Bateman Secondary", "University of the Fraser Valley (UFV)", "SD34 Abbotsford runs 46 schools \u2014 note that popular schools like Yale and Robert Bateman restrict non-catchment enrolment when over capacity, so confirm your specific catchment"],
@@ -2544,11 +2559,38 @@ write_page(
 for a in AREAS:
     others = related_area_cards(a['slug'])
     tags_html = ''.join(f'<span>{t}</span>' for t in a.get('tags', []))
+    _area_search_html = f"""<div class="hero-search">
+        <select id="areaHeroSearch">
+          <option value="49.1913,-122.8490">All Fraser Valley</option>
+          <option value="49.0847,-123.0587">Delta</option>
+          <option value="49.1913,-122.8490">Surrey</option>
+          <option value="49.1042,-122.6604">Langley</option>
+          <option value="49.0189,-122.8025">White Rock / South Surrey</option>
+          <option value="49.2488,-122.9805">Burnaby</option>
+          <option value="49.2838,-122.7932">Coquitlam</option>
+          <option value="49.2057,-122.9110">New Westminster</option>
+          <option value="49.2827,-123.1207">Vancouver</option>
+          <option value="49.3200,-123.0724">North Vancouver</option>
+          <option value="49.3280,-123.1598">West Vancouver</option>
+          <option value="49.1666,-123.1336">Richmond</option>
+          <option value="49.0504,-122.3045">Abbotsford</option>
+          <option value="49.2193,-122.6019">Maple Ridge</option>
+          <option value="49.1337,-122.3255">Mission</option>
+          <option value="49.1579,-121.9514">Chilliwack</option>
+        </select>
+        <button type="button" data-realtor-search="areaHeroSearch">\U0001F50D Search</button>
+      </div>"""
+    _stats = a.get('stats')
+    _stat_bar_html = ''
+    if _stats:
+        _stat_items = f'<div class="stat-item"><div class="stat-value">{_stats["population"]}</div><div class="stat-label">Population</div></div>'
+        _stat_items += f'<div class="stat-item"><div class="stat-value">{_stats["benchmark"]}</div><div class="stat-label">{_stats["benchmark_label"]}</div></div>'
+        _stat_bar_html = f'<div class="hero-stat-bar">{_stat_items}</div>'
     body = subhero(
         "Areas I Serve",
         a['name'],
         a['note'] + ".",
-        TEXT_CTA + CONTACT_CTA
+        TEXT_CTA + CONTACT_CTA + _area_search_html + _stat_bar_html
     )
     # picsum seeds are opaque hashes, not content-aware -- "surrey" happened to hash to an
     # unrelated astronaut/spacewalk stock photo, so it needs a pinned override (see also index.html's
@@ -2556,19 +2598,55 @@ for a in AREAS:
     _picsum_seed_overrides = {"surrey": "surrey-lowermainland"}
     _photo_seed = _picsum_seed_overrides.get(a['slug'], a['slug'])
     area_photo_src = REAL_PHOTOS.get(f"area-{a['slug']}", (f"https://picsum.photos/seed/{_photo_seed}/800/600", 800, 600))
+    # Amenities strip -- icon-based at-a-glance summary
+    _amenity_items = []
+    if a.get('schools'):   _amenity_items.append(('\U0001F3EB', 'Schools'))
+    if a.get('shopping'):  _amenity_items.append(('\U0001F6D2', 'Shopping'))
+    if a.get('entertainment'): _amenity_items.append(('\U0001F37D\ufe0f', 'Dining'))
+    if a.get('recreation'): _amenity_items.append(('\U0001F3DE\ufe0f', 'Parks &amp; Recreation'))
+    for tag in a.get('tags', []):
+        tl = tag.lower()
+        if 'skytrain' in tl or 'seabus' in tl or 'transit' in tl or 'canada line' in tl or 'west coast express' in tl:
+            _amenity_items.append(('\U0001F689', tag))
+            break
+    _amenities_html = ''.join(f'<div class="amenity-item"><span class="a-icon">{ic}</span>{lb}</div>' for ic, lb in _amenity_items) if _amenity_items else ''
+
     body += f"""<section class="content-section" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
       <h2>About {a['name']}</h2>
       <p style="color:var(--ink-soft);margin-top:14px;">{a['desc']}</p>
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
-      <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;"><a class="btn-outline-dark" href="/property-search/">Search Properties in {a['name']} \u2192</a><a class="btn-outline-dark" href="/contact/">Ask Manan About {a['name']} \u2192</a></div>
+      {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
     <img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}" alt="{a['name']} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">
   </div>
 </section>"""
+    if GOOGLE_MAPS_KEY:
+        _map_q = f"{a['name']}, BC, Canada".replace(' ', '+').replace('&amp;', '%26')
+        body += f"""<section class="content-section tight" style="padding:32px 0 40px;">
+  <div class="wrap"><iframe class="area-map" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" width="100%" height="340" style="border:0;width:100%;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+</section>"""
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
+    # Neighbourhood Guides pills -- for cities whose AREA_GROUPS entry has
+    # sub-area slugs beyond the current page itself
+    _current_group = SLUG_TO_GROUP.get(a['slug'])
+    _group_slugs = AREA_GROUPS.get(_current_group, []) if _current_group else []
+    _sub_slugs = [s for s in _group_slugs if s != a['slug']]
+    if _sub_slugs:
+        _pill_html = ''
+        for ss in _sub_slugs:
+            _sub = _AREA_CARD_BY_SLUG.get(ss)
+            if _sub:
+                _pill_html += f'<a class="guide-pill" href="/communities/{ss}/"><span>{_sub["name"]}</span><span class="arrow">\u2192</span></a>'
+        if _pill_html:
+            body += f"""<section class="guides-section raised">
+  <div class="wrap">
+    <div class="content-head center"><h2>Neighbourhood Guides</h2><p>In-depth pages for specific {a['name'] if a['slug'] == _group_slugs[0] else _current_group} communities.</p></div>
+    <div class="guide-pills">{_pill_html}</div>
+  </div>
+</section>"""
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
