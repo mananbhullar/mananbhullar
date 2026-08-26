@@ -493,6 +493,7 @@
 .content-section.tight{padding:56px 0;}
 .content-section.raised{background:var(--line-soft);}
 .content-section.dark{background:var(--ink);color:#fff;}
+.content-section.dark.charcoal{background:#202020;}
 .content-section h2{font-size:1.9rem;}
 .content-section.dark h2{color:#fff;}
 .content-section.dark .eyebrow{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18);color:#fff;}
@@ -506,6 +507,10 @@
 .content-section.dark .faq-item{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
 .content-section.dark .faq-q{color:#fff;}
 .content-section.dark .faq-a p{color:#C7C5C0;}
+.content-section.dark .community-card{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
+.content-section.dark .community-card .name{color:#fff;}
+.content-section.dark .community-card .note{color:#C7C5C0;}
+.content-section.dark .community-card .arrow{color:var(--accent-on-dark);}
 
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .two-col > *{min-width:0;}

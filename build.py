@@ -265,14 +265,21 @@ def step_section(title, sub, steps, raised=False):
   </div>
 </section>"""
 
-def faq_section(title, items, dark=False, raised=False):
+def faq_section(title, items, dark=False, raised=False, charcoal=False):
     items_html = ''
     for q, a in items:
         items_html += f"""<div class="faq-item">
         <button class="faq-q"><span>{q}</span><span class="chev">\u25BE</span></button>
         <div class="faq-a"><p>{a}</p></div>
       </div>"""
-    cls = 'content-section dark' if dark else ('content-section raised' if raised else 'content-section')
+    if charcoal:
+        cls = 'content-section dark charcoal'
+    elif dark:
+        cls = 'content-section dark'
+    elif raised:
+        cls = 'content-section raised'
+    else:
+        cls = 'content-section'
     return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center">
@@ -282,14 +289,15 @@ def faq_section(title, items, dark=False, raised=False):
   </div>
 </section>"""
 
-def community_grid_section(title, sub, areas):
+def community_grid_section(title, sub, areas, charcoal=False):
     cards = ''
     for a in areas:
         cards += f"""<a class="community-card" href="{a['href']}">
         <div><div class="name">{a['name']}</div><div class="note">{a['note']}</div></div>
         <span class="arrow">\u2192</span>
       </a>"""
-    return f"""<section class="content-section raised">
+    cls = 'content-section dark charcoal' if charcoal else 'content-section raised'
+    return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center"><h2>{title}</h2><p>{sub}</p></div>
     <div class="community-grid">{cards}</div>
@@ -2650,7 +2658,7 @@ for a in AREAS:
     if a.get('schools') or a.get('shopping') or a.get('recreation'):
         body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
     if a.get('area_faq'):
-        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'], raised=True)
+        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'], charcoal=True)
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
@@ -2698,7 +2706,7 @@ for a in AREAS:
     <div class="guide-pills">{_pill_html}</div>
   </div>
 </section>"""
-    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others)
+    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, charcoal=True)
     body += cta_band(
         f'Thinking About {a["name"]}?',
         "Manan can share more on pricing, inventory, and what to expect in this market.",
