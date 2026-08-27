@@ -107,11 +107,13 @@ def write_page(path, title, meta_desc, crumb_html, body):
 
 # ---------- Reusable body-fragment builders ----------
 
-def subhero(eyebrow, h1, lead, ctas=None):
+def subhero(eyebrow, h1, lead, ctas=None, flat_dark=False):
     ctas_html = ctas or ''
-    return f"""<header class="subhero">
+    cls = 'subhero flat-dark' if flat_dark else 'subhero'
+    eyebrow_html = f'<div class="eyebrow">{eyebrow}</div>' if eyebrow else ''
+    return f"""<header class="{cls}">
   <div class="wrap">
-    <div class="eyebrow">{eyebrow}</div>
+    {eyebrow_html}
     <h1>{h1}</h1>
     <p class="lead">{lead}</p>
     <div class="hero-ctas">{ctas_html}</div>
@@ -138,8 +140,8 @@ def cta_band(heading, sub, ctas):
   </div>
 </section>"""
 
-def simple_cards(title, sub, cards, cols=3, raised=True):
-    cls = 'raised' if raised else ''
+def simple_cards(title, sub, cards, cols=3, raised=True, dark=False):
+    cls = 'dark' if dark else ('raised' if raised else '')
     grid_cls = 'grid-cards' if cols == 3 else f'grid-cards cols-{cols}'
     cards_html = ''
     for c in cards:
@@ -190,7 +192,7 @@ def lead_form(title, subject, extra_fields='', message_placeholder='Your Message
     note_html = f'<p class="form-disclaimer">{note}</p>' if note else ''
     return f"""<form class="consult-form" action="{FORMSPREE_ENDPOINT}" method="POST" data-lead-form>
       <h3>{title}</h3>
-      <p class="form-trust">REALTOR® · BBA Marketing, SFU Beedie School of Business</p>
+      <p class="form-trust">Manan Bhullar REALTOR® | Marketing Specialist</p>
       <input type="hidden" name="_subject" value="{subject}">
       <input type="text" name="_gotcha" style="display:none">
       <input type="text" name="name" placeholder="Full Name" required style="margin-bottom:12px;">
@@ -225,8 +227,9 @@ def point_list_section(dark, eyebrow, heading, lead, points, img_first=False, im
         <div class="dot">{p['icon']}</div>
         <div><strong>{p['title']}</strong><span>{p['desc']}</span></div>
       </div>"""
+    eyebrow_html = f'<div class="eyebrow" style="margin-bottom:16px;">{eyebrow}</div>' if eyebrow else ''
     text_block = f"""<div>
-      <div class="eyebrow" style="margin-bottom:16px;">{eyebrow}</div>
+      {eyebrow_html}
       <h2>{heading}</h2>
       <p style="color:{'#C7C5C0' if dark else 'var(--ink-soft)'};margin-top:14px;">{lead}</p>
       <div class="point-list">{dot_html}</div>
@@ -264,8 +267,8 @@ def checklist_section(title, sub, items, raised=False, dark=False):
   </div>
 </section>"""
 
-def step_section(title, sub, steps, raised=False):
-    cls = 'content-section raised' if raised else 'content-section'
+def step_section(title, sub, steps, raised=False, dark=False):
+    cls = 'content-section dark' if dark else ('content-section raised' if raised else 'content-section')
     steps_html = ''
     for i, s in enumerate(steps, 1):
         steps_html += f"""<div class="step-card">
@@ -307,23 +310,42 @@ def faq_section(title, items, dark=False, raised=False, charcoal=False):
   </div>
 </section>"""
 
-def community_grid_section(title, sub, areas, charcoal=False, dark=False):
+def area_group_cards(groups):
+    """groups: list of (label, [slugs]) tuples -> .community-card-group blocks, reusing real area names/hrefs."""
+    lookup = {a['slug']: a for a in AREAS}
+    cards = ''
+    for label, slugs in groups:
+        links = ''.join(f'<a href="{area_href(s)}">{lookup[s]["name"]} \u2192</a>' for s in slugs if s in lookup)
+        cards += f"""<div class="community-card-group">
+        <div class="name">{label}</div>
+        <div class="group-links">{links}</div>
+      </div>"""
+    return cards
+
+def community_grid_section(title, sub, areas, charcoal=False, dark=False, raised=True, groups=None, view_all=False):
     cards = ''
     for a in areas:
         cards += f"""<a class="community-card" href="{a['href']}">
         <div><div class="name">{a['name']}</div><div class="note">{a['note']}</div></div>
         <span class="arrow">\u2192</span>
       </a>"""
+    if groups:
+        cards += area_group_cards(groups)
     if charcoal:
         cls = 'content-section dark charcoal'
     elif dark:
         cls = 'content-section dark'
-    else:
+    elif raised:
         cls = 'content-section raised'
+    else:
+        cls = 'content-section'
+    btn_cls = 'btn-outline-light' if (dark or charcoal) else 'btn-outline-dark'
+    view_all_html = f'<div style="text-align:center;margin-top:24px;"><a class="{btn_cls}" href="/communities/">View All Areas \u2192</a></div>' if view_all else ''
     return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center"><h2>{title}</h2><p>{sub}</p></div>
     <div class="community-grid">{cards}</div>
+    {view_all_html}
   </div>
 </section>"""
 
@@ -341,20 +363,23 @@ MANAN_STATS = [
     ("Fleetwood", "Record Price-Per-Sqft Sale"),
 ]
 
-def market_snapshot_section():
-    return f"""<section class="content-section raised">
+def market_snapshot_section(dark=False, raised=True):
+    cls = 'content-section dark' if dark else ('content-section raised' if raised else 'content-section')
+    note_style = 'color:#C7C5C0;' if dark else 'color:var(--ink-soft);'
+    num_style = f'color:var({"--accent-on-dark" if dark else "--accent-deep"});'
+    return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center">
       <h2>Fraser Valley Market Snapshot</h2>
       <p>Real numbers from the Fraser Valley Real Estate Board's most recent monthly report \u2014 not estimates.</p>
     </div>
     <div class="grid-cards cols-4">
-      <div class="simple-card"><strong>$877,600</strong><span>Composite benchmark price, all residential types</span></div>
-      <div class="simple-card"><strong>$1,350,200</strong><span>Benchmark price, single-family detached</span></div>
-      <div class="simple-card"><strong>$764,100</strong><span>Benchmark price, townhomes</span></div>
-      <div class="simple-card"><strong>$469,500</strong><span>Benchmark price, apartments &amp; condos</span></div>
+      <div class="simple-card"><strong style="{num_style}">$877,600</strong><span>Composite benchmark price, all residential types</span></div>
+      <div class="simple-card"><strong style="{num_style}">$1,350,200</strong><span>Benchmark price, single-family detached</span></div>
+      <div class="simple-card"><strong style="{num_style}">$764,100</strong><span>Benchmark price, townhomes</span></div>
+      <div class="simple-card"><strong style="{num_style}">$469,500</strong><span>Benchmark price, apartments &amp; condos</span></div>
     </div>
-    <p style="font-size:0.8rem;color:var(--ink-soft);margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, July 2026 MLS\u00ae &amp; Home Price Index statistics. The Fraser Valley market is currently favouring buyers, with inventory near decade highs \u2014 Manan can walk you through what that means for your specific situation.</p>
+    <p style="font-size:0.8rem;{note_style}margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, July 2026 MLS\u00ae &amp; Home Price Index statistics. The Fraser Valley market is currently favouring buyers, with inventory near decade highs \u2014 Manan can walk you through what that means for your specific situation.</p>
   </div>
 </section>"""
 
@@ -382,10 +407,11 @@ def local_info_section(name, schools=None, shopping=None, recreation=None, enter
 def pro_tip(heading, text):
     return f"""<div class="pro-tip"><strong>{heading}</strong><p>{text}</p></div>"""
 
-def price_range_grid(title, sub, items, tip_heading=None, tip_text=None):
+def price_range_grid(title, sub, items, tip_heading=None, tip_text=None, raised=True):
     cards = ''.join(f'<div class="simple-card"><strong>{n}</strong><span>{d}</span></div>' for n, d in items)
     tip_html = pro_tip(tip_heading, tip_text) if tip_heading else ''
-    return f"""<section class="content-section raised">
+    cls = 'content-section raised' if raised else 'content-section'
+    return f"""<section class="{cls}">
   <div class="wrap">
     <div class="content-head center"><h2>{title}</h2><p>{sub}</p></div>
     <div class="grid-cards cols-2">{cards}</div>
@@ -1525,8 +1551,8 @@ def related_area_cards(current_slug, count=3):
 # /buyers/  — Buy a Home hub
 # ============================================================
 buyers_body = subhero(
-    "Buyer Representation",
-    'Your <span class="accent-warm">Home Buying</span> Journey',
+    "",
+    'Your <span class="gradient-text">Home Buying</span> Journey',
     "A clear, guided process from first conversation to key handover \u2014 with full buyer representation across Surrey and the Lower Mainland.",
     TEXT_CTA + CONTACT_CTA
 )
@@ -1554,8 +1580,8 @@ buyers_body += point_list_section(
     ],
     img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
 )
-buyers_body += market_snapshot_section()
-buyers_body += f"""<section class="content-section raised">
+buyers_body += market_snapshot_section(dark=True)
+buyers_body += f"""<section class="content-section">
   <div class="wrap two-col">
     <div>
       <div class="eyebrow" style="margin-bottom:16px;">First-Time Buyer?</div>
@@ -1584,7 +1610,7 @@ buyers_body += f"""<section class="content-section raised">
         <div class="amt" id="calcResult">~$0</div>
         <div class="note" id="calcResultNote"></div>
       </div>
-      <a class="btn-solid-warm calc-cta" id="calcCta" href="sms:+16047279542">\U0001F4AC Text Manan About This Number</a>
+      <a class="btn-solid-warm calc-cta" id="calcCta" href="sms:+16047279542">\U0001F4AC Contact Manan to Learn More</a>
       <div class="calc-disclaimer">For illustration only. Contact a mortgage broker for accurate figures.</div>
     </div>
   </div>
@@ -1600,30 +1626,23 @@ buyers_body += simple_cards(
     ],
     raised=False
 )
-buyers_body += f"""<section class="content-section raised">
-  <div class="wrap">
-    <div class="content-head center"><h2>Popular Communities</h2><p>A few places to start — explore all {len(AREAS)} communities Manan serves for the full picture.</p></div>
-    <div class="community-grid">
-      <a class="community-card" href="/communities/surrey/"><div><div class="name">Surrey</div><div class="note">BC's second-largest city</div></div><span class="arrow">→</span></a>
-      <a class="community-card" href="/communities/delta/"><div><div class="name">Delta</div><div class="note">Three distinct communities</div></div><span class="arrow">→</span></a>
-      <a class="community-card" href="/communities/south-surrey/"><div><div class="name">White Rock / South Surrey</div><div class="note">Oceanfront & premium market</div></div><span class="arrow">→</span></a>
-      <a class="community-card" href="/communities/langley/"><div><div class="name">Langley</div><div class="note">Small-town charm, modern amenities</div></div><span class="arrow">→</span></a>
-      <div class="community-card-group">
-        <div class="name">Metro Vancouver</div>
-        <div class="group-links"><a href="/communities/vancouver/">Vancouver →</a><a href="/communities/burnaby/">Burnaby →</a><a href="/communities/coquitlam/">Coquitlam →</a></div>
-      </div>
-      <div class="community-card-group">
-        <div class="name">Out of Town</div>
-        <div class="group-links"><a href="/communities/kamloops/">Kamloops →</a><a href="/communities/kelowna/">Kelowna →</a><a href="/communities/hope/">Hope →</a></div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:24px;"><a class="btn-outline-dark" href="/communities/">View All Areas →</a></div>
-  </div>
-</section>"""
+buyers_body += community_grid_section(
+    "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
+    [],
+    raised=False, dark=True, view_all=True,
+    groups=[
+        ('Surrey', ['city-centre', 'fleetwood', 'cloverdale', 'guildford', 'newton']),
+        ('Delta', ['ladner', 'tsawwassen', 'north-delta']),
+        ('South Surrey / White Rock', ['south-surrey', 'morgan-creek', 'ocean-park', 'crescent-beach']),
+        ('Langley', ['langley-city', 'willoughby', 'walnut-grove', 'fort-langley']),
+        ('Metro Vancouver', ['vancouver', 'burnaby', 'coquitlam']),
+        ('Out of Town', ['kamloops', 'kelowna', 'hope']),
+    ]
+)
 buyers_body += cta_band(
     'Ready to Start Your <span class="accent-warm">Home Search</span>?',
     "A free, no-pressure consultation is the best place to start.",
-    TEXT_CTA + EVAL_CTA
+    EVAL_CTA
 )
 write_page(
     '/buyers/',
@@ -1637,13 +1656,14 @@ write_page(
 # /buyers/first-time/  — First-Time Home Buyers
 # ============================================================
 ft_body = subhero(
-    "Your First Home Awaits",
-    'First-Time Home Buyers <br>Surrey &amp; Fraser Valley',
+    "",
+    '<span class="gradient-text">First-Time Home Buyers</span> <br>Surrey &amp; Fraser Valley',
     "Buying your first home is one of the biggest decisions you'll make. Manan guides first-time buyers through every step \u2014 from government programs to keys in hand.",
-    TEXT_CTA + '<a class="btn-solid-warm" href="/contact/">Book a Free Consultation</a>'
+    '<a class="btn-solid-warm" href="/contact/">Book a Free Consultation</a>',
+    flat_dark=True
 )
 ft_body += point_list_section(
-    False, "Getting Started", "Why Work With a Buyer's Agent as a First-Timer",
+    True, "", "Why Work With a Buyer's Agent as a First-Timer",
     "Your first purchase comes with the steepest learning curve \u2014 financing rules, strata documents, subject conditions, closing costs. A dedicated buyer's agent means someone in your corner who explains every decision in plain language, at no direct cost to you in most transactions.",
     [
         dict(icon="\U0001F4CB", title="No Pressure, No Rush", desc="Manan takes a hands-on, personal approach \u2014 you'll never feel pushed into a decision before you're ready."),
@@ -1652,7 +1672,7 @@ ft_body += point_list_section(
     ],
     img_first=True, img_seed='first-time-buyer-keys', img_alt="First-time buyers receiving keys (sample photo)"
 )
-ft_body += f"""<section class="content-section raised">
+ft_body += f"""<section class="content-section">
   <div class="wrap">
     <div class="content-head center">
       <h2>Programs &amp; Incentives for First-Time Buyers</h2>
@@ -1683,7 +1703,6 @@ ft_body += f"""<section class="content-section raised">
     <p style="font-size:0.8rem;color:var(--ink-soft);margin-top:24px;text-align:center;">Program thresholds and eligibility rules change \u2014 Manan will help you confirm current details and whether you qualify.</p>
   </div>
 </section>"""
-ft_body += market_snapshot_section()
 ft_body += step_section(
     "What Your Budget Actually Buys Right Now",
     "Real Fraser Valley benchmark prices by property type \u2014 a starting point for setting expectations before you shop.",
@@ -1692,8 +1711,9 @@ ft_body += step_section(
         dict(title="Around the Townhome Benchmark", desc="At a $764,100 benchmark, townhomes in Cloverdale, Clayton, and parts of Langley offer more space than a condo without stretching to a detached home."),
         dict(title="Approaching the Detached Benchmark", desc="At a $1,350,200 benchmark, detached homes are within reach in Abbotsford, Chilliwack, and select North Surrey pockets, particularly with a larger down payment."),
     ],
-    raised=True
+    dark=True
 )
+ft_body += market_snapshot_section(dark=False, raised=False)
 ft_body += faq_section("First-Time Buyer Questions, Answered", [
     ("What is the minimum down payment for a first home in BC?", "In Canada, the minimum down payment is 5% on the first $500,000 of the purchase price and 10% on any portion between $500,000 and $1.5 million. Homes priced above $1.5 million require 20% down. For a $750,000 Fraser Valley townhome, that's $50,000 minimum, plus closing costs. If you put down less than 20%, you'll also pay CMHC mortgage default insurance, which is added to your mortgage rather than paid up front."),
     ("How much should I save for closing costs?", "Budget roughly 1.5\u20134% of the purchase price. The largest single item is usually BC's Property Transfer Tax \u2014 1% on the first $200,000 and 2% above that, so $14,000 on an $800,000 home \u2014 unless you qualify for the first-time buyer exemption, which fully eliminates it up to $835,000. Beyond that: legal or notary fees, home inspection, title insurance, and adjustments for prepaid property taxes. Manan will walk through a full estimate specific to your purchase."),
@@ -1709,7 +1729,7 @@ ft_body += simple_cards(
         dict(title="Investment Properties", desc="Rental homes, multi-family, and secondary suites for investors.", href="/buyers/investment/"),
         dict(title="Luxury Homes", desc="Estate properties in South Surrey and White Rock.", href="/buyers/luxury/"),
         dict(title="Relocating to BC", desc="Moving from out of province? Remote-buyer support.", href="/buyers/relocation/"),
-    ], cols=4, raised=False
+    ], cols=4, raised=False, dark=True
 )
 ft_body += cta_band(
     'Ready to Buy Your <span class="accent-warm">First Home</span>?',
@@ -1731,23 +1751,24 @@ def area_cards(slugs):
     lookup = {a['slug']: a for a in AREAS}
     return [dict(name=lookup[s]['name'], href=area_href(s), note=lookup[s]['note']) for s in slugs if s in lookup]
 
-def simple_service_page(path, crumb_label, eyebrow, h1, lead, points, extra="", faq=None, related=None, area_slugs=None):
-    body = subhero(eyebrow, h1, lead, TEXT_CTA + CONTACT_CTA)
-    body += point_list_section(False, eyebrow, "What This Means For You", "", points, img_first=True, img_seed=path.strip('/').replace('/', '-'), img_alt=f"{crumb_label} (sample photo)")
+def simple_service_page(path, crumb_label, eyebrow, h1, lead, points, extra="", faq=None, related=None, area_slugs=None, area_groups=None):
+    body = subhero("", f'<span class="gradient-text">{h1}</span>', lead, CONTACT_CTA, flat_dark=True)
+    body += point_list_section(True, "", "What This Means For You", "", points, img_first=True, img_seed=path.strip('/').replace('/', '-'), img_alt=f"{crumb_label} (sample photo)")
     body += extra
-    if area_slugs:
+    if area_slugs or area_groups:
+        # avoid 3 light sections in a row when there's already an "extra" section before this one
         body += community_grid_section(
-            f"Where to Look for {crumb_label}", "Real neighbourhood guides, not just a generic city page.",
-            area_cards(area_slugs)
+            f"Where to Look for {crumb_label}", "Real neighbourhood guides across the areas Manan serves.",
+            area_cards(area_slugs) if area_slugs else [], raised=False, dark=bool(extra), groups=area_groups
         )
     if faq:
         body += faq_section(f"{crumb_label} Questions, Answered", faq)
     if related:
-        body += simple_cards("Related Buyer Services", "Other ways Manan helps buyers across the Fraser Valley.", related, cols=3, raised=True)
+        body += simple_cards("Related Buyer Services", "Other ways Manan helps buyers across the Fraser Valley.", related, cols=3, raised=False, dark=True)
     body += cta_band(
         'Let\'s Talk It <span class="accent-warm">Through</span>',
         "Every situation is different \u2014 a short call is the fastest way to figure out the right approach for yours.",
-        TEXT_CTA + CONTACT_CTA
+        CONTACT_CTA
     )
     return body
 
@@ -1778,7 +1799,14 @@ write_page(
             dict(title="Investment Properties", desc="Considering a condo or townhome as a rental? Start here.", href="/buyers/investment/"),
             dict(title="Buy a Home", desc="Back to the full buyer representation overview.", href="/buyers/"),
         ],
-        area_slugs=['city-centre', 'fleetwood', 'cloverdale', 'grandview-heights', 'langley', 'abbotsford']
+        area_groups=[
+            ('Surrey', ['city-centre', 'fleetwood', 'cloverdale', 'guildford', 'grandview-heights']),
+            ('Langley', ['langley-city', 'willoughby', 'walnut-grove']),
+            ('South Surrey / White Rock', ['south-surrey']),
+            ('Delta', ['ladner', 'tsawwassen']),
+            ('Burnaby', ['metrotown', 'brentwood', 'lougheed', 'highgate']),
+            ('Vancouver', ['downtown-vancouver', 'mount-pleasant', 'kitsilano']),
+        ]
     )
 )
 
@@ -1806,7 +1834,8 @@ write_page(
                 ("Abbotsford or Chilliwack Detached", "The strongest cash-flow-positive opportunities in the region, particularly with a suite. Entry prices are meaningfully lower than Surrey, and rents hold up well. The trade-off is generally slower appreciation than Surrey or Langley over a long horizon \u2014 a cash-flow play rather than a growth play."),
             ],
             tip_heading="How Manan underwrites an investment property",
-            tip_text="Most new investors anchor on the rent number in the listing and never check what comparable units actually leased for. Manan pulls recently-leased comparables \u2014 not asking rents \u2014 and underwrites conservatively, budgeting for vacancy, maintenance, and the first major repair. Cleaner numbers going in means fewer surprises in year two."
+            tip_text="Most new investors anchor on the rent number in the listing and never check what comparable units actually leased for. Manan pulls recently-leased comparables \u2014 not asking rents \u2014 and underwrites conservatively, budgeting for vacancy, maintenance, and the first major repair. Cleaner numbers going in means fewer surprises in year two.",
+            raised=False
         ),
         faq=[
             ("What is a good cap rate for Surrey rental properties?", "Cap rate is net operating income divided by purchase price. In the Lower Mainland, residential cap rates are generally compressed compared to the national average \u2014 investors here have historically accepted thinner yields because appreciation did the heavy lifting. Suited detached homes in Newton or Whalley typically sit at the higher end of the local range; condos at the lower end once strata fees are deducted. Manan will run the actual numbers on any specific property rather than working from a rule of thumb."),
@@ -1821,7 +1850,13 @@ write_page(
             dict(title="Commercial Real Estate", desc="For larger multi-family or commercial income properties.", href="/commercial/"),
             dict(title="Buy a Home", desc="Back to the full buyer representation overview.", href="/buyers/"),
         ],
-        area_slugs=['newton', 'city-centre', 'guildford', 'langley-city', 'north-delta', 'campbell-heights']
+        area_groups=[
+            ('Surrey', ['newton', 'city-centre', 'guildford', 'east-newton', 'campbell-heights']),
+            ('Langley', ['langley-city', 'willoughby']),
+            ('Delta', ['north-delta', 'ladner']),
+            ('Burnaby', ['metrotown', 'edmonds', 'lougheed']),
+            ('Abbotsford', ['abbotsford']),
+        ]
     )
 )
 
@@ -1849,7 +1884,8 @@ write_page(
                 ("Elgin Chantrell &amp; Crescent Beach", "Acreage estates in Elgin Chantrell start around $3M and climb past $8M for premier multi-acre properties with custom homes, equestrian setups, or cottage compounds. Crescent Beach itself offers smaller lots but premium beach proximity at $2.5M\u2013$5M for renovated character homes and new builds."),
             ],
             tip_heading="A note on how Manan prices luxury property",
-            tip_text="Land \u2014 lot size, location, view corridor, and zoning \u2014 is the most durable driver of value in this market. Finishes and floor plans get renovated every 15\u201320 years; the lot doesn't change. When evaluating a luxury purchase or listing, Manan weighs the land first and the structure second."
+            tip_text="Land \u2014 lot size, location, view corridor, and zoning \u2014 is the most durable driver of value in this market. Finishes and floor plans get renovated every 15\u201320 years; the lot doesn't change. When evaluating a luxury purchase or listing, Manan weighs the land first and the structure second.",
+            raised=False
         ),
         faq=[
             ("What defines a luxury home in South Surrey?", "In the South Surrey and White Rock market, the luxury threshold typically starts around $2 million and runs well into the $5\u201310 million range for waterfront, acreage, and architect-designed estates. Beyond price, luxury here means custom construction, premium finishes, larger lots (often half-acre to multi-acre in Elgin Chantrell or Morgan Creek), specialty features like wine cellars, theatre rooms, and gated entries, and irreplaceable locations such as ocean frontage, golf course backing, or panoramic mountain views."),
@@ -1864,7 +1900,12 @@ write_page(
             dict(title="White Rock / South Surrey", desc="Explore the community most associated with the region's premium market.", href="/communities/south-surrey/"),
             dict(title="Buy a Home", desc="Back to the full buyer representation overview.", href="/buyers/"),
         ],
-        area_slugs=['morgan-creek', 'grandview-heights', 'ocean-park', 'south-surrey', 'elgin-chantrell', 'panorama-ridge']
+        area_groups=[
+            ('South Surrey / White Rock', ['south-surrey', 'morgan-creek', 'elgin-chantrell', 'ocean-park', 'crescent-beach']),
+            ('Surrey', ['grandview-heights', 'panorama-ridge']),
+            ('Vancouver', ['shaughnessy', 'point-grey']),
+            ('West Vancouver', ['west-vancouver']),
+        ]
     )
 )
 
@@ -1902,12 +1943,13 @@ write_page(
 # /sellers/  — Sell Your Property hub
 # ============================================================
 sellers_body = subhero(
-    "Seller Representation",
-    'Sell Your Property for <span class="accent-warm">Top Dollar</span>',
+    "",
+    'Sell Your Property for <span class="gradient-text">Top Dollar</span>',
     "A clear pricing, marketing, and negotiation strategy \u2014 built around your property and your timeline.",
-    TEXT_CTA + EVAL_CTA
+    EVAL_CTA,
+    flat_dark=True
 )
-sellers_body += market_snapshot_section()
+sellers_body += market_snapshot_section(dark=True)
 sellers_body += step_section(
     "How Manan Sells Your Home",
     "A straightforward process from first conversation to closing.",
@@ -1926,7 +1968,20 @@ sellers_body += simple_cards(
         dict(title="Free Home Evaluation", desc="Find out what your home is worth in today's market \u2014 no cost, no obligation.", href="/sellers/home-evaluation/"),
         dict(title="Downsizing", desc="A thoughtful, well-paced plan for empty nesters and retirees moving to their next chapter.", href="/sellers/downsizing/"),
     ],
-    cols=2, raised=True
+    cols=2, raised=False, dark=True
+)
+sellers_body += community_grid_section(
+    "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-deep);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
+    [],
+    raised=False,
+    groups=[
+        ('Surrey', ['city-centre', 'fleetwood', 'cloverdale', 'guildford', 'newton']),
+        ('Delta', ['ladner', 'tsawwassen', 'north-delta']),
+        ('South Surrey / White Rock', ['south-surrey', 'morgan-creek', 'ocean-park', 'crescent-beach']),
+        ('Langley', ['langley-city', 'willoughby', 'walnut-grove', 'fort-langley']),
+        ('Metro Vancouver', ['vancouver', 'burnaby', 'coquitlam']),
+        ('Out of Town', ['kamloops', 'kelowna', 'hope']),
+    ]
 )
 sellers_body += faq_section("Selling Questions, Answered", [
     ("How much does it cost to sell a home in BC?", "The main cost is commission, which is negotiable and agreed with your realtor before listing \u2014 there's no fixed rate set by any board. Beyond that, budget for any prep or staging costs, a lawyer or notary for closing, and mortgage discharge fees if applicable. Unlike buying, there's no property transfer tax on the sale side; that's a buyer's cost."),
@@ -1939,7 +1994,7 @@ sellers_body += faq_section("Selling Questions, Answered", [
 sellers_body += cta_band(
     'Curious What Your <span class="accent-warm">Home Is Worth</span>?',
     "Start with a free, no-obligation home evaluation.",
-    TEXT_CTA + EVAL_CTA
+    EVAL_CTA
 )
 write_page(
     '/sellers/',
@@ -1951,16 +2006,17 @@ write_page(
 
 # /sellers/home-evaluation/
 he_body = subhero(
-    "Free & No-Obligation",
-    'What Is Your Home <span class="accent-warm">Worth?</span>',
+    "",
+    '<span class="gradient-text">What Is Your Home Worth?</span>',
     "Get a market-based home evaluation from Manan Bhullar \u2014 free, no obligation, no pressure.",
-    TEXT_CTA + CONTACT_CTA
+    CONTACT_CTA,
+    flat_dark=True
 )
-he_body += f"""<section class="content-section">
+he_body += f"""<section class="content-section dark">
   <div class="wrap two-col">
     <div>
       <h2>How the Evaluation Works</h2>
-      <p style="color:var(--ink-soft);margin-top:14px;">Manan reviews current comparable sales, active listings, and your property's specific features and condition to give you a realistic, market-based estimate \u2014 not an inflated number designed to win your listing.</p>
+      <p style="color:#C7C5C0;margin-top:14px;">Manan reviews current comparable sales, active listings, and your property's specific features and condition to give you a realistic, market-based estimate \u2014 not an inflated number designed to win your listing.</p>
       <div class="point-list">
         <div class="point"><div class="dot">\U0001F4CA</div><div><strong>Comparable Sales Review</strong><span>Recent, relevant sales in your immediate area and property type.</span></div></div>
         <div class="point"><div class="dot">\U0001F3E0</div><div><strong>Property Walkthrough</strong><span>An in-person or video walkthrough to account for condition, upgrades, and unique features.</span></div></div>
@@ -1970,7 +2026,7 @@ he_body += f"""<section class="content-section">
     <img class="imgblock" src="https://picsum.photos/seed/home-evaluation/800/600" alt="Free home evaluation walkthrough (sample photo)" loading="lazy" width="800" height="600">
   </div>
 </section>"""
-he_body += market_snapshot_section()
+he_body += market_snapshot_section(raised=False)
 he_body += faq_section("Home Evaluation Questions, Answered", [
     ("Is the evaluation really free, with no obligation?", "Yes. There's no cost and no requirement to list with Manan afterward \u2014 it's a genuine starting point for homeowners who want a realistic sense of value, whether they're selling soon, refinancing, or just curious."),
     ("How accurate is a home evaluation compared to a formal appraisal?", "A realtor's evaluation is based on current comparable sales and live market activity, which is generally reliable for setting a list price. A formal bank appraisal is a separate, more rigid process typically required for financing, often using slightly different criteria, and can land somewhat differently than a market evaluation."),
@@ -2005,13 +2061,14 @@ write_page(
 
 # /sellers/downsizing/
 ds_body = subhero(
-    "Empty Nesters & Retirees",
-    'A Thoughtful Approach to <span class="accent-warm">Downsizing</span>',
+    "",
+    '<span class="gradient-text">A Thoughtful Approach to Downsizing</span>',
     "Selling the family home and moving to your next chapter is a big transition \u2014 Manan helps make it a well-paced, low-stress one.",
-    TEXT_CTA + CONTACT_CTA
+    CONTACT_CTA,
+    flat_dark=True
 )
 ds_body += point_list_section(
-    False, "Downsizing", "What Sets a Downsizing Sale Apart", "",
+    True, "", "What Sets a Downsizing Sale Apart", "",
     [
         dict(icon="\u23F1\uFE0F", title="A Timeline That Works For You", desc="Downsizing sales often need to be coordinated with a purchase, a move, or family logistics \u2014 Manan plans around your timeline, not a generic template."),
         dict(icon="\U0001F91D", title="Trusted Referrals", desc="Recommendations for movers, estate sale services, and other trades that many downsizing sellers find helpful."),
@@ -2070,7 +2127,7 @@ def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=No
 </section>"""
 
 comm_body = subhero(
-    "Commercial & Industrial",
+    "",
     'Commercial Real Estate <span class="accent-warm">Across the Lower Mainland</span>',
     "From industrial and warehouse leasing to retail, hospitality, and land \u2014 Manan brings the same client-first approach to commercial transactions across 17 specialized categories.",
     TEXT_CTA + CONTACT_CTA
@@ -2126,6 +2183,11 @@ comm_body += point_list_section(
     img_first=False, img_seed='commercial-hub-office', img_alt="Modern commercial interior"
 )
 comm_body += simple_cards(
+    "Explore Our Commercial Services", "Specialized real estate representation across 17 commercial property and business categories, each with its own valuation, due diligence, and financing approach.",
+    [dict(title=c['title'], desc=c['desc'], href=cc_href(c['slug']), icon=c['icon']) for c in COMMERCIAL_CATEGORIES],
+    cols=4, raised=False
+)
+comm_body += simple_cards(
     "Commercial Real Estate Markets I Serve", "Deep familiarity with the specific corridors and submarkets that matter in each city.",
     [
         dict(title="Surrey", desc="City Centre development, King George corridor, Newton industrial.", href="/communities/surrey/", icon="\U0001F4CD"),
@@ -2135,14 +2197,9 @@ comm_body += simple_cards(
         dict(title="Mission", desc="Development land, downtown commercial, junction area.", href="/communities/mission/", icon="\U0001F4CD"),
         dict(title="Maple Ridge", desc="Town centre, Lougheed Highway, Albion industrial.", href="/communities/maple-ridge/", icon="\U0001F4CD"),
     ],
-    cols=3, raised=True
+    cols=3, raised=False, dark=True
 )
-comm_body += simple_cards(
-    "Explore Our Commercial Services", "Specialized real estate representation across 17 commercial property and business categories, each with its own valuation, due diligence, and financing approach.",
-    [dict(title=c['title'], desc=c['desc'], href=cc_href(c['slug']), icon=c['icon']) for c in COMMERCIAL_CATEGORIES],
-    cols=4, raised=False
-)
-comm_body += commercial_cta_form("Commercial Property", ['industrial', 'retail'], form_title="Commercial Property Inquiry")
+comm_body += commercial_cta_form("Commercial Property", ['industrial', 'retail'], form_title="Commercial Property Inquiry", gradient=True)
 write_page(
     '/commercial/',
     "Commercial Real Estate | Surrey & Lower Mainland | Manan Bhullar",
@@ -2163,7 +2220,6 @@ def commercial_sub(path, label, icon, eyebrow_tag, h1, lead,
     subhero_cls = 'subhero flat-dark' if h1_gradient else 'subhero'
     body = f"""<section class="{subhero_cls}">
   <div class="wrap">
-    <div class="eyebrow">{icon} {eyebrow_tag}</div>
     <h1>{h1_html}</h1>
     <p class="lead">{lead}</p>
     <div class="hero-ctas">{CONTACT_CTA}</div>
@@ -2620,13 +2676,14 @@ for p in COMMERCIAL_PAGES:
 # /communities/  — index + individual area pages
 # ============================================================
 comm_idx_body = subhero(
-    "Areas I Serve",
-    'Communities Across <span class="accent-warm">Surrey &amp; the Lower Mainland</span>',
+    "",
+    'Communities Across <span class="gradient-text">Surrey &amp; the Lower Mainland</span>',
     "Get to know the neighbourhoods Manan works in \u2014 residential and commercial alike.",
     TEXT_CTA + CONTACT_CTA
 )
 comm_idx_body += community_grid_section(
-    "Browse by Community", "Explore each area's character before you start your search.", COMMUNITY_CARDS
+    "Browse by Community", "Explore each area's character before you start your search.", COMMUNITY_CARDS,
+    raised=False, dark=True
 )
 comm_idx_body += cta_band(
     'Not Sure Which <span class="accent-warm">Area Fits</span>?',
@@ -2663,7 +2720,7 @@ for a in AREAS:
         _stat_items += f'<div class="stat-item"><div class="stat-value">{_stats["benchmark"]}</div><div class="stat-label">{_stats["benchmark_label"]}</div></div>'
         _stat_bar_html = f'<div class="hero-stat-bar">{_stat_items}</div>'
     body = subhero(
-        "Areas I Serve",
+        "",
         a['name'],
         a['note'] + ".",
         _area_search_html + _stat_bar_html
@@ -2777,7 +2834,7 @@ for a in AREAS:
 # /marketing/
 # ============================================================
 marketing_body = subhero(
-    "Marketing Strategy",
+    "",
     'How Your Property Gets <span class="accent-warm">Marketed</span>',
     "Manan holds a BBA in Marketing from SFU's Beedie School of Business — that background shapes a real, structured marketing plan behind every listing, not just an MLS® upload and a lawn sign.",
     TEXT_CTA + EVAL_CTA
@@ -2830,10 +2887,11 @@ write_page(
 # page; the standalone /about/ page was removed), /contact/, /property-search/, /listings/
 # ============================================================
 why_body = subhero(
-    "About Manan",
-    'Why Work With <span class="accent-warm">Manan</span>?',
+    "",
+    'Why Work With <span class="gradient-text">Manan</span>?',
     "A marketing-trained, dual-market REALTOR\u00AE who treats residential and commercial clients with the same level of care.",
-    TEXT_CTA + CONTACT_CTA
+    CONTACT_CTA,
+    flat_dark=True
 )
 why_body += f"""<section class="content-section why-dark-section">
   <div class="wrap two-col">
@@ -2864,7 +2922,7 @@ _why_points_html = ''.join(
 # Single-column (no photo -- the Background section above already carries the one headshot
 # this page needs) unlike the shared point_list_section() helper, which always pairs the list
 # with a second photo in a two-col layout.
-why_body += f"""<section class="content-section raised">
+why_body += f"""<section class="content-section dark">
   <div class="wrap" style="max-width:640px;">
     <div class="content-head center">
       <div class="eyebrow" style="margin-bottom:16px;">Why Manan</div>
@@ -2887,10 +2945,11 @@ write_page(
 )
 
 contact_body = subhero(
-    "Contact",
-    'Get In Touch',
+    "",
+    '<span class="gradient-text">Get In Touch</span>',
     "Whether you're buying, selling, or leasing \u2014 reach out any time.",
-    ''
+    '',
+    flat_dark=True
 )
 contact_interested_options = "<option>I'm interested in...</option><option>Buying a Home</option><option>Selling My Property</option><option>Commercial Real Estate</option><option>Free Home Evaluation</option><option>Investment Properties</option><option>Other</option>"
 contact_lead_form = lead_form(
@@ -2899,14 +2958,14 @@ contact_lead_form = lead_form(
     extra_fields=f'<select name="interested_in">{contact_interested_options}</select>',
     message_placeholder="Your Message (optional)"
 )
-contact_body += f"""<section class="content-section">
+contact_body += f"""<section class="content-section dark">
   <div class="wrap two-col contact-two-col">
     <div>
       <h2>Contact Details</h2>
       <div class="point-list">
-        <div class="point"><div class="dot">\U0001F4DE</div><div><strong>Phone</strong><span><a href="tel:+16047279542" style="color:var(--accent-deep);">(604) 727-9542</a></span></div></div>
+        <div class="point"><div class="dot">\U0001F4DE</div><div><strong>Phone</strong><span><a href="tel:+16047279542">(604) 727-9542</a></span></div></div>
         <div class="point"><div class="dot">\U0001F4CD</div><div><strong>Office</strong><span>201-2010 E 48th Ave, Vancouver, BC V5P 1R8</span></div></div>
-        <div class="point"><div class="dot">\u2709\uFE0F</div><div><strong>Email</strong><span><a href="mailto:mb_realestate@outlook.com" style="color:var(--accent-deep);">mb_realestate@outlook.com</a></span></div></div>
+        <div class="point"><div class="dot">\u2709\uFE0F</div><div><strong>Email</strong><span><a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a></span></div></div>
         <div class="point"><div class="dot">\U0001F3E2</div><div><strong>Service Area</strong><span>Lower Mainland, BC</span></div></div>
       </div>
     </div>
@@ -2922,7 +2981,7 @@ write_page(
 )
 
 ps_body = subhero(
-    "Property Search",
+    "",
     'Search Properties Across <span class="accent-warm">Surrey &amp; the Lower Mainland</span>',
     "Browse current MLS\u00AE listings by area. Call Manan when you find something you love.",
     ''
@@ -2976,7 +3035,7 @@ write_page(
 )
 
 listings_body = subhero(
-    "My Listings",
+    "",
     'Current Listings',
     "Manan's active listings will appear here. In the meantime, reach out directly or search current MLS\u00AE inventory.",
     '<a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Properties \u2197</a>' + CONTACT_CTA
@@ -3148,7 +3207,6 @@ _pills_html = ''.join(
 
 blog_idx_body = f"""<header class="subhero">
   <div class="wrap">
-    <div class="eyebrow">Updates</div>
     <h1>Real Estate Insight for <span class="accent-warm">Surrey &amp; the Lower Mainland</span></h1>
     <p class="lead">In-depth guides and current market analysis from your trusted Fraser Valley expert.</p>
     {google_follow_card()}
@@ -3182,7 +3240,6 @@ def article_page(art, body_html):
     tags_html = ''.join(f'<span class="article-tag">{t}</span>' for t in art.get('tags', []))
     full = f"""<header class="subhero" style="padding:48px 0;">
   <div class="wrap" style="text-align:center;">
-    <div class="eyebrow">{art['tag']}</div>
     <h1 style="max-width:32ch;margin:0 auto;">{art['title']}</h1>
     <div class="article-tags">{tags_html}</div>
   </div>
@@ -3506,8 +3563,8 @@ article_page(_art_by_slug['buying-a-restaurant-bc-liquor-licence'], """
 # Legal / footer pages
 # ============================================================
 def legal_page(path, title, heading, body_text):
-    body = subhero("Legal", heading, "", '')
-    body += f"""<section class="content-section">
+    body = subhero("", heading, "", '', flat_dark=True)
+    body += f"""<section class="content-section dark">
   <div class="wrap article-body">
     <p>{body_text}</p>
   </div>
