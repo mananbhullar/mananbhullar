@@ -166,7 +166,7 @@
   }
   .hero-path-btn:hover{border-color:#fff;}
   .hero-secondary-link{
-    display:inline-flex;align-items:center;gap:8px;margin-top:28px;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;
     font-size:0.85rem;font-weight:600;color:#fff;
     padding:11px 24px;border:1px solid rgba(255,255,255,0.4);
     position:relative;text-decoration:none;
@@ -181,6 +181,7 @@
     .hero-name{font-size:2.4rem;}
     .hero-tagline{font-size:1.2rem;}
     .hero-path-ctas{flex-direction:column;align-items:center;}
+    .hero-path-btn,.hero-secondary-link{width:220px;justify-content:center;}
     .mobile-break{display:inline;}
     .hero-secondary-full{display:none;}
     .hero-secondary-mobile{display:inline;}
