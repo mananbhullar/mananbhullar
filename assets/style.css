@@ -96,7 +96,7 @@
     .nav-toggle{display:flex;position:relative;z-index:60;}
     .nav.mobile-open .nav-mobile-logo{
       display:block;height:32px;width:auto;
-      grid-column:1;grid-row:1;justify-self:start;align-self:center;
+      grid-column:2;grid-row:1;justify-self:center;align-self:center;
       position:relative;z-index:60;
     }
     .nav.mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
