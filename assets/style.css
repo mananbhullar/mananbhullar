@@ -166,14 +166,13 @@
   }
   .hero-path-btn:hover{border-color:#fff;}
   .hero-secondary-link{
-    display:inline-block;margin-top:26px;font-size:0.9rem;color:rgba(255,255,255,0.75);
+    display:inline-flex;align-items:center;gap:8px;margin-top:28px;
+    font-size:0.85rem;font-weight:600;color:#fff;
+    padding:11px 24px;border:1px solid rgba(255,255,255,0.4);
     position:relative;text-decoration:none;
+    transition:border-color .2s ease;
   }
-  .hero-secondary-link::after{
-    content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;
-    transform:scaleX(0);transform-origin:left;transition:transform .22s ease;
-  }
-  .hero-secondary-link:hover::after{transform:scaleX(1);}
+  .hero-secondary-link:hover{border-color:#fff;}
   .mobile-break{display:none;}
   @media (max-width:760px){
     .hero{min-height:auto;}
