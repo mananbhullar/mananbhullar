@@ -68,8 +68,8 @@ SHELL = """<!DOCTYPE html>
 {footer}
 
 <div class="mobile-cta-bar">
-  <a class="cta-text" href="tel:+16047279542">\U0001F4DE Call</a>
-  <a class="cta-primary" href="/contact/">Get In Touch</a>
+  <a class="cta-text" href="tel:+16047279542">\U0001F4DE Call Manan</a>
+  <a class="cta-primary" href="/contact/">Message</a>
 </div>
 
 <script src="/assets/site.js?v={js_version}" defer></script>
