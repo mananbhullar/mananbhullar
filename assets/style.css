@@ -181,6 +181,7 @@
     .hero-tagline{font-size:1.2rem;}
     .hero-path-ctas{flex-direction:column;align-items:center;}
     .mobile-break{display:inline;}
+    .hero-secondary-full{display:none;}
   }
   @media (max-width:860px){
     .hero{background-image:linear-gradient(180deg, rgba(18,18,18,0.58) 0%, rgba(18,18,18,0.46) 45%, rgba(18,18,18,0.66) 100%), url('/assets/photos/homepage-cover-sm.jpg') !important;}
@@ -286,7 +287,7 @@
   .bio{background:var(--ink);color:#fff;padding:100px 0;}
   .bio-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;}
   .bio-grid > *{min-width:0;}
-  .bio-photo{aspect-ratio:3/4;height:auto;background:linear-gradient(150deg,#3a3f47,#15171a);border:1px solid rgba(255,255,255,0.12);}
+  .bio-photo{aspect-ratio:3/4;height:auto;background:linear-gradient(150deg,#3a3f47,#15171a);}
   .bio-eyebrow{
     display:inline-block;font-family:var(--sans);font-weight:500;font-size:0.78rem;letter-spacing:0.02em;text-transform:uppercase;
     background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:7px 14px;margin-bottom:20px;
