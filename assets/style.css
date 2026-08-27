@@ -173,6 +173,7 @@
     transition:border-color .2s ease;
   }
   .hero-secondary-link:hover{border-color:#fff;}
+  .hero-secondary-mobile{display:none;}
   .mobile-break{display:none;}
   @media (max-width:760px){
     .hero{min-height:auto;}
@@ -182,6 +183,7 @@
     .hero-path-ctas{flex-direction:column;align-items:center;}
     .mobile-break{display:inline;}
     .hero-secondary-full{display:none;}
+    .hero-secondary-mobile{display:inline;}
   }
   @media (max-width:860px){
     .hero{background-image:linear-gradient(180deg, rgba(18,18,18,0.58) 0%, rgba(18,18,18,0.46) 45%, rgba(18,18,18,0.66) 100%), url('/assets/photos/homepage-cover-sm.jpg') !important;}
