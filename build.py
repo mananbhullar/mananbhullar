@@ -68,7 +68,7 @@ SHELL = """<!DOCTYPE html>
 {footer}
 
 <div class="mobile-cta-bar">
-  <a class="cta-text" href="sms:+16047279542">\U0001F4AC Text</a>
+  <a class="cta-text" href="tel:+16047279542">\U0001F4DE Call</a>
   <a class="cta-primary" href="/contact/">Get In Touch</a>
 </div>
 
