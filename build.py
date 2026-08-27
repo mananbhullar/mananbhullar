@@ -2155,7 +2155,7 @@ def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=No
 
 comm_body = subhero(
     "",
-    'Commercial Real Estate <span class="accent-warm">Across the Lower Mainland</span>',
+    'Commercial Real Estate <span class="gradient-text">Across the Lower Mainland</span>',
     "From industrial and warehouse leasing to retail, hospitality, and land \u2014 Manan brings the same client-first approach to commercial transactions across 17 specialized categories.",
     TEXT_CTA + CONTACT_CTA
 )
@@ -2748,7 +2748,7 @@ for a in AREAS:
         _stat_bar_html = f'<div class="hero-stat-bar">{_stat_items}</div>'
     body = subhero(
         "",
-        a['name'],
+        f'<span class="gradient-text">{a["name"]}</span>',
         a['note'] + ".",
         _area_search_html + _stat_bar_html
     )
@@ -2862,7 +2862,7 @@ for a in AREAS:
 # ============================================================
 marketing_body = subhero(
     "",
-    'How Your Property Gets <span class="accent-warm">Marketed</span>',
+    'How Your Property Gets <span class="gradient-text">Marketed</span>',
     "Manan holds a BBA in Marketing from SFU's Beedie School of Business — that background shapes a real, structured marketing plan behind every listing, not just an MLS® upload and a lawn sign.",
     TEXT_CTA + EVAL_CTA
 )
@@ -3009,7 +3009,7 @@ write_page(
 
 ps_body = subhero(
     "",
-    'Search Properties Across <span class="accent-warm">Surrey &amp; the Lower Mainland</span>',
+    'Search Properties Across <span class="gradient-text">Surrey &amp; the Lower Mainland</span>',
     "Browse current MLS\u00AE listings by area. Call Manan when you find something you love.",
     ''
 )
@@ -3063,7 +3063,7 @@ write_page(
 
 listings_body = subhero(
     "",
-    'Current Listings',
+    '<span class="gradient-text">Current Listings</span>',
     "Manan's active listings will appear here. In the meantime, reach out directly or search current MLS\u00AE inventory.",
     '<a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Properties \u2197</a>' + CONTACT_CTA
 )
@@ -3236,7 +3236,7 @@ _pills_html = ''.join(
 
 blog_idx_body = f"""<header class="subhero">
   <div class="wrap">
-    <h1>Real Estate Insight for <span class="accent-warm">Surrey &amp; the Lower Mainland</span></h1>
+    <h1>Real Estate Insight for <span class="gradient-text">Surrey &amp; the Lower Mainland</span></h1>
     <p class="lead">In-depth guides and current market analysis from your trusted Fraser Valley expert.</p>
     {google_follow_card()}
   </div>
@@ -3270,7 +3270,7 @@ def article_page(art, body_html):
     _hero_src = _photo_url(art, 1200, 480)
     full = f"""<header class="subhero" style="padding:48px 0;">
   <div class="wrap" style="text-align:center;">
-    <h1 style="max-width:32ch;margin:0 auto;">{art['title']}</h1>
+    <h1 style="max-width:32ch;margin:0 auto;"><span class="gradient-text">{art['title']}</span></h1>
     <div class="article-tags">{tags_html}</div>
   </div>
 </header>
@@ -3593,7 +3593,7 @@ article_page(_art_by_slug['buying-a-restaurant-bc-liquor-licence'], """
 # Legal / footer pages
 # ============================================================
 def legal_page(path, title, heading, body_text):
-    body = subhero("", heading, "", '', flat_dark=True)
+    body = subhero("", f'<span class="gradient-text">{heading}</span>', "", '', flat_dark=True)
     body += f"""<section class="content-section dark">
   <div class="wrap article-body">
     <p>{body_text}</p>
