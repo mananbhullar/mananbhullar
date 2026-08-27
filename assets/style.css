@@ -103,6 +103,7 @@
     .nav.mobile-open .nav-toggle span:nth-child(2){opacity:0;}
     .nav.mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     .nav.mobile-open .nav-toggle span{background:var(--ink);}
+    .nav.mobile-open .nav-toggle{justify-self:end;margin-right:-11px;}
     .nav-cta{display:none;}
     /* Three columns -- empty | logo | hamburger -- logo and hamburger each centered in their own
        column, first column intentionally left blank. nav-brand (the <a> wrapping the logo) uses
