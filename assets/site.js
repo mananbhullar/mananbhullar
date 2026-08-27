@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function(){
     navToggle.addEventListener('click', function(){
       var isOpen = navEl.classList.toggle('mobile-open');
       navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('mobile-menu-open', isOpen);
     });
   }
 

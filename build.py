@@ -220,6 +220,33 @@ REAL_PHOTOS = {
     'area-glen-valley': ('/assets/photos/acreage-langley.jpg', 2000, 933),
 }
 
+# Real photos oversized for how small they're actually displayed -- each has a pre-generated
+# "-sm.jpg" mobile variant (see assets/photos/*-sm.jpg) so phones don't download the full-res
+# desktop file. Value is (sm variant width, true intrinsic width of the original file) -- the
+# true width is needed for the srcset "w" descriptor even when a caller passes a smaller
+# display width into the <img> width= attribute (e.g. blog thumbnails).
+REAL_PHOTOS_SM = {
+    '/assets/photos/homepage-cover.jpg': (900, 2000),
+    '/assets/photos/manan-headshot.jpg': (700, 1170),
+    '/assets/photos/modern-home-dusk-mountain.jpg': (900, 1920),
+    '/assets/photos/entrance-dusk-stone.jpg': (900, 1920),
+    '/assets/photos/dark-estate-daylight.jpg': (900, 1920),
+    '/assets/photos/courtyard-entrance-dusk.jpg': (900, 1920),
+    '/assets/photos/reflecting-pool-building.jpg': (900, 1920),
+    '/assets/photos/whistler-pool-mountain.jpg': (900, 1700),
+    '/assets/photos/acreage-langley.jpg': (900, 2000),
+    '/assets/photos/blog-market-update.jpg': (900, 3000),
+    '/assets/photos/blog-surrey-neighbourhoods.jpg': (900, 1920),
+    '/assets/photos/blog-gas-station.jpg': (900, 1176),
+}
+
+def responsive_img_attrs(src, orig_w=None, sizes="(max-width:860px) 100vw, 590px"):
+    if src not in REAL_PHOTOS_SM:
+        return ''
+    sm_w, true_w = REAL_PHOTOS_SM[src]
+    sm_src = src.rsplit('.', 1)[0] + '-sm.jpg'
+    return f' srcset="{sm_src} {sm_w}w, {src} {true_w}w" sizes="{sizes}"'
+
 def point_list_section(dark, eyebrow, heading, lead, points, img_first=False, img_seed='surrey-real-estate', img_alt=''):
     dot_html = ''
     for p in points:
@@ -237,7 +264,7 @@ def point_list_section(dark, eyebrow, heading, lead, points, img_first=False, im
     alt = img_alt or f"Sample placeholder photo — {heading}"
     if img_seed in REAL_PHOTOS:
         src, w, h = REAL_PHOTOS[img_seed]
-        img_block = f'<img class="imgblock" src="{src}" alt="{alt.replace(" (sample photo)", "")}" loading="lazy" width="{w}" height="{h}">'
+        img_block = f'<img class="imgblock" src="{src}"{responsive_img_attrs(src, w)} alt="{alt.replace(" (sample photo)", "")}" loading="lazy" width="{w}" height="{h}">'
     else:
         img_block = f'<img class="imgblock" src="https://picsum.photos/seed/{img_seed}/800/600" alt="{alt}" loading="lazy" width="800" height="600">'
     order = [img_block, text_block] if img_first else [text_block, img_block]
@@ -2120,7 +2147,7 @@ def market_context_section(heading, paragraphs, img_seed, img_alt, fact_label=No
       {paras_html}
     </div>
     <div class="market-context-photo">
-      <img src="{src}" alt="{img_alt}" loading="lazy" width="{w}" height="{h}">
+      <img src="{src}"{responsive_img_attrs(src, w)} alt="{img_alt}" loading="lazy" width="{w}" height="{h}">
       {badge_html}
     </div>
   </div>
@@ -2748,7 +2775,7 @@ for a in AREAS:
     if GOOGLE_MAPS_KEY:
         _area_visual_html = f'<iframe class="imgblock area-map" style="aspect-ratio:16/11;" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of {a["name"]}, BC"></iframe>'
     else:
-        _area_visual_html = f'<img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}" alt="{a["name"]} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">'
+        _area_visual_html = f'<img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}"{responsive_img_attrs(area_photo_src[0], area_photo_src[1])} alt="{a["name"]} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">'
     body += f"""<section class="content-section dark" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
@@ -2895,7 +2922,7 @@ why_body = subhero(
 )
 why_body += f"""<section class="content-section why-dark-section">
   <div class="wrap two-col">
-    <img class="bio-photo" style="width:100%;" src="/assets/photos/manan-headshot.jpg" alt="Manan Bhullar headshot" loading="lazy" width="1170" height="1529">
+    <img class="bio-photo" style="width:100%;" src="/assets/photos/manan-headshot.jpg"{responsive_img_attrs('/assets/photos/manan-headshot.jpg', 1170)} alt="Manan Bhullar headshot" loading="lazy" width="1170" height="1529">
     <div>
       <h2>Background</h2>
       <p style="margin-top:14px;">Serving the Fraser Valley and Lower Mainland, Manan brings personal attention to every client and expertise across residential, commercial, and industrial real estate \u2014 always focused on what it takes to reach your goals.</p>
@@ -3174,8 +3201,9 @@ def _photo_alt(art):
 def _blog_card_html(art):
     tags_attr = ' '.join(art.get('tags', []))
     search_attr = f"{art['title']} {art['desc']} {tags_attr}".replace('"', '&quot;')
+    thumb_src = _photo_url(art, 500, 310)
     return f"""<a class="blog-card" href="/updates/{art['slug']}/" data-blog-card data-category="{art['tag']}" data-search="{search_attr}">
-      <img class="thumb" src="{_photo_url(art, 500, 310)}" alt="{_photo_alt(art)}" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
+      <img class="thumb" src="{thumb_src}"{responsive_img_attrs(thumb_src, 500, sizes="400px")} alt="{_photo_alt(art)}" loading="lazy" width="500" height="310" style="width:100%;object-fit:cover;">
       <div class="body">
         <span class="tag">{art['tag']}</span>
         <strong>{art['title']}</strong>
@@ -3188,8 +3216,9 @@ _featured_art = next((a for a in ARTICLES if a.get('featured')), ARTICLES[0])
 _rest_arts = [a for a in ARTICLES if a is not _featured_art]
 
 _featured_search_attr = f"{_featured_art['title']} {_featured_art['desc']} {' '.join(_featured_art.get('tags', []))}".replace('"', '&quot;')
+_featured_thumb_src = _photo_url(_featured_art, 700, 500)
 featured_html = f"""<a class="featured-post" href="/updates/{_featured_art['slug']}/" data-blog-card data-category="{_featured_art['tag']}" data-search="{_featured_search_attr}">
-  <img class="thumb" src="{_photo_url(_featured_art, 700, 500)}" alt="{_photo_alt(_featured_art)}" loading="lazy" width="700" height="500">
+  <img class="thumb" src="{_featured_thumb_src}"{responsive_img_attrs(_featured_thumb_src, sizes="(max-width:860px) 100vw, 700px")} alt="{_photo_alt(_featured_art)}" loading="lazy" width="700" height="500">
   <div class="body">
     <div class="pin-label">Featured</div>
     <span class="tag">{_featured_art['tag']}</span>
@@ -3238,13 +3267,14 @@ def article_page(art, body_html):
         message_placeholder="Your Question"
     )
     tags_html = ''.join(f'<span class="article-tag">{t}</span>' for t in art.get('tags', []))
+    _hero_src = _photo_url(art, 1200, 480)
     full = f"""<header class="subhero" style="padding:48px 0;">
   <div class="wrap" style="text-align:center;">
     <h1 style="max-width:32ch;margin:0 auto;">{art['title']}</h1>
     <div class="article-tags">{tags_html}</div>
   </div>
 </header>
-<img class="article-hero-img" src="{_photo_url(art, 1200, 480)}" alt="{_photo_alt(art)}" loading="lazy" width="1200" height="480">
+<img class="article-hero-img" src="{_hero_src}"{responsive_img_attrs(_hero_src, sizes="(min-width:1180px) 1116px, 100vw")} alt="{_photo_alt(art)}" loading="lazy" width="1200" height="480">
 <section class="content-section">
   <div class="wrap article-layout">
     <div class="article-body">
