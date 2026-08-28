@@ -1581,8 +1581,10 @@ buyers_body = subhero(
     "",
     'Your <span class="gradient-text">Home Buying</span> Journey',
     "A clear, guided process from first conversation to key handover \u2014 with full buyer representation across Surrey and the Lower Mainland.",
-    TEXT_CTA + CONTACT_CTA
+    TEXT_CTA + CONTACT_CTA,
+    flat_dark=True
 )
+buyers_body += market_snapshot_section(dark=True)
 buyers_body += simple_cards(
     "Explore Buyer Services", "Detailed guides for every kind of buyer.",
     [
@@ -1653,7 +1655,6 @@ buyers_body += point_list_section(
     ],
     img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
 )
-buyers_body += market_snapshot_section(dark=True)
 buyers_body += community_grid_section(
     "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
     [],
