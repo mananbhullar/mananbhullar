@@ -146,21 +146,70 @@
     <p class="lead">A clear, guided process from first conversation to key handover — with full buyer representation across Surrey and the Lower Mainland.</p>
     <div class="hero-ctas"><a class="btn-outline-light" href="sms:+16047279542"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg> Text Manan</a><a class="btn-solid-warm" href="/contact/">Get In Touch</a></div>
   </div>
-</header><section class="content-section dark">
+</header><section class="content-section ">
   <div class="wrap">
     <div class="content-head center">
-      <h2>Fraser Valley Market Snapshot</h2>
-      <p>Real numbers from the Fraser Valley Real Estate Board's most recent monthly report — not estimates.</p>
+      <h2>Explore Buyer Services</h2>
+      <p>Detailed guides for every kind of buyer.</p>
     </div>
-    <div class="grid-cards cols-4">
-      <div class="simple-card"><strong style="color:var(--accent-on-dark);">$877,600</strong><span>Composite benchmark price, all residential types</span></div>
-      <div class="simple-card"><strong style="color:var(--accent-on-dark);">$1,350,200</strong><span>Benchmark price, single-family detached</span></div>
-      <div class="simple-card"><strong style="color:var(--accent-on-dark);">$764,100</strong><span>Benchmark price, townhomes</span></div>
-      <div class="simple-card"><strong style="color:var(--accent-on-dark);">$469,500</strong><span>Benchmark price, apartments &amp; condos</span></div>
+    <div class="grid-cards">
+      <a class="simple-card" href="/buyers/first-time/">
+        <strong>First-Time Buyers</strong>
+        <span>Government programs, step-by-step guidance, and everything you need to buy your first home.</span>
+        <span class="go">Learn More →</span>
+      </a><a class="simple-card" href="/buyers/condos-townhomes/">
+        <strong>Condos &amp; Townhomes</strong>
+        <span>Navigate strata documents, fees, and bylaws with confidence.</span>
+        <span class="go">Learn More →</span>
+      </a><a class="simple-card" href="/buyers/investment/">
+        <strong>Investment Properties</strong>
+        <span>Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.</span>
+        <span class="go">Learn More →</span>
+      </a><a class="simple-card" href="/buyers/luxury/">
+        <strong>Luxury Homes</strong>
+        <span>Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.</span>
+        <span class="go">Learn More →</span>
+      </a><a class="simple-card" href="/buyers/relocation/">
+        <strong>Relocating to BC</strong>
+        <span>Moving from out of province? Manan helps remote buyers find the right community and home.</span>
+        <span class="go">Learn More →</span>
+      </a>
     </div>
-    <p style="font-size:0.8rem;color:#C7C5C0;margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, July 2026 MLS® &amp; Home Price Index statistics. The Fraser Valley market is currently favouring buyers, with inventory near decade highs — Manan can walk you through what that means for your specific situation.</p>
   </div>
 </section><section class="content-section">
+  <div class="wrap two-col">
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">First-Time Buyer?</div>
+      <h2>Programs for First-Time Buyers</h2>
+      <p style="color:var(--ink-soft);margin-top:14px;max-width:48ch;">There are real, current programs to help first-time buyers get into the market. Manan will walk you through every option available to your specific situation.</p>
+      <div style="margin-top:22px;"><a class="btn-outline-dark" href="/buyers/first-time/">See the Full First-Time Buyer Guide →</a></div>
+    </div>
+    <div class="calc-card" id="mortgageCalc">
+      <h3>Mortgage Calculator</h3>
+      <div class="sub">Estimate your monthly payments</div>
+      <div class="calc-row"><label for="calcPrice">Purchase Price ($)</label><input type="number" id="calcPrice" value="800000"></div>
+      <div class="calc-row-split">
+        <div class="calc-row"><label for="calcDown">Down Payment (%)</label><input type="number" id="calcDown" value="20"></div>
+        <div class="calc-row"><label for="calcRate">Interest Rate (%)</label><input type="number" step="0.01" id="calcRate" value="5.25"></div>
+      </div>
+      <div class="calc-row">
+        <label for="calcAmort">Amortization (years)</label>
+        <select id="calcAmort">
+          <option value="25">25 years</option>
+          <option value="30">30 years</option>
+          <option value="20">20 years</option>
+          <option value="15">15 years</option>
+        </select>
+      </div>
+      <div class="calc-result">
+        <div class="amt" id="calcResult">~$0</div>
+        <div class="note" id="calcResultNote"></div>
+      </div>
+      <a class="btn-solid-warm calc-cta" id="calcCta" href="sms:+16047279542"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg> Contact Manan to Learn More</a>
+      <div class="calc-disclaimer">For illustration only. Contact a mortgage broker for accurate figures.</div>
+    </div>
+  </div>
+</section><section class="content-section raised">
   <div class="wrap">
     <div class="content-head center">
       <h2>A Clear, Guided Process</h2>
@@ -214,68 +263,19 @@
     </div>
     <img class="imgblock" src="/assets/photos/modern-home-dusk-mountain.jpg" srcset="/assets/photos/modern-home-dusk-mountain-sm.jpg 900w, /assets/photos/modern-home-dusk-mountain.jpg 1920w" sizes="(max-width:860px) 100vw, 590px" alt="Manan Bhullar meeting with buyer clients" loading="lazy" width="1920" height="950">
   </div>
-</section><section class="content-section">
-  <div class="wrap two-col">
-    <div>
-      <div class="eyebrow" style="margin-bottom:16px;">First-Time Buyer?</div>
-      <h2>Programs for First-Time Buyers</h2>
-      <p style="color:var(--ink-soft);margin-top:14px;max-width:48ch;">There are real, current programs to help first-time buyers get into the market. Manan will walk you through every option available to your specific situation.</p>
-      <div style="margin-top:22px;"><a class="btn-outline-dark" href="/buyers/first-time/">See the Full First-Time Buyer Guide →</a></div>
-    </div>
-    <div class="calc-card" id="mortgageCalc">
-      <h3>Mortgage Calculator</h3>
-      <div class="sub">Estimate your monthly payments</div>
-      <div class="calc-row"><label for="calcPrice">Purchase Price ($)</label><input type="number" id="calcPrice" value="800000"></div>
-      <div class="calc-row-split">
-        <div class="calc-row"><label for="calcDown">Down Payment (%)</label><input type="number" id="calcDown" value="20"></div>
-        <div class="calc-row"><label for="calcRate">Interest Rate (%)</label><input type="number" step="0.01" id="calcRate" value="5.25"></div>
-      </div>
-      <div class="calc-row">
-        <label for="calcAmort">Amortization (years)</label>
-        <select id="calcAmort">
-          <option value="25">25 years</option>
-          <option value="30">30 years</option>
-          <option value="20">20 years</option>
-          <option value="15">15 years</option>
-        </select>
-      </div>
-      <div class="calc-result">
-        <div class="amt" id="calcResult">~$0</div>
-        <div class="note" id="calcResultNote"></div>
-      </div>
-      <a class="btn-solid-warm calc-cta" id="calcCta" href="sms:+16047279542"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg> Contact Manan to Learn More</a>
-      <div class="calc-disclaimer">For illustration only. Contact a mortgage broker for accurate figures.</div>
-    </div>
-  </div>
-</section><section class="content-section ">
+</section><section class="content-section raised">
   <div class="wrap">
     <div class="content-head center">
-      <h2>Explore Buyer Services</h2>
-      <p>Detailed guides for every kind of buyer.</p>
+      <h2>Fraser Valley Market Snapshot</h2>
+      <p>Real numbers from the Fraser Valley Real Estate Board's most recent monthly report — not estimates.</p>
     </div>
-    <div class="grid-cards">
-      <a class="simple-card" href="/buyers/first-time/">
-        <strong>First-Time Buyers</strong>
-        <span>Government programs, step-by-step guidance, and everything you need to buy your first home.</span>
-        <span class="go">Learn More →</span>
-      </a><a class="simple-card" href="/buyers/condos-townhomes/">
-        <strong>Condos &amp; Townhomes</strong>
-        <span>Navigate strata documents, fees, and bylaws with confidence.</span>
-        <span class="go">Learn More →</span>
-      </a><a class="simple-card" href="/buyers/investment/">
-        <strong>Investment Properties</strong>
-        <span>Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.</span>
-        <span class="go">Learn More →</span>
-      </a><a class="simple-card" href="/buyers/luxury/">
-        <strong>Luxury Homes</strong>
-        <span>Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.</span>
-        <span class="go">Learn More →</span>
-      </a><a class="simple-card" href="/buyers/relocation/">
-        <strong>Relocating to BC</strong>
-        <span>Moving from out of province? Manan helps remote buyers find the right community and home.</span>
-        <span class="go">Learn More →</span>
-      </a>
+    <div class="grid-cards cols-4">
+      <div class="simple-card"><strong style="color:var(--accent-deep);">$877,600</strong><span>Composite benchmark price, all residential types</span></div>
+      <div class="simple-card"><strong style="color:var(--accent-deep);">$1,350,200</strong><span>Benchmark price, single-family detached</span></div>
+      <div class="simple-card"><strong style="color:var(--accent-deep);">$764,100</strong><span>Benchmark price, townhomes</span></div>
+      <div class="simple-card"><strong style="color:var(--accent-deep);">$469,500</strong><span>Benchmark price, apartments &amp; condos</span></div>
     </div>
+    <p style="font-size:0.8rem;color:var(--ink-soft);margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, July 2026 MLS® &amp; Home Price Index statistics. The Fraser Valley market is currently favouring buyers, with inventory near decade highs — Manan can walk you through what that means for your specific situation.</p>
   </div>
 </section><section class="content-section dark">
   <div class="wrap">

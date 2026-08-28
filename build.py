@@ -1583,30 +1583,16 @@ buyers_body = subhero(
     "A clear, guided process from first conversation to key handover \u2014 with full buyer representation across Surrey and the Lower Mainland.",
     TEXT_CTA + CONTACT_CTA
 )
-buyers_body += market_snapshot_section(dark=True)
-buyers_body += step_section(
-    "A Clear, Guided Process",
-    "Here's what to expect when you buy a home with Manan.",
+buyers_body += simple_cards(
+    "Explore Buyer Services", "Detailed guides for every kind of buyer.",
     [
-        dict(title="Get Pre-Approved", desc="Before you start searching, get mortgage pre-approval. Manan connects you with trusted lenders and helps you understand your budget and purchasing power."),
-        dict(title="Define Your Needs", desc="A conversation about your must-haves, nice-to-haves, lifestyle preferences, and long-term goals \u2014 this shapes your tailored property search."),
-        dict(title="Property Search", desc="Access to MLS\u00ae listings plus local market insight. Showings are scheduled around your schedule, with honest assessments of every property."),
-        dict(title="Make an Offer", desc="A competitive offer with the right conditions to protect your interests, negotiated skillfully on your behalf."),
-        dict(title="Due Diligence", desc="Inspections, strata documents, title review \u2014 you're guided through every subject so you can move forward with confidence."),
-        dict(title="Close &amp; Move In", desc="From final walkthrough to key handover, Manan ensures a smooth completion \u2014 and stays available whenever you need him after."),
-    ]
-)
-buyers_body += point_list_section(
-    True, "Buyer Representation",
-    'Why Buy With <span class="accent-warm">Manan</span>?',
-    "Your buyer's agent should be your advocate, your guide, and your trusted advisor. Here's what that means in practice.",
-    [
-        dict(icon="\U0001F4C8", title="Deep Local Expertise", desc="Manan knows the neighbourhoods, streets, and market trends across Surrey and the Lower Mainland \u2014 residential and commercial alike."),
-        dict(icon="\U0001F4A1", title="Your Interests First", desc="As your buyer's agent, Manan's loyalty is to you. He'll tell you when a property isn't right, even if it means more time searching."),
-        dict(icon="\U0001F91D", title="Extensive Network", desc="Beyond MLS\u00ae, Manan's relationships across the industry can surface opportunities before they're widely known."),
-        dict(icon="\U0001F4C4", title="Buyer Representation", desc="In most transactions, the seller's side pays the buyer's agent commission \u2014 you get full professional representation with no direct cost to you."),
+        dict(title="First-Time Buyers", desc="Government programs, step-by-step guidance, and everything you need to buy your first home.", href="/buyers/first-time/"),
+        dict(title="Condos &amp; Townhomes", desc="Navigate strata documents, fees, and bylaws with confidence.", href="/buyers/condos-townhomes/"),
+        dict(title="Investment Properties", desc="Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.", href="/buyers/investment/"),
+        dict(title="Luxury Homes", desc="Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.", href="/buyers/luxury/"),
+        dict(title="Relocating to BC", desc="Moving from out of province? Manan helps remote buyers find the right community and home.", href="/buyers/relocation/"),
     ],
-    img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
+    raised=False
 )
 buyers_body += f"""<section class="content-section">
   <div class="wrap two-col">
@@ -1642,17 +1628,32 @@ buyers_body += f"""<section class="content-section">
     </div>
   </div>
 </section>"""
-buyers_body += simple_cards(
-    "Explore Buyer Services", "Detailed guides for every kind of buyer.",
+buyers_body += step_section(
+    "A Clear, Guided Process",
+    "Here's what to expect when you buy a home with Manan.",
     [
-        dict(title="First-Time Buyers", desc="Government programs, step-by-step guidance, and everything you need to buy your first home.", href="/buyers/first-time/"),
-        dict(title="Condos &amp; Townhomes", desc="Navigate strata documents, fees, and bylaws with confidence.", href="/buyers/condos-townhomes/"),
-        dict(title="Investment Properties", desc="Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.", href="/buyers/investment/"),
-        dict(title="Luxury Homes", desc="Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.", href="/buyers/luxury/"),
-        dict(title="Relocating to BC", desc="Moving from out of province? Manan helps remote buyers find the right community and home.", href="/buyers/relocation/"),
+        dict(title="Get Pre-Approved", desc="Before you start searching, get mortgage pre-approval. Manan connects you with trusted lenders and helps you understand your budget and purchasing power."),
+        dict(title="Define Your Needs", desc="A conversation about your must-haves, nice-to-haves, lifestyle preferences, and long-term goals \u2014 this shapes your tailored property search."),
+        dict(title="Property Search", desc="Access to MLS\u00ae listings plus local market insight. Showings are scheduled around your schedule, with honest assessments of every property."),
+        dict(title="Make an Offer", desc="A competitive offer with the right conditions to protect your interests, negotiated skillfully on your behalf."),
+        dict(title="Due Diligence", desc="Inspections, strata documents, title review \u2014 you're guided through every subject so you can move forward with confidence."),
+        dict(title="Close &amp; Move In", desc="From final walkthrough to key handover, Manan ensures a smooth completion \u2014 and stays available whenever you need him after."),
     ],
-    raised=False
+    raised=True
 )
+buyers_body += point_list_section(
+    True, "Buyer Representation",
+    'Why Buy With <span class="accent-warm">Manan</span>?',
+    "Your buyer's agent should be your advocate, your guide, and your trusted advisor. Here's what that means in practice.",
+    [
+        dict(icon="\U0001F4C8", title="Deep Local Expertise", desc="Manan knows the neighbourhoods, streets, and market trends across Surrey and the Lower Mainland \u2014 residential and commercial alike."),
+        dict(icon="\U0001F4A1", title="Your Interests First", desc="As your buyer's agent, Manan's loyalty is to you. He'll tell you when a property isn't right, even if it means more time searching."),
+        dict(icon="\U0001F91D", title="Extensive Network", desc="Beyond MLS\u00ae, Manan's relationships across the industry can surface opportunities before they're widely known."),
+        dict(icon="\U0001F4C4", title="Buyer Representation", desc="In most transactions, the seller's side pays the buyer's agent commission \u2014 you get full professional representation with no direct cost to you."),
+    ],
+    img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
+)
+buyers_body += market_snapshot_section()
 buyers_body += community_grid_section(
     "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
     [],
