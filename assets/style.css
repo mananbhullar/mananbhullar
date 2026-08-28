@@ -836,14 +836,14 @@
 
 /* Google follow card (blog hero) */
 .google-follow-card{
-  display:flex;align-items:center;gap:14px;background:#fff;color:var(--ink);
+  display:flex;align-items:center;gap:14px;background:#202020;color:#fff;
   padding:18px 22px;margin:32px auto 0;max-width:520px;box-shadow:0 12px 32px rgba(0,0,0,0.25);
-  transition:transform .15s ease;text-align:left;
+  transition:transform .15s ease;text-align:left;border:1px solid rgba(255,255,255,0.16);
 }
 .google-follow-card:hover{transform:translateY(-2px);}
 .google-follow-card .g-icon{flex-shrink:0;}
-.google-follow-card .txt strong{display:block;font-size:0.95rem;}
-.google-follow-card .txt span{display:block;font-size:0.82rem;color:var(--ink-soft);margin-top:2px;}
+.google-follow-card .txt strong{display:block;font-size:0.95rem;color:#fff;}
+.google-follow-card .txt span{display:block;font-size:0.82rem;color:#C7C5C0;margin-top:2px;}
 @media (max-width:560px){.google-follow-card{max-width:none;}}
 
 /* Sticky mobile CTA bar — keeps a lead path on screen through the whole
