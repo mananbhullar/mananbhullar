@@ -176,11 +176,12 @@
   .hero-secondary-link:hover::after{transform:scaleX(1);}
   .hero-social{display:flex;gap:14px;justify-content:center;margin-top:24px;}
   .hero-social a{
-    display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;
-    border:1px solid rgba(255,255,255,0.35);color:#fff;
-    transition:border-color .2s ease, color .2s ease;
+    position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;color:#fff;
+    transition:opacity .2s ease;
   }
-  .hero-social a:hover{border-color:#fff;color:var(--accent);}
+  .hero-social a .ring{position:absolute;inset:0;width:100%;height:100%;}
+  .hero-social a .glyph{position:relative;z-index:1;}
+  .hero-social a:hover{opacity:0.8;}
   .mobile-break{display:none;}
   @media (max-width:760px){
     .hero{min-height:auto;}
