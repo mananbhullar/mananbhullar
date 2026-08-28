@@ -453,6 +453,8 @@
   .mega--anchored .mega-col-head{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-family:var(--sans);padding-bottom:10px;margin-bottom:12px;}
   .mega--anchored .mega-col-head:not(:first-child){margin-top:20px;}
   .mega--cols-3 .mega-col-head{color:var(--accent-deep);}
+  .mega--cols-3 a.mega-col-head{display:block;white-space:normal;}
+  .mega--cols-3 a.mega-col-head:hover{text-decoration:underline;}
   .mega--cols-3 .mega-list{gap:12px;}
   .mega--cols-3 .mega-col-head:not(:first-child){margin-top:16px;}
 

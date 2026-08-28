@@ -1687,7 +1687,7 @@ def grouped_community_sections_html():
         <span class="arrow">→</span>
       </a>"""
         if cards:
-            html += f"""<div class="community-group">
+            html += f"""<div class="community-group" id="{slugs[0]}">
       <h3 class="community-group-head">{group_name}</h3>
       <div class="community-grid">{cards}</div>
     </div>"""
