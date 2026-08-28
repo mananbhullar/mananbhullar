@@ -1609,6 +1609,18 @@ buyers_body += step_section(
     ],
     dark=True
 )
+buyers_body += point_list_section(
+    True, "Buyer Representation",
+    'Why Buy With <span class="accent-warm">Manan</span>?',
+    "Your buyer's agent should be your advocate, your guide, and your trusted advisor. Here's what that means in practice.",
+    [
+        dict(icon="\U0001F4C8", title="Deep Local Expertise", desc="Manan knows the neighbourhoods, streets, and market trends across Surrey and the Lower Mainland \u2014 residential and commercial alike."),
+        dict(icon="\U0001F4A1", title="Your Interests First", desc="As your buyer's agent, Manan's loyalty is to you. He'll tell you when a property isn't right, even if it means more time searching."),
+        dict(icon="\U0001F91D", title="Extensive Network", desc="Beyond MLS\u00ae, Manan's relationships across the industry can surface opportunities before they're widely known."),
+        dict(icon="\U0001F4C4", title="Buyer Representation", desc="In most transactions, the seller's side pays the buyer's agent commission \u2014 you get full professional representation with no direct cost to you."),
+    ],
+    img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
+)
 buyers_body += f"""<section class="content-section">
   <div class="wrap two-col">
     <div>
@@ -1643,18 +1655,6 @@ buyers_body += f"""<section class="content-section">
     </div>
   </div>
 </section>"""
-buyers_body += point_list_section(
-    True, "Buyer Representation",
-    'Why Buy With <span class="accent-warm">Manan</span>?',
-    "Your buyer's agent should be your advocate, your guide, and your trusted advisor. Here's what that means in practice.",
-    [
-        dict(icon="\U0001F4C8", title="Deep Local Expertise", desc="Manan knows the neighbourhoods, streets, and market trends across Surrey and the Lower Mainland \u2014 residential and commercial alike."),
-        dict(icon="\U0001F4A1", title="Your Interests First", desc="As your buyer's agent, Manan's loyalty is to you. He'll tell you when a property isn't right, even if it means more time searching."),
-        dict(icon="\U0001F91D", title="Extensive Network", desc="Beyond MLS\u00ae, Manan's relationships across the industry can surface opportunities before they're widely known."),
-        dict(icon="\U0001F4C4", title="Buyer Representation", desc="In most transactions, the seller's side pays the buyer's agent commission \u2014 you get full professional representation with no direct cost to you."),
-    ],
-    img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
-)
 buyers_body += community_grid_section(
     "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
     [],

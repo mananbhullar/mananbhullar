@@ -526,6 +526,7 @@
 .content-section.raised{background:var(--line-soft);}
 .content-section.dark{background:var(--ink);color:#fff;}
 .subhero + .content-section.dark{margin-top:-1px;}
+.subhero.flat-dark + .content-section.dark{padding-top:32px;}
 .content-section.dark + .content-section.dark{margin-top:-1px;}
 .why-dark-section + .content-section.dark{margin-top:-1px;}
 .subhero + .why-dark-section{margin-top:-1px;}
