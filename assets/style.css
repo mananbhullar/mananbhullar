@@ -557,6 +557,8 @@
 .content-section.dark .faq-item{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
 .content-section.dark .faq-q{color:#fff;}
 .content-section.dark .faq-a p{color:#C7C5C0;}
+.content-section.dark .local-info-head strong{color:#fff;}
+.content-section.dark .local-info-col li{color:#C7C5C0;border-bottom-color:rgba(255,255,255,0.16);}
 .content-section.dark .community-card{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.16);}
 .content-section.dark .community-card .name{color:#fff;}
 .content-section.dark .community-card .note{color:#C7C5C0;}
