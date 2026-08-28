@@ -3403,7 +3403,6 @@ blog_idx_body = f"""<header class="subhero">
   <div class="wrap">
     <h1>Real Estate Insight for <span class="gradient-text">Surrey &amp; the Lower Mainland</span></h1>
     <p class="lead">In-depth guides and current market analysis from your trusted Fraser Valley expert.</p>
-    {google_follow_card()}
   </div>
 </header>"""
 blog_idx_body += f"""<section class="content-section dark">
@@ -3415,6 +3414,7 @@ blog_idx_body += f"""<section class="content-section dark">
     {featured_html}
     <div class="blog-grid">{blog_cards}</div>
     <div id="blogEmptyState">No articles match your search. Try a different keyword or category.</div>
+    <div style="text-align:center;">{google_follow_card()}</div>
   </div>
 </section>"""
 write_page(
