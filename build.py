@@ -218,6 +218,7 @@ REAL_PHOTOS = {
     'area-campbell-valley': ('/assets/photos/acreage-langley.jpg', 2000, 933),
     'area-otter-district': ('/assets/photos/acreage-langley.jpg', 2000, 933),
     'area-glen-valley': ('/assets/photos/acreage-langley.jpg', 2000, 933),
+    'commercial-hub-office': ('/assets/photos/commercial-hub-office.jpg', 800, 600),
 }
 
 # Real photos oversized for how small they're actually displayed -- each has a pre-generated
