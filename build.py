@@ -1585,17 +1585,6 @@ buyers_body = subhero(
     flat_dark=True
 )
 buyers_body += market_snapshot_section(dark=True)
-buyers_body += simple_cards(
-    "Explore Buyer Services", "Detailed guides for every kind of buyer.",
-    [
-        dict(title="First-Time Buyers", desc="Government programs, step-by-step guidance, and everything you need to buy your first home.", href="/buyers/first-time/"),
-        dict(title="Condos &amp; Townhomes", desc="Navigate strata documents, fees, and bylaws with confidence.", href="/buyers/condos-townhomes/"),
-        dict(title="Investment Properties", desc="Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.", href="/buyers/investment/"),
-        dict(title="Luxury Homes", desc="Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.", href="/buyers/luxury/"),
-        dict(title="Relocating to BC", desc="Moving from out of province? Manan helps remote buyers find the right community and home.", href="/buyers/relocation/"),
-    ],
-    raised=False
-)
 buyers_body += step_section(
     "A Clear, Guided Process",
     "Here's what to expect when you buy a home with Manan.",
@@ -1655,6 +1644,17 @@ buyers_body += f"""<section class="content-section">
     </div>
   </div>
 </section>"""
+buyers_body += simple_cards(
+    "Explore Buyer Services", "Detailed guides for every kind of buyer.",
+    [
+        dict(title="First-Time Buyers", desc="Government programs, step-by-step guidance, and everything you need to buy your first home.", href="/buyers/first-time/"),
+        dict(title="Condos &amp; Townhomes", desc="Navigate strata documents, fees, and bylaws with confidence.", href="/buyers/condos-townhomes/"),
+        dict(title="Investment Properties", desc="Rental homes, multi-family, and secondary suites. Build wealth through Fraser Valley real estate.", href="/buyers/investment/"),
+        dict(title="Luxury Homes", desc="Estate properties in South Surrey, White Rock, and beyond. Discretion and premium service.", href="/buyers/luxury/"),
+        dict(title="Relocating to BC", desc="Moving from out of province? Manan helps remote buyers find the right community and home.", href="/buyers/relocation/"),
+    ],
+    raised=False
+)
 buyers_body += community_grid_section(
     "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
     [],
