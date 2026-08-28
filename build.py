@@ -1669,7 +1669,27 @@ for _area in AREAS:
 def area_href(slug):
     return f'/communities/{slug}/'
 
-COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS]
+def _grouped_areas_order():
+    """Orders AREAS by larger city first, then its smaller sub-areas, using the
+    same real AREA_GROUPS data already used for geography-aware cross-links --
+    replaces the previous order, which was just AREAS' definition order and had
+    no relationship to actual geography (e.g. Fleetwood could appear nowhere
+    near Surrey, or before Langley's own page)."""
+    by_slug = {a['slug']: a for a in AREAS}
+    seen = set()
+    ordered = []
+    for group, slugs in AREA_GROUPS.items():
+        for slug in slugs:
+            if slug in by_slug and slug not in seen:
+                ordered.append(by_slug[slug])
+                seen.add(slug)
+    for a in AREAS:
+        if a['slug'] not in seen:
+            ordered.append(a)
+            seen.add(a['slug'])
+    return ordered
+
+COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in _grouped_areas_order()]
 
 _AREA_CARD_BY_SLUG = {a['slug']: dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS}
 
