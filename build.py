@@ -2932,6 +2932,13 @@ for a in AREAS:
         _area_visual_html = f'<iframe class="imgblock area-map" style="aspect-ratio:16/11;" src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_KEY}&q={_map_q}&zoom=12" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of {a["name"]}, BC"></iframe>'
     else:
         _area_visual_html = f'<img class="imgblock" style="aspect-ratio:16/11;" src="{area_photo_src[0]}"{responsive_img_attrs(area_photo_src[0], area_photo_src[1])} alt="{a["name"]} neighbourhood" loading="lazy" width="{area_photo_src[1]}" height="{area_photo_src[2]}">'
+    _street_seed = f"{a['slug']}-street"
+    if _street_seed in REAL_PHOTOS:
+        _street_src, _street_w, _street_h = REAL_PHOTOS[_street_seed]
+        _street_alt = f"{a['name']} street view"
+    else:
+        _street_src, _street_w, _street_h = f"https://picsum.photos/seed/{_street_seed}/800/600", 800, 600
+        _street_alt = f"{a['name']} street view (sample photo)"
     body += f"""<section class="content-section dark" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
@@ -2940,13 +2947,9 @@ for a in AREAS:
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
-    {_area_visual_html}
+    <img class="imgblock" src="{_street_src}" alt="{_street_alt}" loading="lazy" width="{_street_w}" height="{_street_h}">
   </div>
 </section>"""
-    if a.get('schools') or a.get('shopping') or a.get('recreation'):
-        body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
-    if a.get('area_faq'):
-        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'])
     _is_out_of_town = SLUG_TO_GROUP.get(a['slug']) in OUT_OF_TOWN_GROUPS
     _buy_sell_lead = (
         f"Whether you're searching for a home, an acreage, or a commercial or investment opportunity in {a['name']}, local context matters \u2014 what a property is actually worth here, how quickly comparable listings have been moving, and what the market supports beyond a typical family home search. Manan works across residential, commercial, and investment opportunities in {a['name']} and can walk you through what's realistic for your specific goals."
@@ -2957,16 +2960,9 @@ for a in AREAS:
         f'<div class="point"><div class="dot">\U0001F4BC</div><div><strong>Investors</strong><span>Acreage, ranch, tourism, and commercial opportunities that {a["name"]}\'s market supports beyond a typical family home search.</span></div></div>'
         if _is_out_of_town else ''
     )
-    _street_seed = f"{a['slug']}-street"
-    if _street_seed in REAL_PHOTOS:
-        _street_src, _street_w, _street_h = REAL_PHOTOS[_street_seed]
-        _street_alt = f"{a['name']} street view"
-    else:
-        _street_src, _street_w, _street_h = f"https://picsum.photos/seed/{_street_seed}/800/600", 800, 600
-        _street_alt = f"{a['name']} street view (sample photo)"
     body += f"""<section class="content-section dark">
   <div class="wrap two-col">
-    <img class="imgblock" src="{_street_src}" alt="{_street_alt}" loading="lazy" width="{_street_w}" height="{_street_h}">
+    {_area_visual_html}
     <div>
       <h2>Buying or Selling in {a['name']}</h2>
       <p style="margin-top:14px;">{_buy_sell_lead}</p>
@@ -2983,6 +2979,10 @@ for a in AREAS:
     </div>
   </div>
 </section>"""
+    if a.get('schools') or a.get('shopping') or a.get('recreation'):
+        body += local_info_section(a['name'], a.get('schools'), a.get('shopping'), a.get('recreation'), a.get('entertainment'))
+    if a.get('area_faq'):
+        body += faq_section(f"{a['name']} Real Estate FAQs", a['area_faq'])
     # Neighbourhood Guides pills -- for cities whose AREA_GROUPS entry has
     # sub-area slugs beyond the current page itself
     _current_group = SLUG_TO_GROUP.get(a['slug'])
