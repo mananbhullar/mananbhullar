@@ -1594,6 +1594,19 @@ buyers_body += simple_cards(
     ],
     raised=False
 )
+buyers_body += step_section(
+    "A Clear, Guided Process",
+    "Here's what to expect when you buy a home with Manan.",
+    [
+        dict(title="Get Pre-Approved", desc="Before you start searching, get mortgage pre-approval. Manan connects you with trusted lenders and helps you understand your budget and purchasing power."),
+        dict(title="Define Your Needs", desc="A conversation about your must-haves, nice-to-haves, lifestyle preferences, and long-term goals \u2014 this shapes your tailored property search."),
+        dict(title="Property Search", desc="Access to MLS\u00ae listings plus local market insight. Showings are scheduled around your schedule, with honest assessments of every property."),
+        dict(title="Make an Offer", desc="A competitive offer with the right conditions to protect your interests, negotiated skillfully on your behalf."),
+        dict(title="Due Diligence", desc="Inspections, strata documents, title review \u2014 you're guided through every subject so you can move forward with confidence."),
+        dict(title="Close &amp; Move In", desc="From final walkthrough to key handover, Manan ensures a smooth completion \u2014 and stays available whenever you need him after."),
+    ],
+    dark=True
+)
 buyers_body += f"""<section class="content-section">
   <div class="wrap two-col">
     <div>
@@ -1628,19 +1641,6 @@ buyers_body += f"""<section class="content-section">
     </div>
   </div>
 </section>"""
-buyers_body += step_section(
-    "A Clear, Guided Process",
-    "Here's what to expect when you buy a home with Manan.",
-    [
-        dict(title="Get Pre-Approved", desc="Before you start searching, get mortgage pre-approval. Manan connects you with trusted lenders and helps you understand your budget and purchasing power."),
-        dict(title="Define Your Needs", desc="A conversation about your must-haves, nice-to-haves, lifestyle preferences, and long-term goals \u2014 this shapes your tailored property search."),
-        dict(title="Property Search", desc="Access to MLS\u00ae listings plus local market insight. Showings are scheduled around your schedule, with honest assessments of every property."),
-        dict(title="Make an Offer", desc="A competitive offer with the right conditions to protect your interests, negotiated skillfully on your behalf."),
-        dict(title="Due Diligence", desc="Inspections, strata documents, title review \u2014 you're guided through every subject so you can move forward with confidence."),
-        dict(title="Close &amp; Move In", desc="From final walkthrough to key handover, Manan ensures a smooth completion \u2014 and stays available whenever you need him after."),
-    ],
-    raised=True
-)
 buyers_body += point_list_section(
     True, "Buyer Representation",
     'Why Buy With <span class="accent-warm">Manan</span>?',
@@ -1653,7 +1653,7 @@ buyers_body += point_list_section(
     ],
     img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
 )
-buyers_body += market_snapshot_section()
+buyers_body += market_snapshot_section(dark=True)
 buyers_body += community_grid_section(
     "Popular Communities", f'A few places to start — explore all <a href="/communities/" style="color:var(--accent-on-dark);font-weight:600;text-decoration:underline;">{len(AREAS)} communities</a> Manan serves for the full picture.',
     [],
