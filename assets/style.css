@@ -311,7 +311,7 @@
   .bio-credential strong{display:block;font-size:0.92rem;color:#fff;}
   .bio-credential span{display:block;font-size:0.82rem;color:#B9B7B2;margin-top:2px;}
   .bio-ctas{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
-  @media (max-width:900px){.bio-grid{grid-template-columns:1fr;gap:32px;}.bio-photo{max-width:200px;margin:0 auto;}}
+  @media (max-width:900px){.bio-grid{grid-template-columns:1fr;gap:32px;}.bio-photo{max-width:200px;margin:0;}}
 
   /* ---------- WHY MANAN: Background + What Clients Can Expect (dark) ---------- */
   /* .bio-credential and .point .dot already assume a dark background (translucent-white fills) --
