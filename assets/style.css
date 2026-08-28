@@ -440,6 +440,11 @@
   .mega--anchored .mega-inner{max-width:none;margin:0;padding:24px;display:block;width:280px;}
   .mega--anchored.mega--cols-2 .mega-inner{display:grid;grid-template-columns:1fr 1fr;gap:28px;width:560px;}
   @media (min-width:901px){
+    /* Safety net: on shorter laptop screens a tall dropdown (many items,
+       browser chrome + dock eating into viewport height) can run off the
+       bottom of the window with no way to reach the rest -- scroll instead
+       of clipping. Applies to all three anchored dropdowns. */
+    .mega--anchored{max-height:calc(100vh - 90px);overflow-y:auto;}
     .mega--anchored.mega--cols-3{left:50%;right:auto;transform:translateX(-50%) translateY(-6px);}
     .nav-item:hover .mega--anchored.mega--cols-3,.nav-item:focus-within .mega--anchored.mega--cols-3{transform:translateX(-50%) translateY(0);}
   }
@@ -448,6 +453,8 @@
   .mega--anchored .mega-col-head{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-family:var(--sans);padding-bottom:10px;margin-bottom:12px;}
   .mega--anchored .mega-col-head:not(:first-child){margin-top:20px;}
   .mega--cols-3 .mega-col-head{color:var(--accent-deep);}
+  .mega--cols-3 .mega-list{gap:12px;}
+  .mega--cols-3 .mega-col-head:not(:first-child){margin-top:16px;}
 
   @media (max-width:900px){
     .mega{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;display:none;transition:none;}
