@@ -219,6 +219,22 @@ REAL_PHOTOS = {
     'area-otter-district': ('/assets/photos/acreage-langley.jpg', 2000, 933),
     'area-glen-valley': ('/assets/photos/acreage-langley.jpg', 2000, 933),
     'commercial-hub-office': ('/assets/photos/commercial-hub-office.jpg', 800, 600),
+    'industrial-warehouse-interior': ('/assets/photos/industrial-warehouse-interior.jpg', 900, 675),
+    'retail-storefront-strip': ('/assets/photos/retail-storefront-strip.jpg', 900, 675),
+    'hospitality-pool-resort': ('/assets/photos/hospitality-pool-resort.jpg', 900, 675),
+    'liquor-retail-shelves': ('/assets/photos/liquor-retail-shelves.jpg', 900, 675),
+    'development-land-aerial': ('/assets/photos/development-land-aerial.jpg', 900, 675),
+    'gas-station-canopy': ('/assets/photos/gas-station-canopy.jpg', 900, 675),
+    'convenience-store-interior': ('/assets/photos/convenience-store-interior.jpg', 900, 675),
+    'restaurant-interior-dining': ('/assets/photos/restaurant-interior-dining.jpg', 900, 675),
+    'apartment-building-exterior': ('/assets/photos/apartment-building-exterior.jpg', 900, 675),
+    'self-storage-facility': ('/assets/photos/self-storage-facility.jpg', 900, 675),
+    'truck-yard-highway': ('/assets/photos/truck-yard-highway.jpg', 900, 675),
+    'banquet-hall-event': ('/assets/photos/banquet-hall-event.jpg', 900, 675),
+    'auto-dealership-lot': ('/assets/photos/auto-dealership-lot.jpg', 900, 675),
+    'daycare-classroom-toys': ('/assets/photos/daycare-classroom-toys.jpg', 900, 675),
+    'car-wash-tunnel': ('/assets/photos/car-wash-tunnel.jpg', 900, 675),
+    'farmland-fraser-valley': ('/assets/photos/farmland-fraser-valley.jpg', 900, 675),
 }
 
 # Real photos oversized for how small they're actually displayed -- each has a pre-generated
