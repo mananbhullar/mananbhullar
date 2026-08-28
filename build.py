@@ -129,7 +129,7 @@ def google_follow_card():
       <div class="txt"><strong>Follow us on Google</strong><span>Add Manan Bhullar Real Estate as a preferred source to see our updates in Search</span></div>
     </a>"""
 EVAL_CTA = '<a class="btn-solid-warm" href="/sellers/home-evaluation/">Free Home Evaluation</a>'
-CONTACT_CTA = '<a class="btn-solid-warm" href="/contact/">Get In Touch</a>'
+CONTACT_CTA = '<a class="btn-solid-warm" href="/contact/">Send a Message</a>'
 
 def cta_band(heading, sub, ctas):
     return f"""<section class="cta-band">
@@ -1735,7 +1735,7 @@ buyers_body = subhero(
     "",
     'Your <span class="gradient-text">Home Buying</span> Journey',
     "A clear, guided process from first conversation to key handover \u2014 with full buyer representation across Surrey and the Lower Mainland.",
-    TEXT_CTA + CONTACT_CTA,
+    CALL_CTA + CONTACT_CTA,
     flat_dark=True
 )
 buyers_body += market_snapshot_section(dark=True)
@@ -1917,7 +1917,7 @@ ft_body += simple_cards(
 ft_body += cta_band(
     'Ready to Buy Your <span class="accent-warm">First Home</span>?',
     "Let's start with a free, no-pressure consultation. Manan will walk you through the programs you qualify for and help you understand your budget.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 write_page(
     '/buyers/first-time/',
@@ -2270,7 +2270,7 @@ ds_body += faq_section("Downsizing Questions, Answered", [
 ds_body += cta_band(
     'Thinking About Your <span class="accent-warm">Next Chapter</span>?',
     "A relaxed, no-obligation conversation is a good place to start.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 write_page(
     '/sellers/downsizing/',
@@ -2313,7 +2313,7 @@ comm_body = subhero(
     "",
     'Commercial Real Estate <span class="gradient-text">Across the Lower Mainland</span>',
     "From industrial and warehouse leasing to retail, hospitality, and land \u2014 Manan brings the same client-first approach to commercial transactions across 17 specialized categories.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 
 COMMERCIAL_CATEGORIES = [
@@ -2862,7 +2862,7 @@ comm_idx_body = subhero(
     "",
     'Communities Across <span class="gradient-text">Surrey &amp; the Lower Mainland</span>',
     "Get to know the neighbourhoods Manan works in \u2014 residential and commercial alike.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 comm_idx_body += community_grid_section(
     "Browse by Community", "Explore each area's character before you start your search.", COMMUNITY_CARDS,
@@ -2871,7 +2871,7 @@ comm_idx_body += community_grid_section(
 comm_idx_body += cta_band(
     'Not Sure Which <span class="accent-warm">Area Fits</span>?',
     "Manan can walk you through the trade-offs based on what matters most to you.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 write_page(
     '/communities/',
@@ -3004,7 +3004,7 @@ for a in AREAS:
     body += cta_band(
         f'Thinking About {a["name"]}?',
         "Manan can share more on pricing, inventory, and what to expect in this market.",
-        TEXT_CTA + CONTACT_CTA
+        CALL_CTA + CONTACT_CTA
     )
     body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
     title_name = a['name']
@@ -3124,7 +3124,7 @@ why_body += f"""<section class="content-section dark">
 why_body += cta_band(
     'See It For <span class="accent-warm">Yourself</span>',
     "A short call is the easiest way to find out if it's a good fit.",
-    TEXT_CTA + CONTACT_CTA
+    CALL_CTA + CONTACT_CTA
 )
 write_page(
     '/why-manan/',
