@@ -1480,6 +1480,16 @@ def _auto_supplement_faqs(area, target=6):
             f"What investment or commercial opportunities exist in {name}?",
             f"Areas like {name} often draw interest beyond a typical residential buyer — acreages, ranch or rural land, tourism-driven commercial space, and income properties can all be part of the picture depending on the specific property and zoning. Manan can walk through what's realistic for {name} specifically, residential or otherwise."
         ))
+    if 'familiar with' not in existing_q:
+        # Prioritized right after the out-of-town investment question (not appended at
+        # the end) so this confident, non-limiting answer reliably survives the target=6
+        # cap even on information-rich pages that already fill most slots with
+        # schools/shopping/recreation -- see the out-of-town candidate above for the same
+        # reasoning. Client was explicit: don't let Manan read as boxed into one sub-region.
+        candidates.append((
+            f"Is Manan familiar with {name} specifically?",
+            f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
+        ))
     if area.get('schools') and 'school' not in existing_q:
         candidates.append((
             f"What schools serve {name}?",
@@ -1505,10 +1515,6 @@ def _auto_supplement_faqs(area, target=6):
             f"Who is {name} a good fit for?",
             f"Based on the area's character \u2014 {area['note'].lower()} \u2014 {name} tends to suit {_good_fit(name, area['note'], area['tags'])}. Manan can talk through whether it fits your specific situation."
         ))
-    candidates.append((
-        f"Is Manan familiar with {name} specifically?",
-        f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
-    ))
     if is_out_of_town:
         candidates.append((
             f"Is now a good time to buy or sell in {name}?",
