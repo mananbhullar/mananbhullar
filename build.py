@@ -1669,29 +1669,29 @@ for _area in AREAS:
 def area_href(slug):
     return f'/communities/{slug}/'
 
-def _grouped_areas_order():
-    """Orders AREAS by larger city first, then its smaller sub-areas, using the
-    same real AREA_GROUPS data already used for geography-aware cross-links --
-    replaces the previous order, which was just AREAS' definition order and had
-    no relationship to actual geography (e.g. Fleetwood could appear nowhere
-    near Surrey, or before Langley's own page)."""
-    by_slug = {a['slug']: a for a in AREAS}
-    seen = set()
-    ordered = []
-    for group, slugs in AREA_GROUPS.items():
-        for slug in slugs:
-            if slug in by_slug and slug not in seen:
-                ordered.append(by_slug[slug])
-                seen.add(slug)
-    for a in AREAS:
-        if a['slug'] not in seen:
-            ordered.append(a)
-            seen.add(a['slug'])
-    return ordered
-
-COMMUNITY_CARDS = [dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in _grouped_areas_order()]
-
 _AREA_CARD_BY_SLUG = {a['slug']: dict(name=a['name'], href=area_href(a['slug']), note=a['note']) for a in AREAS}
+
+def grouped_community_sections_html():
+    """Renders the /communities/ hub grid as one headed sub-section per real
+    city in AREA_GROUPS (Surrey, Langley, Delta, etc.), instead of a single
+    flat 108-card grid with no visual indication of which areas belong to
+    which city."""
+    html = ''
+    for group_name, slugs in AREA_GROUPS.items():
+        cards = ''
+        for slug in slugs:
+            c = _AREA_CARD_BY_SLUG.get(slug)
+            if c:
+                cards += f"""<a class="community-card" href="{c['href']}">
+        <div><div class="name">{c['name']}</div><div class="note">{c['note']}</div></div>
+        <span class="arrow">→</span>
+      </a>"""
+        if cards:
+            html += f"""<div class="community-group">
+      <h3 class="community-group-head">{group_name}</h3>
+      <div class="community-grid">{cards}</div>
+    </div>"""
+    return html
 
 def related_area_cards(current_slug, count=3):
     """Geography-aware 'Other Communities' picks: same-city siblings first,
@@ -2864,10 +2864,12 @@ comm_idx_body = subhero(
     "Get to know the neighbourhoods Manan works in \u2014 residential and commercial alike.",
     CALL_CTA + CONTACT_CTA
 )
-comm_idx_body += community_grid_section(
-    "Browse by Community", "Explore each area's character before you start your search.", COMMUNITY_CARDS,
-    raised=False, dark=True
-)
+comm_idx_body += f"""<section class="content-section dark">
+  <div class="wrap">
+    <div class="content-head center"><h2>Browse by Community</h2><p>Explore each area's character before you start your search.</p></div>
+    <div class="community-groups">{grouped_community_sections_html()}</div>
+  </div>
+</section>"""
 comm_idx_body += cta_band(
     'Not Sure Which <span class="accent-warm">Area Fits</span>?',
     "Manan can walk you through the trade-offs based on what matters most to you.",

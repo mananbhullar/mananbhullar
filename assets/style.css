@@ -688,6 +688,10 @@
 .content-section.dark .community-card-group .group-links a{color:var(--accent-on-dark);}
 @media (max-width:860px){.community-grid{grid-template-columns:1fr 1fr;}}
 @media (max-width:560px){.community-grid{grid-template-columns:1fr;}}
+.community-group{margin-bottom:40px;}
+.community-group:last-child{margin-bottom:0;}
+.community-group-head{font-size:1.15rem;font-weight:700;margin:0 0 16px;padding-bottom:10px;border-bottom:2px solid var(--accent-deep);}
+.content-section.dark .community-group-head{color:#fff;border-bottom-color:var(--accent-on-dark);}
 
 /* Generic CTA band reused across subpages */
 .cta-band{background:var(--ink);color:#fff;padding:64px 0;text-align:center;}
