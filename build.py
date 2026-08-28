@@ -3735,21 +3735,73 @@ article_page(_art_by_slug['buying-a-restaurant-bc-liquor-licence'], """
 # ============================================================
 # Legal / footer pages
 # ============================================================
-def legal_page(path, title, heading, body_text):
+def legal_page(path, title, heading, body_html, meta_desc=None):
     body = subhero("", f'<span class="gradient-text">{heading}</span>', "", '', flat_dark=True)
     body += f"""<section class="content-section dark">
   <div class="wrap article-body">
-    <p>{body_text}</p>
+    {body_html}
   </div>
 </section>"""
-    write_page(path, f"{title} | Manan Bhullar", body_text, crumbs((heading, None)), body)
+    write_page(path, f"{title} | Manan Bhullar", meta_desc or f"{title} for mananbhullar.com, Manan Bhullar's real estate website.", crumbs((heading, None)), body)
 
-legal_page('/privacy-policy/', 'Privacy Policy', 'Privacy Policy',
-    "This page will outline how personal information submitted through this site is collected, used, and protected. Full policy text to be finalized with Manan before launch.")
-legal_page('/terms-of-use/', 'Terms of Use', 'Terms of Use',
-    "This page will outline the terms governing use of this website. Full policy text to be finalized with Manan before launch.")
-legal_page('/fair-housing-notice/', 'Fair Housing Notice', 'Fair Housing Notice',
-    "Manan Bhullar is committed to fair housing practices, in compliance with applicable BC and Canadian human rights legislation. Full notice text, including brokerage details, to be finalized before launch.")
+legal_page('/privacy-policy/', 'Privacy Policy', 'Privacy Policy', """
+<p><em>Last updated: August 2026</em></p>
+<p>This Privacy Policy explains how mananbhullar.com ("this site") collects, uses, and protects personal information. This site is operated in British Columbia, Canada, and this policy is intended to comply with applicable Canadian and British Columbia privacy legislation, including the Personal Information Protection Act (PIPA) of British Columbia.</p>
+
+<h2>Information We Collect</h2>
+<p>We collect personal information that you voluntarily provide through this site's contact forms, consultation requests, and mortgage calculator, which may include your name, email address, phone number, and the content of your message or inquiry. We do not require you to create an account or provide payment information to use this site.</p>
+
+<h2>How We Use Your Information</h2>
+<p>Information submitted through this site is used only to respond to your inquiry, provide the service you requested (such as a home evaluation or consultation), and follow up regarding your real estate needs. We do not sell or rent your personal information to third parties.</p>
+
+<h2>Third-Party Services</h2>
+<p>Contact and consultation forms on this site are processed through Formspree, a third-party form-handling service, which receives the information you submit in order to deliver it to Manan Bhullar. This site may also use analytics services (such as Google Analytics) to understand general site traffic and usage patterns; any such data is aggregated and is not used to personally identify visitors. This site loads fonts from third-party font providers (Google Fonts and Fontshare), which may receive standard technical request information (such as IP address) as part of delivering those fonts.</p>
+
+<h2>Cookies</h2>
+<p>This site may use minimal functional cookies necessary for basic site operation and, where analytics are enabled, cookies used to measure site usage. This site does not currently use cookies for third-party advertising or retargeting.</p>
+
+<h2>Your Rights</h2>
+<p>You may request access to, correction of, or deletion of personal information you have submitted through this site, and you may withdraw consent to future contact at any time, by emailing <a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a>.</p>
+
+<h2>Data Security</h2>
+<p>We take reasonable steps to protect personal information submitted through this site, but no method of electronic transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
+
+<h2>Contact</h2>
+<p>Questions about this Privacy Policy can be directed to Manan Bhullar at <a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a> or <a href="tel:+16047279542">(604) 727-9542</a>.</p>
+""", meta_desc="How mananbhullar.com collects, uses, and protects personal information submitted through this site.")
+legal_page('/terms-of-use/', 'Terms of Use', 'Terms of Use', """
+<p><em>Last updated: August 2026</em></p>
+<p>By accessing or using mananbhullar.com ("this site"), you agree to the following terms. If you do not agree with these terms, please do not use this site.</p>
+
+<h2>Informational Purpose</h2>
+<p>The content on this site — including area guides, market data, FAQs, blog articles, and commercial real estate information — is provided for general informational purposes only and does not constitute real estate, legal, financial, or tax advice. You should consult directly with Manan Bhullar or another appropriate licensed professional before making real estate decisions.</p>
+
+<h2>Property and Market Information</h2>
+<p>Property search results link to third-party listing sources. Market statistics referenced on this site (such as benchmark prices) are drawn from sources including the Fraser Valley Real Estate Board and are current as of the date noted on the relevant page; figures shift over time and should be confirmed directly with Manan Bhullar before relying on them. This site does not guarantee the accuracy, completeness, or timeliness of any listing or market information.</p>
+
+<h2>Intellectual Property</h2>
+<p>The text, layout, and original photography on this site are the property of Manan Bhullar unless otherwise noted, and may not be reproduced without permission.</p>
+
+<h2>Third-Party Links</h2>
+<p>This site may link to third-party websites, including property search and social media platforms. Manan Bhullar does not control and is not responsible for the content, accuracy, or privacy practices of any third-party site.</p>
+
+<h2>No Warranty; Limitation of Liability</h2>
+<p>This site is provided "as is" without warranties of any kind. To the fullest extent permitted by law, Manan Bhullar is not liable for any damages arising from your use of this site or reliance on its content.</p>
+
+<h2>Governing Law</h2>
+<p>These terms are governed by the laws of the Province of British Columbia and the laws of Canada applicable therein.</p>
+
+<h2>Contact</h2>
+<p>Questions about these Terms of Use can be directed to <a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a> or <a href="tel:+16047279542">(604) 727-9542</a>.</p>
+""", meta_desc="The terms governing use of mananbhullar.com, including disclaimers about market data and listing information.")
+legal_page('/fair-housing-notice/', 'Fair Housing Notice', 'Fair Housing Notice', """
+<p>Manan Bhullar, REALTOR® with Coldwell Banker Universe Realty (201-2010 E 48th Ave, Vancouver, BC V5P 1R8), is committed to providing equal professional service to every client and customer, without regard to race, colour, ancestry, place of origin, religion, marital status, family status, physical or mental disability, sex, sexual orientation, gender identity or expression, or age, consistent with the British Columbia Human Rights Code and the REALTOR® Code administered by the Canadian Real Estate Association.</p>
+
+<p>This commitment applies to all residential and commercial real estate services provided, including buyer representation, seller representation, property evaluations, and marketing.</p>
+
+<h2>Questions or Concerns</h2>
+<p>If you have questions about this commitment or a concern about the service you received, please contact Manan Bhullar directly at <a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a> or <a href="tel:+16047279542">(604) 727-9542</a>.</p>
+""", meta_desc="Manan Bhullar's commitment to equal professional service and fair housing practices under BC human rights legislation.")
 
 # ============================================================
 # 404 page \u2014 standalone, sleek dark treatment
