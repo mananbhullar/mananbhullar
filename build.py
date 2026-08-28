@@ -1583,6 +1583,7 @@ buyers_body = subhero(
     "A clear, guided process from first conversation to key handover \u2014 with full buyer representation across Surrey and the Lower Mainland.",
     TEXT_CTA + CONTACT_CTA
 )
+buyers_body += market_snapshot_section(dark=True)
 buyers_body += step_section(
     "A Clear, Guided Process",
     "Here's what to expect when you buy a home with Manan.",
@@ -1607,7 +1608,6 @@ buyers_body += point_list_section(
     ],
     img_seed='surrey-buyer-agent', img_alt="Manan Bhullar meeting with buyer clients (sample photo)"
 )
-buyers_body += market_snapshot_section(dark=True)
 buyers_body += f"""<section class="content-section">
   <div class="wrap two-col">
     <div>
