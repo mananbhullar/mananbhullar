@@ -3296,7 +3296,7 @@ SOLD_LISTINGS = [
     dict(street="", area="Hyland Business Centre, Surrey", type="Retail Unit", price="$900,000", img_seed="sold-32", category="Commercial"),
     dict(street="Fraser Highway", area="Surrey", type="Development Property", price="Contact for Price", img_seed="sold-28", category="Commercial"),
     dict(street="", area="Yarrow", type="Liquor & Convenience Store", price="Contact for Price", img_seed="sold-25", category="Commercial"),
-    dict(street="Wallace Street", area="Hope", type="Liquor Store", price="$3,400,000", img_seed="sold-12", category="Commercial"),
+    dict(street="Wallace Street", area="Hope", type="Liquor Store", price="Contact for Price", img_seed="sold-12", category="Commercial"),
     dict(street="82 Avenue", area="Surrey", type="Industrial Strata Unit — 204", price="Contact for Price", img_seed="sold-warehouse-204", category="Commercial"),
     dict(street="83 Avenue", area="Willoughby", type="Industrial Land", price="Contact for Price", img_seed="sold-33", category="Commercial"),
     dict(street="Lincoln Road", area="Abbotsford", type="Development Property", price="Contact for Price", img_seed="sold-29", category="Commercial"),
