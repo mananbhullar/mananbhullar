@@ -1,0 +1,98 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "#dc2626",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-01T21:56:03.910Z",
+        "reason": "user confirmed: explicitly asked for the SOLD badge/heading word in red on the new sold-listings page"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.85)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-01T23:04:16.471Z",
+        "reason": "functional necessity: gradient scrim for white text legibility over arbitrary listing photos on hover, matches the site's existing hero-photo dark-overlay convention (see homepage cover photo)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.5)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-01T23:04:16.511Z",
+        "reason": "same gradient scrim, mid-stop of the legibility overlay"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.35)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T02:45:05.029Z",
+        "reason": "functional hover-lift shadow on sold-listing cards, same family as existing box-shadow rgba(0,0,0,0.14)/0.25 used elsewhere in the file"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.92)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:05:08.559Z",
+        "reason": "same photo-legibility gradient scrim family already approved (0.85/0.5), tightened for sleeker hover-card request"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.62)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:05:08.609Z",
+        "reason": "same photo-legibility gradient scrim family, mid-stop"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.64rem",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:05:08.650Z",
+        "reason": "tightened eyebrow-label size for sleeker sold-card hover panel, same family as existing 0.7rem tag/label sizes used throughout the file"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#7da2f5",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:08:27.886Z",
+        "reason": "user reported the type label was hard to read against the hover-card photo; lightened from --accent-on-dark to this tint specifically for contrast"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.7)",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:08:27.926Z",
+        "reason": "text-shadow added for the same legibility fix, same family as other on-photo text-shadow/gradient values already sanctioned this session"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.68rem",
+        "files": [
+          "assets/style.css"
+        ],
+        "createdAt": "2026-09-02T21:08:27.963Z",
+        "reason": "slightly enlarged type label for legibility per user feedback, same family as existing 0.7rem tag sizes used throughout the file"
+      }
+    ]
+  }
+}

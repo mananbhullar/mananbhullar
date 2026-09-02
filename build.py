@@ -355,6 +355,49 @@ REAL_PHOTOS = {
     'willoughby-street': ('/assets/photos/willoughby-street.jpg', 800, 600),
     'willowbrook-street': ('/assets/photos/willowbrook-street.jpg', 800, 600),
     'yorkson-street': ('/assets/photos/yorkson-street.jpg', 800, 600),
+    'sold-1': ('/assets/photos/sold-0-avenue-pacific-douglas.jpg', 1446, 1087),
+    'sold-2': ('/assets/photos/sold-79-avenue-fleetwood.jpg', 1565, 1005),
+    'sold-3': ('/assets/photos/sold-80-avenue-fleetwood.jpg', 1535, 1024),
+    'sold-4': ('/assets/photos/sold-124-street-surrey.jpg', 1402, 1122),
+    'sold-5': ('/assets/photos/sold-134-street-whalley-devmap.jpg', 1600, 1066),
+    'sold-6': ('/assets/photos/sold-134-street-whalley-house.jpg', 1536, 1024),
+    'sold-7': ('/assets/photos/sold-balsam-cr-elgin-chantrell.jpg', 1535, 1024),
+    'sold-8': ('/assets/photos/sold-liquor-license-icon.png', 348, 348),
+    'sold-9': ('/assets/photos/sold-77-ave-fleetwood-a.jpg', 640, 427),
+    'sold-10': ('/assets/photos/sold-77-ave-fleetwood-b.jpg', 1537, 1023),
+    'sold-11': ('/assets/photos/sold-hope-motor-hotel.jpg', 1448, 1086),
+    'sold-12': ('/assets/photos/sold-hope-liquor-store.jpg', 1445, 1088),
+    'sold-7711-1': ('/assets/photos/sold-7711-alltrades-1.jpg', 1536, 1024),
+    'sold-7711-2': ('/assets/photos/sold-7711-alltrades-2.jpg', 1535, 1024),
+    'sold-7711-3': ('/assets/photos/sold-7711-alltrades-3.jpg', 1535, 1024),
+    'sold-7711-4': ('/assets/photos/sold-7711-alltrades-4.jpg', 1535, 1024),
+    'sold-7711-5': ('/assets/photos/sold-7711-alltrades-5.jpg', 1535, 1024),
+    'sold-7711-6': ('/assets/photos/sold-7711-alltrades-6.jpg', 1535, 1024),
+    'sold-7711-7': ('/assets/photos/sold-7711-alltrades-7.jpg', 1600, 1066),
+    'sold-warehouse-203': ('/assets/photos/sold-82-ave-warehouse-203.jpg', 1559, 1009),
+    'sold-warehouse-204': ('/assets/photos/sold-82-ave-warehouse-204.jpg', 1559, 1009),
+    'sold-13': ('/assets/photos/sold-106a-whalley.jpg', 1280, 853),
+    'sold-14': ('/assets/photos/sold-144-st-surrey.jpg', 1600, 1064),
+    'sold-15': ('/assets/photos/sold-145a-bear-creek.jpg', 1392, 1130),
+    'sold-16': ('/assets/photos/sold-153a-fleetwood.jpg', 1392, 1130),
+    'sold-17': ('/assets/photos/sold-89a-fleetwood.jpg', 1537, 1023),
+    'sold-18': ('/assets/photos/sold-91a.jpg', 1600, 901),
+    'sold-19': ('/assets/photos/sold-drayton-st-north-vancouver.jpg', 1535, 1024),
+    'sold-20': ('/assets/photos/sold-river-road-surrey.jpg', 1537, 1023),
+    'sold-21': ('/assets/photos/sold-smith-ave-burnaby.jpg', 1280, 854),
+    'sold-22': ('/assets/photos/sold-motel-hollywood-whalley.jpg', 1448, 1086),
+    'sold-23': ('/assets/photos/sold-pizza-shop-guildford.jpg', 1453, 1083),
+    'sold-24': ('/assets/photos/sold-spa-delta.jpg', 1463, 1075),
+    'sold-25': ('/assets/photos/sold-yarrow-liquor.jpg', 1268, 830),
+    'sold-26': ('/assets/photos/sold-fraser-st-hope.jpg', 1448, 1086),
+    'sold-27': ('/assets/photos/sold-83-ave-willoughby-bizpark.jpg', 1600, 900),
+    'sold-28': ('/assets/photos/sold-fraser-hwy-surrey.jpg', 1402, 1122),
+    'sold-29': ('/assets/photos/sold-lincoln-rd-abbotsford.jpg', 1048, 838),
+    'sold-30': ('/assets/photos/sold-mccallum-rd-abbotsford.jpg', 1538, 1023),
+    'sold-31': ('/assets/photos/sold-ridge-cr-panorama-ridge.jpg', 1537, 1023),
+    'sold-32': ('/assets/photos/sold-hyland-business-centre.jpg', 1448, 1086),
+    'sold-33': ('/assets/photos/sold-83-ave-willoughby-land.jpg', 1523, 1033),
+    'sold-34': ('/assets/photos/sold-land-assembly-abbotsford.jpg', 1448, 1086),
 }
 
 # Real photos oversized for how small they're actually displayed -- each has a pre-generated
@@ -3235,23 +3278,123 @@ write_page(
     ps_body
 )
 
-listings_body = subhero(
+# ============================================================
+# /listings/  \u2014 real, client-confirmed sold listings (street name
+# only -- no house number in text, no beds/baths, no sold date).
+# Photos sourced from ~/Desktop/Completed/, resized/compressed
+# into assets/photos/sold-*.jpg. Add more dicts here as Manan
+# sends additional cleared listings.
+# ============================================================
+SOLD_LISTINGS = [
+    # --- Featured (client-selected order) ---
+    dict(street="McCallum Road", area="Abbotsford", type="Development Property", price="Contact for Price", img_seed="sold-30", category="Commercial"),
+    dict(street="Lincoln Road", area="Abbotsford", type="Development Property", price="Contact for Price", img_seed="sold-29", category="Commercial"),
+    dict(street="Fraser Highway", area="Surrey", type="Development Property", price="Contact for Price", img_seed="sold-28", category="Commercial"),
+    dict(street="83 Avenue", area="Willoughby", type="Development Property", price="Contact for Price", img_seed="sold-27", category="Commercial"),
+    dict(street="Fraser Street", area="Hope", type="Development Property", price="Contact for Price", img_seed="sold-26", category="Commercial"),
+    dict(street="", area="Yarrow", type="Liquor & Convenience Store", price="Contact for Price", img_seed="sold-25", category="Commercial"),
+    dict(street="", area="Hyland Business Centre, Surrey", type="Retail Unit", price="$900,000", img_seed="sold-32", category="Commercial"),
+    dict(street="King George Boulevard", area="Whalley", type="Motel", price="Contact for Price", img_seed="sold-22", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #5", price="Contact for Price", img_seed="sold-7711-1", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #6", price="Contact for Price", img_seed="sold-7711-2", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #7", price="Contact for Price", img_seed="sold-7711-3", category="Commercial"),
+    dict(street="82 Avenue", area="Surrey", type="Industrial Strata Unit — 204", price="Contact for Price", img_seed="sold-warehouse-204", category="Commercial"),
+    dict(street="Wallace Street", area="Hope", type="Liquor Store", price="$3,400,000", img_seed="sold-12", category="Commercial"),
+    dict(street="Wallace Street", area="Hope", type="Hotel/Motel", price="$3,400,000", img_seed="sold-11", category="Commercial"),
+    dict(street="134 Street", area="Downtown Surrey", type="Development Property", price="Contact for Price", img_seed="sold-5", category="Residential"),
+    dict(street="River Road", area="Surrey", type="Single-Family", price="$2,200,000", img_seed="sold-20", category="Residential"),
+    dict(street="145A Street", area="Bear Creek", type="Single-Family", price="$3,000,000", img_seed="sold-15", category="Residential"),
+    dict(street="77 Avenue", area="Fleetwood", type="Single-Family", price="$3,200,000", img_seed="sold-9", category="Residential"),
+    dict(street="", area="Northern BC", type="Liquor License", price="Contact for Price", img_seed="sold-8", category="Commercial"),
+    dict(street="Balsam Crescent", area="Elgin Chantrell", type="Acreage", price="$3,200,000", img_seed="sold-7", category="Residential"),
+    dict(street="64 Avenue", area="Delta", type="Salon & Spa", price="Contact for Price", img_seed="sold-24", category="Commercial"),
+    dict(street="83 Avenue", area="Willoughby", type="Industrial Land", price="Contact for Price", img_seed="sold-33", category="Commercial"),
+    dict(street="", area="Abbotsford", type="Land Assembly", price="Contact for Price", img_seed="sold-34", category="Residential"),
+    # --- Everything else ---
+    dict(street="0 Avenue", area="Pacific Douglas", type="Single-Family", price="$2,000,000", img_seed="sold-1", category="Residential"),
+    dict(street="79 Avenue", area="Fleetwood", type="Single-Family", price="Contact for Price", img_seed="sold-2", category="Residential"),
+    dict(street="80 Avenue", area="Fleetwood", type="Single-Family", price="$1,600,000", img_seed="sold-3", category="Residential"),
+    dict(street="124 Street", area="Surrey", type="Single-Family", price="Contact for Price", img_seed="sold-4", category="Residential"),
+    dict(street="134 Street", area="Whalley", type="Development Property", price="Contact for Price", img_seed="sold-6", category="Residential"),
+    dict(street="", area="Abbotsford", type="Liquor License", price="Contact for Price", img_seed="sold-8", category="Commercial"),
+    dict(street="77 Avenue", area="Fleetwood", type="Single-Family", price="$3,200,000", img_seed="sold-10", category="Residential"),
+    dict(street="82 Avenue", area="Surrey", type="Industrial Strata Unit — 203", price="Contact for Price", img_seed="sold-warehouse-203", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #8", price="Contact for Price", img_seed="sold-7711-4", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #11", price="Contact for Price", img_seed="sold-7711-5", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #12", price="Contact for Price", img_seed="sold-7711-6", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #15", price="Contact for Price", img_seed="sold-7711-7", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #16", price="Contact for Price", img_seed="sold-7711-1", category="Commercial"),
+    dict(street="128 Street", area="Surrey", type="Industrial Strata Unit — #17", price="Contact for Price", img_seed="sold-7711-2", category="Commercial"),
+    dict(street="106A Avenue", area="Whalley", type="Single-Family", price="$1,800,000", img_seed="sold-13", category="Residential"),
+    dict(street="144 Street", area="Surrey", type="Single-Family", price="$1,200,000", img_seed="sold-14", category="Residential"),
+    dict(street="153A Street", area="Fleetwood", type="Single-Family", price="$1,700,000", img_seed="sold-16", category="Residential"),
+    dict(street="89A Avenue", area="Fleetwood", type="Single-Family", price="Contact for Price", img_seed="sold-17", category="Residential"),
+    dict(street="91A Avenue", area="Fleetwood", type="Single-Family", price="Contact for Price", img_seed="sold-18", category="Residential"),
+    dict(street="Drayton Street", area="North Vancouver", type="Single-Family", price="Contact for Price", img_seed="sold-19", category="Residential"),
+    dict(street="Smith Avenue", area="Burnaby", type="Single-Family", price="$2,000,000", img_seed="sold-21", category="Residential"),
+    dict(street="108 Avenue", area="Guildford", type="Restaurant", price="Contact for Price", img_seed="sold-23", category="Commercial"),
+    dict(street="Ridge Crescent", area="Panorama Ridge", type="Single-Family", price="$1,900,000", img_seed="sold-31", category="Residential"),
+]
+
+def sold_card(item):
+    location = f'{item["street"]}, {item["area"]}' if item['street'] else item['area']
+    if item['img_seed'] in REAL_PHOTOS:
+        src, w, h = REAL_PHOTOS[item['img_seed']]
+        img_html = f'<img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{location}">'
+    else:
+        img_html = f'<img src="https://picsum.photos/seed/{item["img_seed"]}/600/450" loading="lazy" alt="{location}">'
+    return f"""<div class="sold-card" data-sold-card data-category="{item['category']}">
+      <div class="thumb">
+        {img_html}<span class="sold-badge">Sold</span>
+        <div class="body">
+          {f'<span class="type">{item["type"]}</span>' if item['type'] != 'Single-Family' else ''}
+          <div class="meta-row">
+            <span class="location">{location}</span>
+            <span class="price">{item['price']}</span>
+          </div>
+        </div>
+      </div>
+    </div>"""
+
+sold_listings_body = subhero(
     "",
-    '<span class="gradient-text">Current Listings</span>',
-    "Manan's active listings will appear here. In the meantime, reach out directly or search current MLS\u00AE inventory.",
-    '<a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Properties \u2197</a>' + CONTACT_CTA
+    '<span class="gradient-text">Listings</span>',
+    "Manan Bhullar, REALTOR®",
+    CALL_CTA + CONTACT_CTA
 )
-listings_body += f"""<section class="content-section">
-  <div class="wrap" style="text-align:center;max-width:52ch;">
-    <p style="color:var(--ink-soft);">This page is ready for listing data once an MLS\u00AE feed is connected \u2014 for now, call or message Manan directly for current inventory.</p>
+sold_listings_body = sold_listings_body.replace(
+    '<header class="subhero">',
+    '<header class="subhero" style="background-image:linear-gradient(180deg, rgba(18,18,18,0.68) 0%, rgba(18,18,18,0.58) 45%, rgba(18,18,18,0.78) 100%), url(\'/assets/photos/dark-estate-dusk-firepit.jpg\');background-size:cover;background-position:center 65%;">'
+)
+sold_listings_body += stat_strip([
+    ("Top Producer", "2024"),
+    ("50+", "Happy Clients"),
+    ("Marketing Specialist", "SFU Beedie Grad"),
+    ("20+", "Areas Served"),
+]).replace('content-section stat-strip', 'content-section stat-strip dark')
+sold_listings_body += f"""<section class="content-section dark">
+  <div class="wrap">
+    <div class="filter-pills" id="soldFilterBar">
+      <button class="filter-pill active" data-pill="All">All</button>
+      <button class="filter-pill" data-pill="Residential">Residential</button>
+      <button class="filter-pill" data-pill="Commercial">Commercial</button>
+    </div>
+    <div class="sold-grid">
+      {''.join(sold_card(item) for item in SOLD_LISTINGS)}
+    </div>
   </div>
 </section>"""
+sold_listings_body += cta_band(
+    "Thinking About Selling?",
+    "Get a clear, honest read on what your property could sell for in today's market.",
+    EVAL_CTA + CONTACT_CTA
+)
 write_page(
     '/listings/',
-    "My Listings | Manan Bhullar",
-    "Current listings from Manan Bhullar, REALTOR\u00AE.",
-    crumbs(("My Listings", None)),
-    listings_body
+    "Listings | Manan Bhullar",
+    "A selection of properties recently sold by Manan Bhullar, REALTOR\u00AE, across Surrey and the Lower Mainland.",
+    crumbs(("Listings", None)),
+    sold_listings_body
 )
 
 # ============================================================

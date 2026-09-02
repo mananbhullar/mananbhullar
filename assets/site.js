@@ -180,4 +180,54 @@ document.addEventListener('DOMContentLoaded', function(){
     if(blogSearch) blogSearch.addEventListener('input', applyBlogFilter);
   }
 
+  // Sold Listings gallery: category filter pills
+  var soldBar = document.getElementById('soldFilterBar');
+  var soldCards = document.querySelectorAll('[data-sold-card]');
+  if(soldBar && soldCards.length){
+    var soldPills = soldBar.querySelectorAll('.filter-pill');
+    soldPills.forEach(function(pill){
+      pill.addEventListener('click', function(){
+        soldPills.forEach(function(p){ p.classList.remove('active'); });
+        pill.classList.add('active');
+        var category = pill.getAttribute('data-pill');
+        soldCards.forEach(function(card){
+          var show = category === 'All' || card.getAttribute('data-category') === category;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  }
+
+  // Stat strip: reveal + count-up when scrolled into view
+  var statCards = document.querySelectorAll('.stat-strip .stat-card');
+  if(statCards.length && 'IntersectionObserver' in window){
+    var statCardList = Array.prototype.slice.call(statCards);
+    statCardList.forEach(function(card){ card.classList.add('js-stat-init'); });
+    var statObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        var card = entry.target;
+        statObserver.unobserve(card);
+        var delay = statCardList.indexOf(card) * 90;
+        setTimeout(function(){
+          card.classList.add('in-view');
+          var strongEl = card.querySelector('strong');
+          var match = strongEl.textContent.match(/^(\$?)(\d+)(.*)$/);
+          if(match){
+            var prefix = match[1], target = parseInt(match[2], 10), suffix = match[3];
+            var duration = 900, startTime = null;
+            function step(ts){
+              if(!startTime) startTime = ts;
+              var progress = Math.min((ts - startTime) / duration, 1);
+              strongEl.textContent = prefix + Math.round(progress * target) + suffix;
+              if(progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+          }
+        }, delay);
+      });
+    }, {threshold: 0.3});
+    statCardList.forEach(function(card){ statObserver.observe(card); });
+  }
+
 });
