@@ -3377,7 +3377,7 @@ sold_listings_body = sold_listings_body.replace(
 )
 sold_listings_body += stat_strip([
     ("Top Producer", "2024"),
-    ("50+", "Happy Clients"),
+    ("5.0 ★", "Rating on Google"),
     ("Marketing Specialist", "SFU Beedie BBA"),
     ("20+", "Areas Served"),
 ]).replace('content-section stat-strip', 'content-section stat-strip dark')
