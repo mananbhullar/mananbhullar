@@ -137,7 +137,7 @@ def google_follow_card():
       <svg class="g-icon" viewBox="0 0 48 48" width="26" height="26"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 6 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.6 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.5 6 29.5 4 24 4c-7.4 0-13.8 4.2-17 10.3z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-1.8 14-4.9l-6.4-5.4C29.6 35.5 26.9 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.9 39.6 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.4 5.4C39.9 36.9 44 31 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
       <div class="txt"><strong>Follow us on Google</strong><span>Add Manan Bhullar Real Estate as a preferred source to see our updates in Search</span></div>
     </a>"""
-EVAL_CTA = '<a class="btn-solid-warm" href="/sellers/home-evaluation/">Free Home Evaluation</a>'
+EVAL_CTA = '<a class="btn-solid-warm" href="/sellers/home-evaluation/">Free Property Evaluation</a>'
 CONTACT_CTA = '<a class="btn-solid-warm" href="/contact/">Send a Message</a>'
 
 def cta_band(heading, sub, ctas):
@@ -2194,7 +2194,7 @@ sellers_body += step_section(
     "How Manan Sells Your Home",
     "A straightforward process from first conversation to closing.",
     [
-        dict(title="Free Home Evaluation", desc="A market-based assessment of your property's value, backed by current comparable sales."),
+        dict(title="Free Property Evaluation", desc="A market-based assessment of your property's value, backed by current comparable sales."),
         dict(title="Pricing &amp; Prep Strategy", desc="A conversation about pricing strategy and any prep work \u2014 staging, minor repairs, photography \u2014 that will maximize your return."),
         dict(title="Marketing Launch", desc="Professional photography, MLS\u00ae listing, and targeted marketing to reach qualified buyers."),
         dict(title="Showings &amp; Offers", desc="Coordinated showings and skilled negotiation on every offer that comes in, always with your interests first."),
@@ -2205,7 +2205,7 @@ sellers_body += step_section(
 sellers_body += simple_cards(
     "Seller Services", "Whatever stage you're at in the selling process.",
     [
-        dict(title="Free Home Evaluation", desc="Find out what your home is worth in today's market \u2014 no cost, no obligation.", href="/sellers/home-evaluation/"),
+        dict(title="Free Property Evaluation", desc="Find out what your property is worth in today's market \u2014 no cost, no obligation.", href="/sellers/home-evaluation/"),
         dict(title="Downsizing", desc="A thoughtful, well-paced plan for empty nesters and retirees moving to their next chapter.", href="/sellers/downsizing/"),
     ],
     cols=2, raised=False, dark=True
@@ -2232,8 +2232,8 @@ sellers_body += faq_section("Selling Questions, Answered", [
     ("Can I sell and buy at the same time without ending up homeless in between?", "Yes \u2014 this is common, and there are a few ways to structure it: a subject-to-sale offer on your purchase, a rent-back arrangement with your buyer after closing, bridge financing to cover the gap, or timing both completion dates to align. Manan coordinates this regularly for sellers who are also buying and will walk through which option fits your situation."),
 ])
 sellers_body += cta_band(
-    'Curious What Your <span class="accent-warm">Home Is Worth</span>?',
-    "Start with a free, no-obligation home evaluation.",
+    'Curious What Your <span class="accent-warm">Property Is Worth</span>?',
+    "Start with a free, no-obligation property evaluation.",
     EVAL_CTA
 )
 write_page(
@@ -2247,8 +2247,8 @@ write_page(
 # /sellers/home-evaluation/
 he_body = subhero(
     "",
-    '<span class="gradient-text">What Is Your Home Worth?</span>',
-    "Get a market-based home evaluation from Manan Bhullar \u2014 free, no obligation, no pressure.",
+    '<span class="gradient-text">What Is Your Property Worth?</span>',
+    "Get a market-based property evaluation from Manan Bhullar \u2014 free, no obligation, no pressure.",
     CONTACT_CTA,
     flat_dark=True
 )
@@ -2263,11 +2263,11 @@ he_body += f"""<section class="content-section dark">
         <div class="point"><div class="dot">\U0001F4DD</div><div><strong>Written Summary</strong><span>A clear written estimate with the reasoning behind it, so you understand exactly how the number was reached.</span></div></div>
       </div>
     </div>
-    <img class="imgblock" src="/assets/photos/home-evaluation.jpg" alt="Free home evaluation walkthrough" loading="lazy" width="800" height="600">
+    <img class="imgblock" src="/assets/photos/home-evaluation.jpg" alt="Free property evaluation walkthrough" loading="lazy" width="800" height="600">
   </div>
 </section>"""
 he_body += market_snapshot_section(raised=False)
-he_body += faq_section("Home Evaluation Questions, Answered", [
+he_body += faq_section("Property Evaluation Questions, Answered", [
     ("Is the evaluation really free, with no obligation?", "Yes. There's no cost and no requirement to list with Manan afterward \u2014 it's a genuine starting point for homeowners who want a realistic sense of value, whether they're selling soon, refinancing, or just curious."),
     ("How accurate is a home evaluation compared to a formal appraisal?", "A realtor's evaluation is based on current comparable sales and live market activity, which is generally reliable for setting a list price. A formal bank appraisal is a separate, more rigid process typically required for financing, often using slightly different criteria, and can land somewhat differently than a market evaluation."),
     ("Does my home need to be tidy or staged for the evaluation?", "Not for the evaluation itself \u2014 Manan can account for condition and clutter mentally during the walkthrough. If you decide to sell, that's when prep and staging conversations become worth having, before photos and showings."),
@@ -2277,7 +2277,7 @@ he_body += faq_section("Home Evaluation Questions, Answered", [
 ])
 he_eval_form = lead_form(
     "Get My Free Evaluation",
-    "New Home Evaluation Request \u2014 mananbhullar.com",
+    "New Property Evaluation Request \u2014 mananbhullar.com",
     extra_fields='<input type="text" name="property_address" placeholder="Property Address" required style="margin-bottom:12px;"><select name="timeline"><option>What\u2019s your timeline?</option><option>Just curious</option><option>Selling in 3\u201312 months</option><option>Ready to list now</option></select>',
     message_placeholder="Anything else Manan should know? (optional)"
 )
@@ -2293,9 +2293,9 @@ he_body += f"""<section class="cta-form-band">
 </section>"""
 write_page(
     '/sellers/home-evaluation/',
-    "Free Home Evaluation | Manan Bhullar",
-    "Get a free, no-obligation home evaluation from Manan Bhullar, Surrey BC.",
-    crumbs(("Sell Your Property", "/sellers/"), ("Free Home Evaluation", None)),
+    "Free Property Evaluation | Manan Bhullar",
+    "Get a free, no-obligation property evaluation from Manan Bhullar, Surrey BC.",
+    crumbs(("Sell Your Property", "/sellers/"), ("Free Property Evaluation", None)),
     he_body
 )
 
@@ -3032,7 +3032,7 @@ for a in AREAS:
       </div>
       <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;">
         <a class="btn-solid-warm" href="/property-search/">\U0001F50D Search Homes in {a['name']}</a>
-        <a class="btn-outline-light" href="/sellers/home-evaluation/">\U0001F4CB Free Home Evaluation</a>
+        <a class="btn-outline-light" href="/sellers/home-evaluation/">\U0001F4CB Free Property Evaluation</a>
       </div>
       <p style="margin-top:14px;font-size:0.85rem;">Prefer to talk now? Call <a href="tel:+16047279542" style="color:var(--accent-on-dark);font-weight:600;">(604) 727-9542</a></p>
     </div>
@@ -3120,7 +3120,7 @@ marketing_body += faq_section("Marketing Questions, Answered", [
 ], dark=True)
 marketing_body += cta_band(
     'See the Plan for <span class="accent-warm">Your Property</span>',
-    "Every marketing plan is built around the specific property — book a free home evaluation to see what Manan would propose for yours.",
+    "Every marketing plan is built around the specific property — book a free property evaluation to see what Manan would propose for yours.",
     TEXT_CTA + EVAL_CTA
 )
 write_page(
@@ -3200,7 +3200,7 @@ contact_body = subhero(
     '',
     flat_dark=True
 )
-contact_interested_options = "<option>I'm interested in...</option><option>Buying a Home</option><option>Selling My Property</option><option>Commercial Real Estate</option><option>Free Home Evaluation</option><option>Investment Properties</option><option>Other</option>"
+contact_interested_options = "<option>I'm interested in...</option><option>Buying a Home</option><option>Selling My Property</option><option>Commercial Real Estate</option><option>Free Property Evaluation</option><option>Investment Properties</option><option>Other</option>"
 contact_lead_form = lead_form(
     "Send a Message",
     "New Contact Form Message — mananbhullar.com",
@@ -3935,7 +3935,7 @@ legal_page('/privacy-policy/', 'Privacy Policy', 'Privacy Policy', """
 <p>We collect personal information that you voluntarily provide through this site's contact forms, consultation requests, and mortgage calculator, which may include your name, email address, phone number, and the content of your message or inquiry. We do not require you to create an account or provide payment information to use this site.</p>
 
 <h2>How We Use Your Information</h2>
-<p>Information submitted through this site is used only to respond to your inquiry, provide the service you requested (such as a home evaluation or consultation), and follow up regarding your real estate needs. We do not sell or rent your personal information to third parties.</p>
+<p>Information submitted through this site is used only to respond to your inquiry, provide the service you requested (such as a property evaluation or consultation), and follow up regarding your real estate needs. We do not sell or rent your personal information to third parties.</p>
 
 <h2>Third-Party Services</h2>
 <p>Contact and consultation forms on this site are processed through Formspree, a third-party form-handling service, which receives the information you submit in order to deliver it to Manan Bhullar. This site may also use analytics services (such as Google Analytics) to understand general site traffic and usage patterns; any such data is aggregated and is not used to personally identify visitors. This site loads fonts from third-party font providers (Google Fonts and Fontshare), which may receive standard technical request information (such as IP address) as part of delivering those fonts.</p>

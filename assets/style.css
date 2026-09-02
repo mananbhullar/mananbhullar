@@ -790,7 +790,14 @@
 .insight-card .tag{font-family:var(--sans);font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent-on-dark);}
 .insight-card strong{display:block;margin-top:8px;font-size:0.98rem;line-height:1.4;color:#fff;}
 @media (max-width:860px){.insight-grid{grid-template-columns:1fr 1fr;}}
-@media (max-width:560px){.insight-grid{grid-template-columns:1fr;}}
+@media (max-width:560px){
+  .insight-grid{
+    display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
+    gap:16px;margin:0 -32px;padding:0 32px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .insight-grid::-webkit-scrollbar{display:none;}
+  .insight-grid .insight-card{flex:0 0 85%;scroll-snap-align:start;}
+}
 
 .blog-toolbar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:36px;}
 .blog-search-input{flex:1;min-width:220px;max-width:340px;padding:12px 16px;border:1px solid var(--line);background:var(--paper-raised);font-family:var(--sans);font-size:0.9rem;color:var(--ink);}
