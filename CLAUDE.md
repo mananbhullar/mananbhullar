@@ -218,6 +218,11 @@ doing this — don't ship based on reading the HTML source alone.
 
 ## COMPLETED this session (verified working, don't redo)
 
+- **Hosting is live.** The site is hosted and the domain is connected (confirmed
+  by the client 2026-09-03) — this was previously listed as pending/never done;
+  that's no longer accurate. `git push origin main` reaches the live site.
+  Exact deploy mechanism (host, DNS, auto-deploy from GitHub) wasn't detailed
+  by the client, just that it's live — don't assume specifics not confirmed.
 - Full commercial section rebuild (16 categories + hub) to a richer layout
   matching client-provided reference screenshots, restyled to the site's own
   blue/off-white look (not the reference sites' navy/gold/serif skin).
@@ -369,14 +374,7 @@ doing this — don't ship based on reading the HTML source alone.
      too" — real crawlable content per article, proper meta descriptions per
      article, category/tag pages if feasible).
 
-8. **Hosting setup** — explicitly deferred earlier in the project, never done.
-   Client owns the domain already (registered, not yet connected). Plan agreed
-   on: push to a GitHub repo, connect to Cloudflare Pages (or Netlify — client
-   has used Netlify Drop for previews already) for free hosting with a custom
-   domain, point the domain's DNS at it. This also happens to be exactly what
-   unlocks simpler self-service image swaps for the client going forward
-   (replace a file in GitHub instead of asking for a rebuild each time).
-9. **More real photos** — client has sent 8 cleared photos (all in
+8. **More real photos** — client has sent 8 cleared photos (all in
    `assets/photos/`, all currently placed) but the site still has ~130 pages
    using Picsum gradient placeholders. Client will keep sending real photos
    over time; when they arrive, always ask/check for a visible watermark or
