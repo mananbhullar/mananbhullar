@@ -4057,7 +4057,7 @@ import datetime
 today = datetime.date.today().isoformat()
 url_paths = []
 for dirpath, dirnames, filenames in os.walk(ROOT):
-    dirnames[:] = [d for d in dirnames if d not in ('assets',)]
+    dirnames[:] = [d for d in dirnames if d not in ('assets', '604-727-9542-1')]
     if 'index.html' in filenames:
         rel = os.path.relpath(dirpath, ROOT)
         url_paths.append('/' if rel == '.' else '/' + rel.replace(os.sep, '/') + '/')
