@@ -244,6 +244,9 @@ REAL_PHOTOS = {
     'daycare-classroom-toys': ('/assets/photos/daycare-classroom-toys.jpg', 900, 675),
     'car-wash-tunnel': ('/assets/photos/car-wash-tunnel.jpg', 900, 675),
     'farmland-fraser-valley': ('/assets/photos/farmland-fraser-valley.jpg', 900, 675),
+    'active-listing-west-newton': ('/assets/photos/listing-west-newton.jpg', 1600, 1067),
+    'active-listing-morgan-creek': ('/assets/photos/listing-morgan-creek.jpg', 1600, 1067),
+    'active-listing-bear-creek': ('/assets/photos/listing-bear-creek.jpg', 1600, 1067),
     'abbotsford-street': ('/assets/photos/abbotsford-street.jpg', 800, 600),
     'aldergrove-street': ('/assets/photos/aldergrove-street.jpg', 800, 600),
     'annieville-street': ('/assets/photos/annieville-street.jpg', 800, 600),
@@ -3284,11 +3287,67 @@ write_page(
 )
 
 # ============================================================
-# /listings/  \u2014 real, client-confirmed sold listings (street name
-# only -- no house number in text, no beds/baths, no sold date).
-# Photos sourced from ~/Desktop/Completed/, resized/compressed
-# into assets/photos/sold-*.jpg. Add more dicts here as Manan
-# sends additional cleared listings.
+# /listings/  \u2014 Manan's own current active listings (MLS\u00ae-public,
+# full address/specs are fine to show since these are actively being
+# marketed, unlike the sold-listings archive below). Each links out
+# to the live listing page. Add/remove dicts here as listings change.
+# ============================================================
+ACTIVE_LISTINGS = [
+    dict(
+        address="15160 81 Avenue", area="Surrey, BC", community="Fleetwood",
+        type="House", price="$1,775,000", beds="6", baths="4", sqft="4,010",
+        mls="R3163219", img_seed="active-listing-bear-creek",
+        url="https://www.rew.ca/properties/15160-81-avenue-surrey-bc",
+    ),
+    dict(
+        address="328-15168 33 Avenue", area="Surrey, BC", community="Morgan Creek",
+        type="Condo", price="$579,000", beds="2", baths="2", sqft="850",
+        mls="R3152400", img_seed="active-listing-morgan-creek",
+        url="https://www.rew.ca/properties/328-15168-33-avenue-surrey-bc",
+    ),
+    dict(
+        address="17-7140 132 Street", area="Surrey, BC", community="Newton Town Centre",
+        type="Townhouse", price="$759,000", beds="4", baths="3", sqft="1,966",
+        mls="R3162305", img_seed="active-listing-west-newton",
+        url="https://www.rew.ca/properties/17-7140-132-street-surrey-bc",
+    ),
+]
+
+def active_listing_card(item):
+    src, w, h = REAL_PHOTOS[item['img_seed']]
+    return f"""<div class="listing-card">
+      <a class="thumb" href="{item['url']}" target="_blank" rel="noopener">
+        <img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{item['address']}, {item['area']}">
+        <span class="listing-badge">For Sale</span>
+      </a>
+      <div class="listing-body">
+        <span class="listing-type">{item['type']} &middot; {item['community']}</span>
+        <div class="listing-meta-row">
+          <span class="listing-address">{item['address']}<br><small>{item['area']}</small></span>
+          <span class="listing-price">{item['price']}</span>
+        </div>
+        <div class="listing-specs">{item['beds']} bd &middot; {item['baths']} ba &middot; {item['sqft']} sqft</div>
+        <a class="listing-cta" href="{item['url']}" target="_blank" rel="noopener">View Listing &rarr;</a>
+      </div>
+    </div>"""
+
+active_listings_section = f"""<section class="content-section dark">
+  <div class="wrap">
+    <div class="content-head center">
+      <h2>Active Listings</h2>
+      <p>Currently on the market with Manan &mdash; click through for the full listing, photos, and open house times.</p>
+    </div>
+    <div class="listing-grid">
+      {''.join(active_listing_card(item) for item in ACTIVE_LISTINGS)}
+    </div>
+  </div>
+</section>"""
+
+# ============================================================
+# Sold listings archive (street name only -- no house number in
+# text, no beds/baths, no sold date). Photos sourced from
+# ~/Desktop/Completed/, resized/compressed into assets/photos/sold-*.jpg.
+# Add more dicts here as Manan sends additional cleared listings.
 # ============================================================
 SOLD_LISTINGS = [
     # --- Featured (client-selected order) ---
@@ -3381,8 +3440,13 @@ sold_listings_body += stat_strip([
     ("Marketing Specialist", "SFU Beedie BBA"),
     ("20+", "Areas Served"),
 ]).replace('content-section stat-strip', 'content-section stat-strip dark')
+sold_listings_body += active_listings_section
 sold_listings_body += f"""<section class="content-section dark">
   <div class="wrap">
+    <div class="content-head center">
+      <h2>Recently Sold</h2>
+      <p>A selection of properties Manan has closed across residential and commercial real estate.</p>
+    </div>
     <div class="filter-pills" id="soldFilterBar">
       <button class="filter-pill active" data-pill="All">All</button>
       <button class="filter-pill" data-pill="Residential">Residential</button>
@@ -3401,7 +3465,7 @@ sold_listings_body += cta_band(
 write_page(
     '/listings/',
     "Listings | Manan Bhullar",
-    "A selection of properties recently sold by Manan Bhullar, REALTOR\u00AE, across Surrey and the Lower Mainland.",
+    "Active listings and recently sold properties from Manan Bhullar, REALTOR\u00AE, across Surrey and the Lower Mainland.",
     crumbs(("Listings", None)),
     sold_listings_body
 )

@@ -92,6 +92,12 @@
         ],
         "createdAt": "2026-09-02T21:08:27.963Z",
         "reason": "slightly enlarged type label for legibility per user feedback, same family as existing 0.7rem tag sizes used throughout the file"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#16a34a",
+        "createdAt": "2026-09-09T21:20:54.362Z",
+        "reason": "user confirmed: explicitly asked for the For Sale listing badge to be green as a status-color convention alongside the existing red Sold badge"
       }
     ]
   }
