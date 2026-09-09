@@ -117,7 +117,7 @@
 
   /* ---------- HERO: full-bleed with search ---------- */
   .hero{
-    position:relative;min-height:74vh;display:flex;align-items:center;
+    position:relative;min-height:58vh;display:flex;align-items:center;
     background:
       linear-gradient(180deg, rgba(18,18,18,0.72) 0%, rgba(18,18,18,0.55) 45%, rgba(18,18,18,0.82) 100%),
       linear-gradient(120deg, #2b2f36 0%, #14161a 60%, #0d0e10 100%);
