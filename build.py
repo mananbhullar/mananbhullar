@@ -3335,7 +3335,6 @@ active_listings_section = f"""<section class="content-section dark">
   <div class="wrap">
     <div class="content-head center">
       <h2>Featured Listings</h2>
-      <p>Currently on the market with Manan &mdash; click through for the full listing, photos, and open house times.</p>
     </div>
     <div class="listing-grid">
       {''.join(active_listing_card(item) for item in ACTIVE_LISTINGS)}
