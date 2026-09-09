@@ -3297,19 +3297,19 @@ ACTIVE_LISTINGS = [
         address="15160 81 Avenue", area="Surrey, BC", community="Fleetwood",
         type="House", price="$1,775,000", beds="6", baths="4", sqft="4,010",
         mls="R3163219", img_seed="active-listing-bear-creek",
-        url="https://www.rew.ca/properties/15160-81-avenue-surrey-bc",
+        url="https://www.realtor.ca/real-estate/30253497/15160-81-avenue-surrey",
     ),
     dict(
         address="328-15168 33 Avenue", area="Surrey, BC", community="Morgan Creek",
         type="Condo", price="$579,000", beds="2", baths="2", sqft="850",
         mls="R3152400", img_seed="active-listing-morgan-creek",
-        url="https://www.rew.ca/properties/328-15168-33-avenue-surrey-bc",
+        url="https://www.realtor.ca/real-estate/30117257/328-15168-33-avenue-surrey",
     ),
     dict(
         address="17-7140 132 Street", area="Surrey, BC", community="Newton Town Centre",
         type="Townhouse", price="$759,000", beds="4", baths="3", sqft="1,966",
         mls="R3162305", img_seed="active-listing-west-newton",
-        url="https://www.rew.ca/properties/17-7140-132-street-surrey-bc",
+        url="https://www.realtor.ca/real-estate/30248736/17-7140-132-street-surrey",
     ),
 ]
 
