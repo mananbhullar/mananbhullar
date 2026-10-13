@@ -54,10 +54,11 @@ asset paths like `/assets/style.css` need an actual server, not `file://`).
 
 ## Hard rules (client was explicit about these — do not violate)
 
-1. **"Coldwell Banker Universe Realty" appears exactly ONCE site-wide** — in the
-   homepage footer copyright line only, alongside the real brokerage address:
+1. **"Coldwell Banker Universe Realty" appears only in the footer copyright line**
+   (shared footer, so it's on every page — client confirmed 2026-10-13 that this
+   is fine), alongside the real brokerage address:
    `201-2010 E 48th Ave, Vancouver, BC V5P 1R8` (verified via BCFSA/REALTOR.ca).
-   Every other page/title/meta/JSON-LD must NOT name the brokerage. This was a
+   Page body copy, titles, meta and JSON-LD must NOT name the brokerage. This was a
    deliberate de-emphasis request — don't add it back into bio sections, credential
    badges, page titles, etc.
 2. **Never announce "Realtor.ca" in visible copy.** The property search still
