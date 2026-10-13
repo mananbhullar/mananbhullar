@@ -3754,10 +3754,16 @@ def article_page(art, body_html):
     )
     tags_html = ''.join(f'<span class="article-tag">{t}</span>' for t in art.get('tags', []))
     _hero_src = _photo_url(art, 1200, 480)
+    # Same git-derived date as the BlogPosting datePublished in the JSON-LD. Not "updated": every
+    # build-wide change (CSS hash, schema) touches every page, so the last-commit date would drift.
+    _updated = GIT_DATES.get(f"updates/{art['slug']}/index.html", (None, None))[0] or __import__('datetime').date.today().isoformat()
+    _d = __import__('datetime').date.fromisoformat(_updated)
+    _updated_label = f"{_d.strftime('%B')} {_d.day}, {_d.year}"
     full = f"""<header class="subhero" style="padding:48px 0;">
   <div class="wrap" style="text-align:center;">
     <h1 style="max-width:32ch;margin:0 auto;"><span class="gradient-text">{art['title']}</span></h1>
     <div class="article-tags">{tags_html}</div>
+    <p class="article-byline">By <a href="/why-manan/">Manan Bhullar</a>, REALTOR\u00ae \u00b7 <span style="white-space:nowrap;">Published <time datetime="{_updated}">{_updated_label}</time></span></p>
   </div>
 </header>
 <img class="article-hero-img" src="{_hero_src}"{responsive_img_attrs(_hero_src, sizes="(min-width:1180px) 1116px, 100vw")} alt="{_photo_alt(art)}" loading="lazy" width="1200" height="480">

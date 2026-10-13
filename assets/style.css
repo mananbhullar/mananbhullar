@@ -865,6 +865,8 @@
 .article-meta{font-size:0.82rem;color:var(--ink-soft);text-align:center;margin-bottom:8px;}
 .article-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px;}
 .article-tag{font-family:var(--sans);font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:5px 12px;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);}
+.article-byline{font-family:var(--sans);font-size:0.9rem;color:rgba(255,255,255,0.75);margin:16px 0 0;}
+.article-byline a{color:#fff;text-decoration:underline;text-underline-offset:3px;}
 
 .article-hero-img{display:block;width:100%;max-height:420px;object-fit:cover;}
 .article-layout{display:grid;grid-template-columns:1fr 340px;gap:56px;align-items:start;}
