@@ -1,4 +1,5 @@
 import os
+import re
 import hashlib
 from icons import apply_icons
 
@@ -23,8 +24,9 @@ SHELL = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{meta_desc}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="https://www.mananbhullar.com{path}">
+<link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt">
 <meta name="theme-color" content="#1E5FD9">
 <meta name="format-detection" content="telephone=yes">
 
@@ -63,7 +65,7 @@ SHELL = """<!DOCTYPE html>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css?v={css_version}">
 <script type="application/ld+json">
-{{"@context":"https://schema.org","@type":"RealEstateAgent","name":"Manan Bhullar","image":"https://www.mananbhullar.com/assets/og-image.jpg","url":"https://www.mananbhullar.com{path}","telephone":"+1-604-727-9542","email":"mb_realestate@outlook.com","areaServed":[{{"@type":"City","name":"Surrey"}},{{"@type":"City","name":"Langley"}},{{"@type":"City","name":"Delta"}},{{"@type":"City","name":"Burnaby"}}],"address":{{"@type":"PostalAddress","addressRegion":"BC","addressCountry":"CA"}}}}
+{jsonld}
 </script>
 </head>
 <body>
@@ -96,11 +98,105 @@ def crumbs(*pairs):
             parts.append(f'<span class="cur">{label}</span>')
     return ''.join(parts)
 
+
+# ---------- Structured data (JSON-LD) ----------
+# One @graph per page: the agent entity (stable @id so every page points at the same
+# person), the WebSite, this WebPage, its BreadcrumbList, plus FAQPage / BlogPosting
+# when the page has them. FAQ Q&As are parsed straight out of the rendered body so the
+# schema can never drift from the visible text. Brokerage deliberately NOT named here
+# (hard rule #1 in CLAUDE.md).
+import json, html as _html, subprocess
+SITE = 'https://www.mananbhullar.com'
+AGENT_ID = SITE + '/#agent'
+SITE_ID = SITE + '/#website'
+AGENT_LD = {
+    "@type": "RealEstateAgent", "@id": AGENT_ID,
+    "name": "Manan Bhullar",
+    "description": "REALTOR® serving residential and commercial/industrial real estate clients in Surrey and across the Lower Mainland and Fraser Valley, BC.",
+    "url": SITE + "/",
+    "image": SITE + "/assets/photos/manan-headshot.jpg",
+    "logo": SITE + "/assets/logo-signature-black.png",
+    "telephone": "+1-604-727-9542",
+    "email": "mb_realestate@outlook.com",
+    "jobTitle": "REALTOR®",
+    "alumniOf": {"@type": "CollegeOrUniversity", "name": "Beedie School of Business, Simon Fraser University"},
+    "knowsAbout": ["Residential real estate", "Commercial real estate", "Industrial leasing",
+                   "Real estate marketing", "First-time home buyers", "Investment property",
+                   "Surrey BC real estate", "Fraser Valley real estate"],
+    "areaServed": [{"@type": "City", "name": c} for c in
+                   ["Surrey", "Langley", "Delta", "White Rock", "Burnaby", "Abbotsford", "Coquitlam",
+                    "New Westminster", "Richmond", "Vancouver", "Maple Ridge", "Mission", "Chilliwack"]],
+    "address": {"@type": "PostalAddress", "addressLocality": "Surrey", "addressRegion": "BC", "addressCountry": "CA"},
+    "sameAs": ["https://www.facebook.com/mananrealtor/", "https://www.instagram.com/mb_realestate/",
+               "https://www.linkedin.com/in/mananbhullar", "https://youtube.com/@mananbhullar"],
+}
+WEBSITE_LD = {"@type": "WebSite", "@id": SITE_ID, "url": SITE + "/", "name": "Manan Bhullar Real Estate",
+              "inLanguage": "en-CA", "publisher": {"@id": AGENT_ID}}
+
+def _git_dates():
+    """path -> (first_commit_date, last_commit_date) for every committed index.html, one git call."""
+    out = {}
+    try:
+        log = subprocess.run(['git', '-C', ROOT, 'log', '--format=@%as', '--name-only', '--', '*.html'],
+                             capture_output=True, text=True, check=True).stdout
+    except Exception:
+        return out
+    date = None
+    for line in log.splitlines():
+        if line.startswith('@'):
+            date = line[1:]
+        elif line.strip():
+            first, last = out.get(line, (date, date))
+            out[line] = (date, last)  # log is newest-first, so keep overwriting "first"
+    return out
+GIT_DATES = _git_dates()
+
+def _strip_tags(x):
+    return _html.unescape(re.sub(r'<[^>]+>', '', x)).strip()
+
+def page_jsonld(path, title, meta_desc, crumb_html, body):
+    url = SITE + path
+    graph = [AGENT_LD, WEBSITE_LD]
+    page = {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": title.split(' | ')[0],
+            "description": _html.unescape(meta_desc), "isPartOf": {"@id": SITE_ID},
+            "about": {"@id": AGENT_ID}, "inLanguage": "en-CA"}
+    # Breadcrumbs, from the same crumb HTML that's rendered on the page
+    items = [(_strip_tags(m.group(2) or m.group(3)), m.group(1) or path)
+             for m in re.finditer(r'<a href="([^"]+)">(.*?)</a>|<span class="cur">(.*?)</span>', crumb_html)]
+    if len(items) > 1:
+        graph.append({"@type": "BreadcrumbList", "@id": url + "#breadcrumb", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + h} for i, (n, h) in enumerate(items)]})
+        page["breadcrumb"] = {"@id": url + "#breadcrumb"}
+    # FAQPage, from the rendered .faq-item blocks
+    faqs = re.findall(r'<button class="faq-q"><span>(.*?)</span>.*?<div class="faq-a">(.*?)</div>', body, re.S)
+    if faqs:
+        graph.append({"@type": "FAQPage", "@id": url + "#faq", "mainEntity": [
+            {"@type": "Question", "name": _strip_tags(q), "acceptedAnswer": {"@type": "Answer", "text": _strip_tags(a)}}
+            for q, a in faqs]})
+    # BlogPosting for /updates/<slug>/
+    if path.startswith('/updates/') and path != '/updates/':
+        first, last = GIT_DATES.get(path.lstrip('/') + 'index.html', (None, None))
+        today = __import__('datetime').date.today().isoformat()
+        img = re.search(r'<img class="article-hero-img" src="([^"]+)"', body)
+        post = {"@type": "BlogPosting", "@id": url + "#article", "headline": title.split(' | ')[0],
+                "description": _html.unescape(meta_desc), "mainEntityOfPage": {"@id": url + "#webpage"},
+                "author": {"@id": AGENT_ID}, "publisher": {"@id": AGENT_ID}, "inLanguage": "en-CA",
+                "datePublished": first or today, "dateModified": last or today}
+        if img:
+            post["image"] = img.group(1) if img.group(1).startswith('http') else SITE + img.group(1)
+        graph.append(post)
+    graph.append(page)
+    return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(',', ':'))
+
+PAGES = []  # (path, title, meta_desc) for llms.txt
+
 def write_page(path, title, meta_desc, crumb_html, body):
+    PAGES.append((path, _html.unescape(title.split(' | ')[0]), _html.unescape(meta_desc)))
     full_html = SHELL.format(
         title=title, meta_desc=meta_desc, og_title=title.split(' | ')[0],
         path=path, nav=NAV, footer=FOOTER, crumbs=crumb_html, body=body,
-        css_version=CSS_VERSION, js_version=JS_VERSION
+        css_version=CSS_VERSION, js_version=JS_VERSION,
+        jsonld=page_jsonld(path, title, meta_desc, crumb_html, body).replace('</', '<\\/')
     )
     full_html = apply_icons(full_html)
     if path.endswith('/'):
@@ -4129,7 +4225,7 @@ url_paths.sort()
 sitemap_entries = ''.join(
     f"""  <url>
     <loc>https://www.mananbhullar.com{p}</loc>
-    <lastmod>{today}</lastmod>
+    <lastmod>{GIT_DATES.get((p.lstrip('/') or '') + 'index.html', (None, today))[1]}</lastmod>
     <changefreq>{'weekly' if p == '/' else 'monthly'}</changefreq>
     <priority>{'1.0' if p == '/' else '0.6'}</priority>
   </url>
@@ -4144,13 +4240,47 @@ with open(os.path.join(ROOT, 'sitemap.xml'), 'w') as f:
     f.write(sitemap_xml)
 print(f'wrote /sitemap.xml ({len(url_paths)} urls)')
 
-robots_txt = """User-agent: *
-Allow: /
-
-Sitemap: https://www.mananbhullar.com/sitemap.xml
-"""
+# AI crawlers are listed by name (not just covered by *) so the intent is explicit, and so a
+# CDN/host "block AI bots" toggle that respects robots.txt has nothing to point at.
+AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+           'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot', 'Applebot-Extended',
+           'Bingbot', 'DuckAssistBot', 'Amazonbot', 'meta-externalagent', 'MistralAI-User', 'CCBot']
+robots_txt = "User-agent: *\nAllow: /\n\n" + ''.join(f"User-agent: {b}\nAllow: /\n\n" for b in AI_BOTS) + \
+    "Sitemap: https://www.mananbhullar.com/sitemap.xml\n"
 with open(os.path.join(ROOT, 'robots.txt'), 'w') as f:
     f.write(robots_txt)
 print('wrote /robots.txt')
+
+
+# ============================================================
+# llms.txt — plain-text site map for AI assistants (llmstxt.org format)
+# ============================================================
+LLMS_SECTIONS = [('Buying', '/buyers/'), ('Selling', '/sellers/'), ('Commercial & Industrial', '/commercial/'),
+                 ('Market Updates & Guides', '/updates/'), ('Communities', '/communities/')]
+def _llms_line(p, t, d):
+    return f"- [{t}]({SITE}{p}): {d}\n"
+llms = """# Manan Bhullar Real Estate
+
+> Manan Bhullar is a REALTOR® based in Surrey, BC, serving residential buyers and sellers and commercial/industrial clients across Surrey, the Lower Mainland and the Fraser Valley. He holds a BBA in Marketing from the Beedie School of Business at Simon Fraser University. Phone: (604) 727-9542. Email: mb_realestate@outlook.com.
+
+Key facts:
+- Practice covers residential (detached, townhomes, condos, luxury, investment) and commercial/industrial leasing and sales (industrial, retail, hotels/motels, gas stations, land, farms/ALR and more).
+- As a licensed REALTOR® in BC he can represent clients anywhere in the province.
+- Notable result: a record-breaking price-per-square-foot sale in Fleetwood, Surrey.
+- Free home evaluations: """ + SITE + """/sellers/home-evaluation/
+- Contact: """ + SITE + """/contact/
+
+## Core pages
+- [Home](""" + SITE + """/): Overview, featured listings and areas served.
+""" + ''.join(_llms_line(p, t, d) for p, t, d in PAGES
+              if p in ('/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/'))
+_seen = {'/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/'}
+for label, prefix in LLMS_SECTIONS:
+    rows = [(p, t, d) for p, t, d in PAGES if p.startswith(prefix) and p not in _seen]
+    _seen.update(p for p, _, _ in rows)
+    llms += f"\n## {label}\n" + ''.join(_llms_line(*r) for r in rows)
+with open(os.path.join(ROOT, 'llms.txt'), 'w') as f:
+    f.write(llms)
+print('wrote /llms.txt')
 
 print("BUILD COMPLETE")
