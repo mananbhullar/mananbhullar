@@ -1621,16 +1621,17 @@ def _oxford_join(items):
     return ", ".join(items[:-1]) + f", and {items[-1]}"
 
 def _housing_type(desc, tags):
-    text = (desc + ' ' + ' '.join(tags)).lower()
+    text = (desc + ' ' + ' '.join(tags)).lower().replace('real estate', '')
+    has = lambda pat: re.search(pat, text) is not None
     types = []
-    if 'acreage' in text or 'estate' in text or 'equestrian' in text: types.append("acreage and estate properties")
-    if 'townhome' in text or 'townhouse' in text: types.append("townhomes")
-    if 'condo' in text or 'high-rise' in text or 'tower' in text: types.append("condos")
-    if 'detached' in text or 'single-family' in text: types.append("single-family detached homes")
+    if has(r'\bacreages?\b|\bequestrian\b|\branch(es)?\b'): types.append("acreage properties")
+    if has(r'\btownhom|\btownhouse'): types.append("townhomes")
+    if has(r'\bcondo|\bhigh-rise|\btowers?\b'): types.append("condos")
+    if has(r'\bdetached\b|\bsingle-family\b'): types.append("single-family detached homes")
     if not types:
-        if 'industrial' in text: types.append("industrial and commercial properties, not primarily residential")
-        elif 'rural' in text or 'agricultural' in text or 'farm' in text: types.append("larger rural and agricultural-zoned properties")
-        else: types.append("a mix of established housing")
+        if has(r'\bindustrial\b'): types.append("industrial and commercial properties, not primarily residential")
+        elif has(r'\brural\b|\bagricultural\b|\bfarm'): types.append("larger rural and agricultural-zoned properties")
+        else: types.append("a mix of housing types")
     return _oxford_join(types)
 
 def _good_fit(name, note, tags):
@@ -1754,74 +1755,184 @@ GROUP_NEIGHBORS = {
 # conversation.
 OUT_OF_TOWN_GROUPS = {'Hope', 'Harrison Hot Springs', 'Kelowna', 'Kamloops', 'Williams Lake', 'Prince George'}
 
+# ---------- Per-area context for FAQs and the "at a glance" box ----------
+# Real, checkable facts only: which city a neighbourhood belongs to, its public school
+# district, and which real estate board publishes its price data. Used so area answers
+# are specific to each place instead of the same boilerplate on 99 pages (AI answer
+# engines skip duplicated text and quote specific, self-contained answers).
+GROUP_SCHOOL_DISTRICT = {
+    'Surrey': 'School District 36 (Surrey)', 'South Surrey / White Rock': 'School District 36 (Surrey)',
+    'Langley': 'School District 35 (Langley)', 'Delta': 'School District 37 (Delta)',
+    'Burnaby': 'School District 41 (Burnaby)', 'Coquitlam': 'School District 43 (Coquitlam)',
+    'Port Coquitlam': 'School District 43 (Coquitlam)', 'Port Moody': 'School District 43 (Coquitlam)',
+    'New Westminster': 'School District 40 (New Westminster)', 'Vancouver': 'School District 39 (Vancouver)',
+    'North Vancouver': 'School District 44 (North Vancouver)', 'West Vancouver': 'School District 45 (West Vancouver)',
+    'Richmond': 'School District 38 (Richmond)', 'Pitt Meadows': 'School District 42 (Maple Ridge-Pitt Meadows)',
+    'Maple Ridge': 'School District 42 (Maple Ridge-Pitt Meadows)', 'Abbotsford': 'School District 34 (Abbotsford)',
+    'Mission': 'School District 75 (Mission)', 'Chilliwack': 'School District 33 (Chilliwack)',
+    'Hope': 'School District 78 (Fraser-Cascade)', 'Harrison Hot Springs': 'School District 78 (Fraser-Cascade)',
+    'Kelowna': 'School District 23 (Central Okanagan)', 'Kamloops': 'School District 73 (Kamloops-Thompson)',
+    'Williams Lake': 'School District 27 (Cariboo-Chilcotin)', 'Prince George': 'School District 57 (Prince George)',
+}
+GROUP_REGION = {g: 'Metro Vancouver' for g in ['Surrey', 'South Surrey / White Rock', 'Langley', 'Delta', 'Burnaby',
+    'Coquitlam', 'Port Coquitlam', 'Port Moody', 'New Westminster', 'Vancouver', 'North Vancouver',
+    'West Vancouver', 'Richmond', 'Pitt Meadows', 'Maple Ridge']}
+GROUP_REGION.update({'Abbotsford': 'the Fraser Valley', 'Mission': 'the Fraser Valley', 'Chilliwack': 'the Fraser Valley',
+    'Hope': 'the Fraser Valley', 'Harrison Hot Springs': 'the Fraser Valley', 'Kelowna': 'the Okanagan',
+    'Kamloops': 'the Thompson region', 'Williams Lake': 'the Cariboo', 'Prince George': 'Northern BC'})
+FVREB_GROUPS = {'Surrey', 'South Surrey / White Rock', 'Langley', 'Abbotsford', 'Mission'}
+GVR_GROUPS = {'Burnaby', 'Coquitlam', 'Port Coquitlam', 'Port Moody', 'New Westminster', 'Vancouver',
+              'North Vancouver', 'West Vancouver', 'Richmond', 'Pitt Meadows', 'Maple Ridge'}
+FVREB_DELTA = {'north-delta', 'sunshine-hills', 'annieville', 'scottsdale'}   # North Delta = Fraser Valley board
+GVR_DELTA = {'ladner', 'tsawwassen', 'boundary-bay'}                           # Ladner/Tsawwassen = Greater Vancouver
+FVREB_LABEL = "the July 2026 Fraser Valley Real Estate Board (FVREB) report"
+FVREB_FIGURES = "a composite benchmark of $877,600, with detached homes at $1,350,200, townhomes at $764,100, and condos at $469,500"
+
+def _price_board(slug, group):
+    if group in FVREB_GROUPS or slug in FVREB_DELTA: return 'fvreb'
+    if group in GVR_GROUPS or slug in GVR_DELTA: return 'gvr'
+    if slug == 'delta': return 'delta-split'
+    if group == 'Chilliwack': return 'cadreb'
+    return None
+
+def _area_ctx(area):
+    slug, name = area['slug'], area['name']
+    group = SLUG_TO_GROUP.get(slug)
+    is_city = bool(group) and AREA_GROUPS[group][0] == slug
+    neighbours = GROUP_NEIGHBORS.get(group, [])
+    if group in OUT_OF_TOWN_GROUPS:
+        reach = f"{name} and elsewhere in {GROUP_REGION.get(group, 'BC')}"
+    elif is_city or not group:
+        reach = f"{name} and neighbouring {_oxford_join(neighbours)}" if neighbours else name
+    else:
+        reach = f"{name}, the rest of {group}" + (f", and neighbouring {_oxford_join(neighbours)}" if neighbours else "")
+    return dict(group=group, is_city=is_city, neighbours=neighbours, reach=reach,
+                region=GROUP_REGION.get(group), district=GROUP_SCHOOL_DISTRICT.get(group),
+                board=_price_board(slug, group), out_of_town=group in OUT_OF_TOWN_GROUPS)
+
+def _housing_advice(housing):
+    h = housing.lower()
+    if 'industrial' in h:
+        return "Here the deciding factors are usually zoning, ceiling height, loading, and power supply rather than bedrooms and bathrooms."
+    if 'acreage' in h or 'rural' in h:
+        return "Acreage and rural purchases need extra due diligence beyond a typical home: zoning, any Agricultural Land Reserve (ALR) status, well and septic systems, and what the land is actually permitted to be used for."
+    if 'condo' in h or 'townhome' in h:
+        return "For condos and townhomes, the strata documents — meeting minutes, the depreciation report, and the contingency reserve fund — deserve as much attention as the unit itself."
+    if 'detached' in h:
+        return "For detached homes, lot size, age of construction, and suite potential account for most of the price difference between otherwise similar houses."
+    return "Comparing recent sales of the specific type of home you want \u2014 not area-wide averages \u2014 is the quickest way to understand value here."
+
 def _auto_supplement_faqs(area, target=6):
     faqs = list(area.get('area_faq') or [])
     existing_q = ' '.join(q.lower() for q, _ in faqs)
     name = area['name']
-    is_out_of_town = SLUG_TO_GROUP.get(area['slug']) in OUT_OF_TOWN_GROUPS
+    c = _area_ctx(area)
+    housing = _housing_type(area['desc'], area['tags'])
+    residential = 'industrial' not in housing
     candidates = []
-    if is_out_of_town and 'investment' not in existing_q and 'commercial' not in existing_q:
-        # Prioritized first (not appended at the end) so it reliably survives the
-        # target=6 cap even on information-rich pages like Kelowna, which already
-        # fill most slots with schools/shopping/recreation/custom FAQs.
+    if c['out_of_town'] and 'investment' not in existing_q and 'commercial' not in existing_q:
+        # First so it survives the target=6 cap on information-rich pages like Kelowna.
         candidates.append((
             f"What investment or commercial opportunities exist in {name}?",
-            f"Areas like {name} often draw interest beyond a typical residential buyer — acreages, ranch or rural land, tourism-driven commercial space, and income properties can all be part of the picture depending on the specific property and zoning. Manan can walk through what's realistic for {name} specifically, residential or otherwise."
+            f"Beyond typical residential buying, {name} draws interest in acreages, ranch and rural land, tourism-driven commercial space, and income properties. What's realistic depends on the specific property, its zoning, and the local economy, which in {c['region'] or 'this part of BC'} runs on different drivers than Metro Vancouver commuter demand. Manan works on both the residential and commercial side and can walk you through what {name} actually supports."
         ))
-    if 'familiar with' not in existing_q:
-        # Prioritized right after the out-of-town investment question (not appended at
-        # the end) so this confident, non-limiting answer reliably survives the target=6
-        # cap even on information-rich pages that already fill most slots with
-        # schools/shopping/recreation -- see the out-of-town candidate above for the same
-        # reasoning. Client was explicit: don't let Manan read as boxed into one sub-region.
+    if 'familiar with' not in existing_q and 'realtor' not in existing_q:
+        # Client was explicit: confident and non-limiting, never boxed into one sub-region.
         candidates.append((
-            f"Is Manan familiar with {name} specifically?",
-            f"Yes \u2014 as a licensed REALTOR\u00ae in British Columbia, Manan works with clients across the province, not just one sub-region, and can speak directly to {name}'s current inventory, pricing, and what makes it different from its neighbours."
+            f"Can Manan Bhullar help me buy or sell in {name}?",
+            f"Yes. Manan Bhullar is a Surrey-based REALTOR® licensed in British Columbia, and he works with buyers and sellers in {c['reach']} — a BC licence covers the whole province. He can pull recent comparable sales, arrange viewings, and price and market a listing, drawing on his BBA in Marketing from SFU's Beedie School of Business. Because his practice also covers commercial and industrial real estate, he can help with an investment or business property in {name} too. Call or text (604) 727-9542."
         ))
+    if residential and housing != "a mix of housing types" and 'type of home' not in existing_q and 'kind of home' not in existing_q and 'housing' not in existing_q:
+        candidates.append((
+            f"What kind of homes are in {name}?",
+            f"Housing in {name} includes {housing}. {_housing_advice(housing)}"
+        ))
+    if residential and not any(k in existing_q for k in ('good fit', 'good choice', 'good area', 'good for', 'good place')):
+        note = area['note'].strip("'\"")
+        candidates.append((
+            f"Is {name} a good place to live?",
+            f"It depends on what you're after. {name} is best summed up as \u201c{note}\u201d, and it tends to suit {_good_fit(name, area['note'], area['tags'])}. Visiting at different times of day and comparing it with nearby {('neighbourhoods' if c['group'] and not c['is_city'] else 'communities')} is the best way to judge the fit."
+        ))
+    if residential and not c['out_of_town'] and not any(k in existing_q for k in ('price', 'pricing', 'cost', 'benchmark')):
+        if c['board'] == 'fvreb':
+            ans = (f"{name}'s home prices are tracked by the Fraser Valley Real Estate Board. As of {FVREB_LABEL}, the Fraser Valley had {FVREB_FIGURES}. "
+                   f"A specific {name} home can sit well above or below those figures depending on property type, lot size, and age, so recent sold comparables are the reliable guide.")
+        elif c['board'] == 'gvr':
+            ans = (f"{name}'s home prices are tracked by Greater Vancouver Realtors (GVR), not the Fraser Valley board, so Fraser Valley benchmark figures aren't a fair comparison. "
+                   f"Prices in {name} vary widely by property type, size, and age; recent sold comparables for the specific type of home you're considering are the reliable guide, and Manan can pull them for you.")
+        elif c['board'] == 'delta-split':
+            ans = (f"Delta's price data is split between two boards: North Delta is covered by the Fraser Valley Real Estate Board, while Ladner and Tsawwassen are covered by Greater Vancouver Realtors. "
+                   f"For reference, {FVREB_LABEL} showed {FVREB_FIGURES} across the Fraser Valley. Within Delta, prices differ meaningfully between the three communities, so comparables from the exact neighbourhood matter.")
+        elif c['board'] == 'cadreb':
+            ans = (f"{name}'s home prices are tracked by the Chilliwack and District Real Estate Board, separately from the Fraser Valley and Greater Vancouver boards. "
+                   f"Prices vary by property type, lot size, and age, so recent sold comparables are the reliable guide, and Manan can pull them for you.")
+        else:
+            ans = f"Prices in {name} vary by property type, lot size, and age; recent sold comparables are the reliable guide, and Manan can pull them for you."
+        candidates.append((f"How much do homes cost in {name}?", ans))
     if area.get('schools') and 'school' not in existing_q:
+        caveat = '' if 'catchment' in ' '.join(area['schools']).lower() else " School catchments are set by address, so confirm a specific home's catchment with the district before you buy."
+        district = f"{name} is in {c['district']}. " if c['district'] else ''
         candidates.append((
             f"What schools serve {name}?",
-            f"{_oxford_join(area['schools'])}."
+            f"{district}Schools and campuses serving the area include: {_oxford_join(area['schools'])}.{caveat}"
         ))
     if area.get('shopping') and 'shop' not in existing_q and 'grocery' not in existing_q:
         candidates.append((
-            f"Where do {name} residents shop?",
-            f"{_oxford_join(area['shopping'])}."
+            f"Where do {name} residents shop?" if residential else f"What shopping and services are near {name}?",
+            f"For day-to-day shopping and groceries, {name} residents typically use: {_oxford_join(area['shopping'])}."
         ))
     if area.get('recreation') and 'recreation' not in existing_q and 'park' not in existing_q:
         candidates.append((
-            f"What recreation and parks are near {name}?",
-            f"{_oxford_join(area['recreation'])}."
+            f"What parks and recreation are near {name}?",
+            f"Parks and recreation in and around {name} include: {_oxford_join(area['recreation'])}."
         ))
-    if 'type of home' not in existing_q and 'kind of home' not in existing_q and 'housing' not in existing_q:
-        candidates.append((
-            f"What type of homes will I find in {name}?",
-            f"{name} is mainly known for {_housing_type(area['desc'], area['tags'])}. {area['desc']}"
-        ))
-    if 'good fit' not in existing_q and 'good choice' not in existing_q and 'good area' not in existing_q and 'good for' not in existing_q:
-        candidates.append((
-            f"Who is {name} a good fit for?",
-            f"Based on the area's character \u2014 {area['note'].lower()} \u2014 {name} tends to suit {_good_fit(name, area['note'], area['tags'])}. Manan can talk through whether it fits your specific situation."
-        ))
-    if is_out_of_town:
+    if not residential:
+        pass
+    elif c['out_of_town']:
         candidates.append((
             f"Is now a good time to buy or sell in {name}?",
-            f"Conditions in {name} can move differently than the Lower Mainland's \u2014 driven more by local tourism, resource, or agricultural economics than commuter demand. Rather than relying on general Lower Mainland trends, it's worth a direct, current conversation with Manan about what's happening specifically in {name}."
+            f"{name}'s market can move differently from the Lower Mainland's, driven more by local tourism, resource, or agricultural economics than by commuter demand. Rather than relying on Metro Vancouver headlines, it's worth a current, local look at recent sales and inventory before deciding — Manan can put that together for you."
+        ))
+    elif c['board'] == 'fvreb':
+        candidates.append((
+            f"Is now a good time to buy or sell in {name}?",
+            f"As of {FVREB_LABEL}, conditions across the Fraser Valley favoured buyers, with inventory near decade highs and sales below year-ago levels. For {name}, that generally means more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions change month to month, so check the latest {name} numbers before committing either way."
         ))
     else:
         candidates.append((
-            f"How does pricing in {name} compare to the wider Fraser Valley market?",
-            f"As a general reference point, the Fraser Valley's composite benchmark price was $877,600 as of the most recent Fraser Valley Real Estate Board report, with detached homes at $1,350,200, townhomes at $764,100, and condos at $469,500. Where {name} sits relative to those figures depends on housing type, lot size, and age of construction \u2014 Manan can pull current comparables specific to this area."
-        ))
-        candidates.append((
             f"Is now a good time to buy or sell in {name}?",
-            "Market conditions across the Fraser Valley have recently favoured buyers, with inventory near decade highs and sales activity below year-ago levels \u2014 which can mean more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions shift, so it's worth a direct, current conversation with Manan rather than relying on general trends alone."
+            f"That depends on current inventory and sales activity for your specific type of property in {name}, which can differ from region-wide headlines. A look at recent sales and active listings for comparable homes is the best basis for timing a purchase or sale, and Manan can put that together for you."
         ))
     for q, a in candidates:
         if len(faqs) >= target:
             break
         faqs.append((q, a))
     area['area_faq'] = faqs
+
+def area_glance_html(area):
+    """Short fact list under the About text -- self-contained facts answer engines can lift."""
+    c = _area_ctx(area)
+    rows = []
+    if c['group'] and not c['is_city']:
+        rows.append(("Location", f"Neighbourhood in {c['group']}" + (f", {c['region']}" if c['region'] else '')))
+    elif c['region']:
+        rows.append(("Location", f"{'City' if c['group'] else 'Community'} in {c['region']}, BC"))
+    if c['neighbours'] and c['is_city'] and not c['out_of_town']:
+        rows.append(("Neighbouring cities", _oxford_join(c['neighbours'])))
+    housing = _housing_type(area['desc'], area['tags'])
+    if housing != "a mix of housing types":
+        rows.append(("Property types", housing[0].upper() + housing[1:]))
+    if c['district']:
+        rows.append(("Public schools", c['district']))
+    board = {'fvreb': 'Fraser Valley Real Estate Board', 'gvr': 'Greater Vancouver Realtors',
+             'delta-split': 'FVREB (North Delta) and Greater Vancouver Realtors (Ladner, Tsawwassen)',
+             'cadreb': 'Chilliwack and District Real Estate Board'}.get(c['board'])
+    if board:
+        rows.append(("Price data", board))
+    if not rows:
+        return ''
+    items = ''.join(f'<div class="glance-row"><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
+    return f'<dl class="area-glance" aria-label="{area["name"]} at a glance">{items}</dl>'
 
 for _area in AREAS:
     _auto_supplement_faqs(_area)
@@ -3106,6 +3217,7 @@ for a in AREAS:
     <div>
       <h2>About {a['name']}</h2>
       <p style="margin-top:14px;">{a['desc']}</p>
+      {area_glance_html(a)}
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
