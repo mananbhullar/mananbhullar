@@ -1,0 +1,12 @@
+# Old GoDaddy Website Builder URLs -> new pages (301 = permanent, passes ranking).
+# Source list: Google Search Console "Not found (404)" report, 2026-10-13.
+/home                     /                 301
+/category/uncategorized   /updates/         301
+/category/*               /updates/         301
+/leasing-1                /commercial/      301
+/leasing                  /commercial/      301
+/marketing-1              /marketing/       301
+/15160-81-avenue          /listings/        301
+/education                /why-manan/       301
+/about                    /why-manan/       301
+/about/                   /why-manan/       301
