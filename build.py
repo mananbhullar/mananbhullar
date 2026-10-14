@@ -127,7 +127,8 @@ AGENT_LD = {
     "areaServed": [{"@type": "City", "name": c} for c in
                    ["Surrey", "Langley", "Delta", "White Rock", "Burnaby", "Abbotsford", "Coquitlam",
                     "New Westminster", "Richmond", "Vancouver", "Maple Ridge", "Mission", "Chilliwack"]],
-    "address": {"@type": "PostalAddress", "addressLocality": "Surrey", "addressRegion": "BC", "addressCountry": "CA"},
+    "address": {"@type": "PostalAddress", "streetAddress": "6625 152A St #204", "addressLocality": "Surrey",
+                "addressRegion": "BC", "postalCode": "V3S 3L1", "addressCountry": "CA"},
     "sameAs": ["https://www.facebook.com/mananrealtor/", "https://www.instagram.com/mb_realestate/",
                "https://www.linkedin.com/in/mananbhullar", "https://youtube.com/@mananbhullar"],
 }
