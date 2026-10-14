@@ -129,7 +129,9 @@ AGENT_LD = {
                     "New Westminster", "Richmond", "Vancouver", "Maple Ridge", "Mission", "Chilliwack"]],
     "address": {"@type": "PostalAddress", "streetAddress": "6625 152A St #204", "addressLocality": "Surrey",
                 "addressRegion": "BC", "postalCode": "V3S 3L1", "addressCountry": "CA"},
-    "sameAs": ["https://www.facebook.com/mananrealtor/", "https://www.instagram.com/mb_realestate/",
+    "geo": {"@type": "GeoCoordinates", "latitude": 49.1232297, "longitude": -122.8001969},
+    "hasMap": "https://maps.google.com/?cid=1002855580493537118",
+    "sameAs": ["https://maps.google.com/?cid=1002855580493537118", "https://www.facebook.com/mananrealtor/", "https://www.instagram.com/mb_realestate/",
                "https://www.linkedin.com/in/mananbhullar", "https://youtube.com/@mananbhullar"],
 }
 WEBSITE_LD = {"@type": "WebSite", "@id": SITE_ID, "url": SITE + "/", "name": "Manan Bhullar Real Estate",
