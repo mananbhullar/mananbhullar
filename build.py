@@ -1822,6 +1822,29 @@ def _housing_advice(housing):
         return "For detached homes, lot size, age of construction, and suite potential account for most of the price difference between otherwise similar houses."
     return "Comparing recent sales of the specific type of home you want \u2014 not area-wide averages \u2014 is the quickest way to understand value here."
 
+def _commercial_angles(area):
+    """Investment/commercial angles grounded in the area's own description, best match first."""
+    text = (area['desc'] + ' ' + area['note'] + ' ' + ' '.join(area.get('tags', []))).lower().replace('real estate', '')
+    has = lambda pat: re.search(pat, text) is not None
+    link = lambda slug, label: f'<a href="/commercial/{slug}/">{label}</a>'
+    angles = []
+    if has(r'\bindustrial\b|\bwarehous|\bbusiness park|\blogistics\b'):
+        angles.append(("industrial space, from strata warehouse units to larger buildings for owner-users",
+                       "ceiling height, loading access, power supply, and the site's environmental history", [link('industrial', 'industrial'), link('truck-yards', 'truck yard'), link('self-storage', 'self-storage')]))
+    if has(r'\bskytrain\b|\btransit\b|\bhigh-rise\b|\bcondo|\brental\b|\buniversity\b|\bsfu\b'):
+        angles.append(("rental condos and multi-family buildings close to transit",
+                       "the rent roll, existing tenancies under BC's Residential Tenancy Act, and the building's condition", [link('apartment-buildings', 'apartment building'), link('retail', 'retail')]))
+    if has(r'\bretail\b|\bshopping\b|\bcommercial\b|\bdowntown\b|\bvillage\b|\bcorridor\b|\bdining\b'):
+        angles.append(("storefront retail, small strata commercial units, and established businesses such as restaurants and convenience stores",
+                       "the lease terms, the business's real financials, and any licences that need to transfer", [link('retail', 'retail'), link('restaurants', 'restaurant'), link('convenience-stores', 'convenience store')]))
+    if has(r'\bagricultural\b|\bfarm|\bacreages?\b|\balr\b|\bequestrian\b|\brural\b'):
+        angles.append(("farmland, ALR parcels, and acreage with agricultural or agri-tourism potential",
+                       "Agricultural Land Reserve rules, water licences, and whether the property qualifies for farm class assessment", [link('farms-alr-land', 'farm and ALR land'), link('land', 'development land')]))
+    if not angles:
+        angles.append(("income properties such as homes with legal suites, along with neighbourhood retail and service businesses",
+                       "whether suites are legal and permitted, current rents against market, and the lease terms on any commercial space", [link('apartment-buildings', 'apartment building'), link('retail', 'retail')]))
+    return angles[:2]
+
 def _auto_supplement_faqs(area, target=6):
     faqs = list(area.get('area_faq') or [])
     existing_q = ' '.join(q.lower() for q, _ in faqs)
@@ -1841,6 +1864,20 @@ def _auto_supplement_faqs(area, target=6):
         candidates.append((
             f"Can Manan Bhullar help me buy or sell in {name}?",
             f"Yes. Manan Bhullar is a Surrey-based REALTOR® licensed in British Columbia, and he works with buyers and sellers in {c['reach']} — a BC licence covers the whole province. He can pull recent comparable sales, arrange viewings, and price and market a listing, drawing on his BBA in Marketing from SFU's Beedie School of Business. Because his practice also covers commercial and industrial real estate, he can help with an investment or business property in {name} too. Call or text (604) 727-9542."
+        ))
+    if not c['out_of_town'] and 'commercial' not in existing_q and 'investment' not in existing_q:
+        # Client asked for in-town areas to mix residential and commercial content.
+        angles = _commercial_angles(area)
+        links = []
+        for _, _, ls in angles:
+            links += [l for l in ls if l not in links]
+        (kind1, check1, _) = angles[0]
+        also = f" {name} also suits {angles[1][0]}." if len(angles) > 1 else ""
+        candidates.append((
+            f"Can I buy commercial or investment property in {name}?",
+            f"Yes. Given what {name} is known for, the opportunities that fit best are {kind1}.{also} "
+            f"Commercial financing works differently from a home mortgage, usually with a larger down payment and closer scrutiny of the property's income or your business, and for this kind of property the key checks are {check1}. "
+            f"Manan handles commercial and industrial sales and leasing; his {_oxford_join(links)} guides go deeper on each property type."
         ))
     if residential and housing != "a mix of housing types" and 'type of home' not in existing_q and 'kind of home' not in existing_q and 'housing' not in existing_q:
         candidates.append((
@@ -1903,6 +1940,8 @@ def _auto_supplement_faqs(area, target=6):
             f"Is now a good time to buy or sell in {name}?",
             f"That depends on current inventory and sales activity for your specific type of property in {name}, which can differ from region-wide headlines. A look at recent sales and active listings for comparable homes is the best basis for timing a purchase or sale, and Manan can put that together for you."
         ))
+    if not c['out_of_town']:
+        target += 1
     for q, a in candidates:
         if len(faqs) >= target:
             break

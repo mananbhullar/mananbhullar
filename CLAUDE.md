@@ -288,12 +288,12 @@ doing this — don't ship based on reading the HTML source alone.
    shouldn't be presented with equal weight to actual cities in these lists.
    Needs a real geography-aware grouping (which areas are actually near which),
    not the current fixed list.
-3. **In-town vs. out-of-town FAQ/content mix.** Client wants areas that are
-   "in town" (Surrey, Lower Mainland, Delta, Langley, Burnaby, etc.) to get a
-   mix of residential AND commercial FAQ content, while more remote areas
-   (Hope, Harrison Hot Springs, Kelowna, Kamloops) should lean more toward
-   commercial/investment-focused content specifically, less residential-buyer
-   focused. Not yet implemented anywhere.
+3. ~~In-town vs. out-of-town FAQ/content mix~~ **DONE 2026-10-14.** In-town areas get
+   a "Can I buy commercial or investment property in X?" FAQ (7 FAQs instead of 6),
+   with the angle picked from the area's own desc/tags by `_commercial_angles()`
+   (industrial / transit rental / retail & businesses / farm & ALR / suites fallback)
+   and linking to the matching /commercial/ guides. Out-of-town areas already lead
+   with the investment/commercial question.
 4. **Vancouver page needs real sub-areas** (North Vancouver, West Vancouver,
    etc.) — currently intentionally generic/thin, client wants it built out
    properly now.

@@ -680,6 +680,8 @@
 .faq-item.open .faq-q .chev{transform:rotate(180deg);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .22s ease;}
 .faq-a p{padding:0 20px 18px;font-size:0.88rem;color:var(--ink-soft);line-height:1.65;margin:0;}
+.faq-a a{color:var(--accent-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+.content-section.dark .faq-a a{color:#fff;}
 
 /* Community / area grid */
 .community-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;justify-content:center;}
