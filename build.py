@@ -3314,9 +3314,10 @@ contact_body += f"""<section class="content-section dark">
       <h2>Contact Details</h2>
       <div class="point-list">
         <div class="point"><div class="dot">\U0001F4DE</div><div><strong>Phone</strong><span><a href="tel:+16047279542">(604) 727-9542</a></span></div></div>
-        <div class="point"><div class="dot">\U0001F4CD</div><div><strong>Office</strong><span>201-2010 E 48th Ave, Vancouver, BC V5P 1R8</span></div></div>
+        <div class="point"><div class="dot">\U0001F4CD</div><div><strong>Office</strong><span><a href="https://www.google.com/maps/search/?api=1&amp;query=6625+152A+St+%23204+Surrey+BC+V3S+3L1" target="_blank" rel="noopener">6625 152A St #204, Surrey, BC V3S 3L1</a></span></div></div>
         <div class="point"><div class="dot">\u2709\uFE0F</div><div><strong>Email</strong><span><a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a></span></div></div>
-        <div class="point"><div class="dot">\U0001F3E2</div><div><strong>Service Area</strong><span>Lower Mainland, BC</span></div></div>
+        <div class="point"><div class="dot">\U0001F3E2</div><div><strong>Brokerage</strong><span>201-2010 E 48th Ave, Vancouver, BC V5P 1R8</span></div></div>
+        <div class="point"><div class="dot">\U0001F5FA\uFE0F</div><div><strong>Service Area</strong><span>Surrey, the Lower Mainland &amp; Fraser Valley</span></div></div>
       </div>
     </div>
     {contact_lead_form}
