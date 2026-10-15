@@ -689,12 +689,12 @@ def market_snapshot_section(dark=False, raised=True):
       <p>Real numbers from the Fraser Valley Real Estate Board's most recent monthly report \u2014 not estimates.</p>
     </div>
     <div class="grid-cards cols-4">
-      <div class="simple-card"><strong style="{num_style}">$877,600</strong><span>Composite benchmark price, all residential types</span></div>
-      <div class="simple-card"><strong style="{num_style}">$1,350,200</strong><span>Benchmark price, single-family detached</span></div>
-      <div class="simple-card"><strong style="{num_style}">$764,100</strong><span>Benchmark price, townhomes</span></div>
-      <div class="simple-card"><strong style="{num_style}">$469,500</strong><span>Benchmark price, apartments &amp; condos</span></div>
+      <div class="simple-card"><strong style="{num_style}">$1,300,000</strong><span>Benchmark price, single-family detached (down 8.8% year over year)</span></div>
+      <div class="simple-card"><strong style="{num_style}">$745,300</strong><span>Benchmark price, townhomes (down 6.2% year over year)</span></div>
+      <div class="simple-card"><strong style="{num_style}">$461,800</strong><span>Benchmark price, apartments &amp; condos (down 9.3% year over year)</span></div>
+      <div class="simple-card"><strong style="{num_style}">9,763</strong><span>Active listings, 31% above the 10-year seasonal average</span></div>
     </div>
-    <p style="font-size:0.8rem;{note_style}margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, July 2026 MLS\u00ae &amp; Home Price Index statistics. The Fraser Valley market is currently favouring buyers, with inventory near decade highs \u2014 Manan can walk you through what that means for your specific situation.</p>
+    <p style="font-size:0.8rem;{note_style}margin-top:20px;text-align:center;">Source: Fraser Valley Real Estate Board, September 2026 MLS\u00ae &amp; Home Price Index statistics. The board says the Fraser Valley has spent most of the last two years in a buyer's market \u2014 Manan can walk you through what that means for your specific situation.</p>
   </div>
 </section>"""
 
@@ -741,7 +741,7 @@ print("helpers ready")
 # ============================================================
 AREAS = [
     dict(slug='surrey', name='Surrey', note='BC\'s second-largest city',
-         stats={'population': '732,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
+         stats={'population': '732,000+', 'benchmark': '$1,386,200', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
          tags=['SkyTrain Connectivity', 'Cultural Diversity', 'Growing Tech Hub'],
          desc="Surrey is British Columbia's second-largest city, offering diverse neighbourhoods, excellent transit connectivity, and a booming local economy. From established family neighbourhoods to rapidly densifying town centres, Surrey covers an enormous range of housing types and price points.",
          schools=["SFU Surrey and KPU Civic Plaza campuses in City Centre", "School District 36 Surrey \u2014 the province's largest, with 50+ elementary and nearly 30 secondary schools"],
@@ -818,7 +818,7 @@ AREAS = [
             ("What areas make up Surrey's industrial corridor?", "Campbell Heights is the flagship large-format industrial park, alongside established industrial land around Cloverdale and the Highway 10 corridor \u2014 see Manan's dedicated Industrial &amp; Warehouse commercial page for full detail on this market."),
          ]),
     dict(slug='delta', name='Delta', note='Three distinct communities',
-         stats={'population': '115,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
+         stats={'population': '115,000+', 'benchmark': '$1,159,600', 'benchmark_label': 'North Delta Detached Benchmark (FVREB Sept 2026)'},
          tags=['Waterfront Living', 'BC Ferries Terminal', 'Ladner & Tsawwassen'],
          desc="Delta is a diverse municipality comprising three distinct communities — Ladner, Tsawwassen, and North Delta — offering everything from waterfront living and rural acreages to the Tsawwassen ferry terminal connecting to Vancouver Island.",
          schools=["Delta School District (SD37) \u2014 24 elementary and 7 secondary schools, including District French Immersion"],
@@ -826,7 +826,7 @@ AREAS = [
          entertainment=["Restaurants in Ladner Village and dining at Tsawwassen Mills"],
          shopping=["Ladner Village shops", "Tsawwassen Mills and Tsawwassen Commons"]),
     dict(slug='langley', name='Langley', note='Small-town charm, modern amenities',
-         stats={'population': '198,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
+         stats={'population': '198,000+', 'benchmark': '$1,471,100', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
          tags=['Fort Langley Heritage', 'Wine Country', 'Equestrian Community'],
          desc="Langley combines small-town charm with modern amenities, featuring the historic Fort Langley village, an established wine and agritourism scene, and a strong equestrian community alongside newer master-planned residential development.",
          schools=["School District 35 Langley covers all of Langley Township and City", "Willoughby's newer schools include Lynn Fripps, Richard Bulpitt, and Yorkson Creek Middle \u2014 confirm your specific catchment with SD35"],
@@ -839,7 +839,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Langley", "Restaurants in Fort Langley's historic village and Willoughby Town Centre"]),
     dict(slug='burnaby', name='Burnaby', note='Geographic centre of Metro Vancouver',
-         stats={'population': '310,000+', 'benchmark': '$1,011,900', 'benchmark_label': 'Composite Benchmark (REBGV 2026)'},
+         stats={'population': '310,000+', 'benchmark': '$972,800', 'benchmark_label': 'Burnaby South Composite (GVR Sept 2026)'},
          tags=['Metrotown', 'SFU & BCIT', 'SkyTrain Lines'],
          desc="Burnaby sits at the geographic centre of Metro Vancouver, offering everything from Metrotown's high-rise energy to quieter, tree-lined family neighbourhoods, with two major universities (SFU and BCIT) and extensive SkyTrain coverage.",
          schools=["Burnaby South Secondary (IB Diploma Programme &amp; French Immersion)", "Simon Fraser University (Burnaby Mountain campus)", "British Columbia Institute of Technology (BCIT)", "School District 41 Burnaby covers the whole city \u2014 elementary catchment depends on exact address"],
@@ -852,7 +852,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Metropolis at Metrotown", "Cineplex VIP Cinemas &amp; The Rec Room (bowling, arcade, dining) at The Amazing Brentwood"]),
     dict(slug='coquitlam', name='Coquitlam', note='SkyTrain-connected, mountain-backed',
-         stats={'population': '160,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
+         stats={'population': '160,000+', 'benchmark': '$971,700', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
          tags=['Evergreen SkyTrain Line', 'Coquitlam Centre', 'Lafarge Lake'],
          desc="Coquitlam pairs SkyTrain-connected town centres with mountain-backed family neighbourhoods, from Burquitlam's newer towers to the established communities around Lafarge Lake and Westwood Plateau.",
          shopping=["Coquitlam Centre Mall (200+ shops, restaurants, and services)", "Austin Heights, Sunwood Square, and Burquitlam Plaza shopping areas", "Como Lake Village and Pinetree Village"],
@@ -886,7 +886,7 @@ AREAS = [
          entertainment=["Restaurants throughout Uptown and along Columbia Street"]),
     dict(slug='vancouver', name='Vancouver', note="BC's largest city",
          housing="condos, townhomes, character houses, and detached homes",
-         stats={'population': '700,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
+         stats={'population': '700,000+', 'benchmark': '$1,206,600', 'benchmark_label': 'Vancouver West Composite (GVR Sept 2026)'},
          tags=['Diverse Neighbourhoods', 'Downtown Core', 'Transit-Connected'],
          desc="Vancouver real estate spans an enormous range, from dense downtown condo towers and Yaletown lofts to established west-side neighbourhoods like Shaughnessy, Kerrisdale, and Point Grey, plus east-side communities like Mount Pleasant, Grandview-Woodland, and Hastings-Sunrise \u2014 each with its own character, price point, and community feel.",
          schools=["School District 39 (Vancouver) runs the city's public schools \u2014 catchments are set by address", "University of British Columbia (Point Grey)", "SFU's Vancouver campus at Harbour Centre", "Langara College", "Emily Carr University of Art + Design"],
@@ -899,7 +899,7 @@ AREAS = [
          ],
          entertainment=["Rogers Arena and BC Place (Canucks, BC Lions, Whitecaps)", "The Orpheum and downtown theatres", "Granville Island's theatres and studios", "Restaurants across Yaletown, Gastown, Main Street, and Commercial Drive"]),
     dict(slug='north-vancouver', name='North Vancouver', note='Mountains meet the waterfront',
-         stats={'population': '170,000+', 'benchmark': '$779,700', 'benchmark_label': 'Condo Benchmark (REBGV 2026)'},
+         stats={'population': '170,000+', 'benchmark': '$1,290,400', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
          tags=['North Shore Mountains', 'Lonsdale Quay', 'SeaBus Connected'],
          desc="North Vancouver spans the City and District of North Vancouver on the North Shore, from the urban waterfront energy of Lower Lonsdale and the SeaBus terminal to mountain-backed family neighbourhoods in Lynn Valley, Edgemont Village, and Deep Cove.",
          schools=["Carson Graham Secondary (IB World School — Middle Years and Diploma Programmes)", "Handsworth Secondary (North Vancouver's largest, ~1,600 students)", "Sutherland Secondary", "Seycove Secondary (Deep Cove area)", "Windsor Secondary", "Argyle Secondary", "SD44 North Vancouver serves the whole district"],
@@ -911,7 +911,7 @@ AREAS = [
          ],
          entertainment=["Lonsdale Quay Market food hall", "Restaurants and cafés along Lonsdale Avenue", "Deep Cove's waterfront cafés (Arms Reach Bistro, Deep Cove Pizza)"]),
     dict(slug='west-vancouver', name='West Vancouver', note="Metro Vancouver's premium North Shore",
-         stats={'population': '46,000+', 'benchmark': '$3,060,000', 'benchmark_label': 'Detached Benchmark (REBGV 2026)'},
+         stats={'population': '46,000+', 'benchmark': '$2,822,900', 'benchmark_label': 'Detached Benchmark (GVR Sept 2026)'},
          tags=['Waterfront Living', 'Park Royal', 'Cypress Mountain'],
          desc="West Vancouver is one of Metro Vancouver's most established luxury residential communities, stretching along the North Shore waterfront from Ambleside and Dundarave through the British Properties and out to Horseshoe Bay's BC Ferries terminal.",
          schools=["Rockridge Secondary (IB Middle Years Programme, Advanced Placement)", "Sentinel Secondary (French Immersion, Advanced Placement, ~1,160 students)", "West Vancouver Secondary (IB Diploma, Arts, Trades)", "West Vancouver Schools (SD45) — 14 elementary and 3 secondary schools district-wide"],
@@ -1044,7 +1044,7 @@ AREAS = [
          ],
          entertainment=["The PNE fair and Playland (seasonal)", "East Hastings Street restaurants"]),
     dict(slug='richmond', name='Richmond', note='Historic charm meets urban energy',
-         stats={'population': '225,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
+         stats={'population': '225,000+', 'benchmark': '$1,015,800', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
          tags=['Steveston Village', 'Canada Line', 'YVR Access'],
          desc="Richmond pairs the historic charm of Steveston Village with City Centre's urban energy along the Canada Line, plus proximity to YVR and Highway 99 — a diverse, well-connected city on the Fraser River delta.",
          schools=["Steveston-London Secondary (public, grades 8-12)", "School District 38 Richmond serves the whole city \u2014 confirm your specific catchment"],
@@ -1073,7 +1073,7 @@ AREAS = [
          entertainment=["Restaurants along the Harris Road commercial strip"],
          shopping=["Pitt Meadows' town centre shops along Harris Road"]),
     dict(slug='abbotsford', name='Abbotsford', note="'City in the Country'",
-         stats={'population': '160,000+', 'benchmark': '$1,350,200', 'benchmark_label': 'Detached Benchmark (FVREB Jul 2026)'},
+         stats={'population': '160,000+', 'benchmark': '$1,087,000', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
          tags=['Mountain Views', 'University Town', 'International Airport'],
          desc="Known as the 'City in the Country,' Abbotsford offers mountain views and relatively more affordable housing than Vancouver, alongside a growing urban centre, University of the Fraser Valley, and its own international airport.",
          schools=["Abbotsford Senior Secondary", "Robert Bateman Secondary", "University of the Fraser Valley (UFV)", "SD34 Abbotsford runs 46 schools \u2014 note that popular schools like Yale and Robert Bateman restrict non-catchment enrolment when over capacity, so confirm your specific catchment"],
@@ -1861,8 +1861,62 @@ GVR_GROUPS = {'Burnaby', 'Coquitlam', 'Port Coquitlam', 'Port Moody', 'New Westm
               'North Vancouver', 'West Vancouver', 'Richmond', 'Pitt Meadows', 'Maple Ridge'}
 FVREB_DELTA = {'north-delta', 'sunshine-hills', 'annieville', 'scottsdale'}   # North Delta = Fraser Valley board
 GVR_DELTA = {'ladner', 'tsawwassen', 'boundary-bay'}                           # Ladner/Tsawwassen = Greater Vancouver
-FVREB_LABEL = "the July 2026 Fraser Valley Real Estate Board (FVREB) report"
-FVREB_FIGURES = "a composite benchmark of $877,600, with detached homes at $1,350,200, townhomes at $764,100, and condos at $469,500"
+FVREB_LABEL = "the September 2026 Fraser Valley Real Estate Board (FVREB) report"
+FVREB_FIGURES = "benchmarks of $1,300,000 for detached homes, $745,300 for townhomes, and $461,800 for apartments and condos"
+# Official September 2026 MLS® HPI benchmarks. FVREB: municipal market report; GVR: September
+# 2026 stats package. Refresh monthly; keep MARKET_MONTH in sync. Never invent or interpolate a figure.
+MARKET_MONTH = 'September 2026'
+MARKET = {
+    'Surrey': dict(board='fvreb', det='$1,386,200', th='$758,600', apt='$447,600'),
+    'North Delta': dict(board='fvreb', det='$1,159,600', th='$845,600', apt='$479,000'),
+    'White Rock': dict(board='fvreb', det='$1,542,600', th='$720,800', apt='$543,200'),
+    'Langley': dict(board='fvreb', det='$1,471,100', th='$802,600', apt='$525,900'),
+    'Abbotsford': dict(board='fvreb', det='$1,087,000', th='$592,600', apt='$370,200'),
+    'Mission': dict(board='fvreb', det='$889,200', th='$621,700', apt='$411,500'),
+    'Burnaby East': dict(board='gvr', det='$1,694,900', th='$857,900', apt='$708,100', comp='$982,400'),
+    'Burnaby North': dict(board='gvr', det='$1,808,500', th='$880,400', apt='$662,400', comp='$877,100'),
+    'Burnaby South': dict(board='gvr', det='$1,894,600', th='$942,100', apt='$723,000', comp='$972,800'),
+    'Coquitlam': dict(board='gvr', det='$1,584,400', th='$976,600', apt='$640,100', comp='$971,700'),
+    'Ladner': dict(board='gvr', det='$1,284,100', th='$919,800', apt='$586,400', comp='$1,033,700'),
+    'Maple Ridge': dict(board='gvr', det='$1,155,900', th='$700,800', apt='$513,400', comp='$882,600'),
+    'New Westminster': dict(board='gvr', det='$1,356,900', th='$854,200', apt='$579,900', comp='$719,600'),
+    'North Vancouver': dict(board='gvr', det='$2,042,000', th='$1,230,400', apt='$769,000', comp='$1,290,400'),
+    'Pitt Meadows': dict(board='gvr', det='$1,178,600', th='$737,500', apt='$558,200', comp='$848,800'),
+    'Port Coquitlam': dict(board='gvr', det='$1,240,600', th='$834,300', apt='$550,000', comp='$835,500'),
+    'Port Moody': dict(board='gvr', det='$1,903,500', th='$940,900', apt='$676,200', comp='$1,011,500'),
+    'Richmond': dict(board='gvr', det='$1,871,100', th='$1,025,000', apt='$635,600', comp='$1,015,800'),
+    'Tsawwassen': dict(board='gvr', det='$1,508,500', th='$886,000', apt='$556,000', comp='$1,113,100'),
+    'Vancouver East': dict(board='gvr', det='$1,630,500', th='$980,400', apt='$634,800', comp='$1,120,200'),
+    'Vancouver West': dict(board='gvr', det='$2,916,100', th='$1,298,500', apt='$761,800', comp='$1,206,600'),
+    'West Vancouver': dict(board='gvr', det='$2,822,900', th=None, apt='$1,097,300', comp='$2,244,700'),
+}
+FVREB_REGION = dict(det='$1,300,000', th='$745,300', apt='$461,800')   # FVREB region-wide, Sept 2026
+GVR_REGION = dict(det='$1,784,700', th='$1,016,700', apt='$682,500', comp='$1,075,900')  # Metro Vancouver, Sept 2026
+VAN_WEST = {'downtown-vancouver', 'west-end', 'kitsilano', 'fairview', 'point-grey', 'dunbar-southlands', 'kerrisdale', 'shaughnessy'}
+VAN_EAST = {'mount-pleasant', 'grandview-woodland', 'hastings-sunrise'}
+GROUP_MARKET = {'Surrey': ['Surrey'], 'South Surrey / White Rock': ['Surrey', 'White Rock'], 'Langley': ['Langley'],
+    'Abbotsford': ['Abbotsford'], 'Mission': ['Mission'], 'Burnaby': ['Burnaby North', 'Burnaby South', 'Burnaby East'],
+    'Coquitlam': ['Coquitlam'], 'Port Coquitlam': ['Port Coquitlam'], 'Port Moody': ['Port Moody'],
+    'New Westminster': ['New Westminster'], 'North Vancouver': ['North Vancouver'], 'West Vancouver': ['West Vancouver'],
+    'Richmond': ['Richmond'], 'Maple Ridge': ['Maple Ridge'], 'Pitt Meadows': ['Pitt Meadows'],
+    'Vancouver': ['Vancouver West', 'Vancouver East']}
+
+def market_keys(slug, group):
+    if slug in VAN_WEST: return ['Vancouver West']
+    if slug in VAN_EAST: return ['Vancouver East']
+    if slug in FVREB_DELTA: return ['North Delta']
+    if slug == 'ladner': return ['Ladner']
+    if slug in ('tsawwassen', 'boundary-bay'): return ['Tsawwassen']
+    if slug == 'delta': return ['North Delta', 'Ladner', 'Tsawwassen']
+    return GROUP_MARKET.get(group, [])
+
+def _bench_sentence(key):
+    m = MARKET[key]
+    parts = [f"{m['det']} for a detached home"]
+    if m.get('th'): parts.append(f"{m['th']} for a townhome")
+    parts.append(f"{m['apt']} for an apartment or condo")
+    return f"{key}: {_oxford_join(parts)}"
+
 
 def _price_board(slug, group):
     if group in FVREB_GROUPS or slug in FVREB_DELTA: return 'fvreb'
@@ -1967,15 +2021,16 @@ def _auto_supplement_faqs(area, target=6):
             f"It depends on what you're after. {name} is best summed up as \u201c{note}\u201d, and it tends to suit {_good_fit(name, area['note'], area['tags'])}. Visiting at different times of day and comparing it with nearby {('neighbourhoods' if c['group'] and not c['is_city'] else 'communities')} is the best way to judge the fit."
         ))
     if residential and not c['out_of_town'] and not any(k in existing_q for k in ('price', 'pricing', 'cost', 'benchmark')):
-        if c['board'] == 'fvreb':
-            ans = (f"{name}'s home prices are tracked by the Fraser Valley Real Estate Board. As of {FVREB_LABEL}, the Fraser Valley had {FVREB_FIGURES}. "
-                   f"A specific {name} home can sit well above or below those figures depending on property type, lot size, and age, so recent sold comparables are the reliable guide.")
-        elif c['board'] == 'gvr':
-            ans = (f"{name}'s home prices are tracked by Greater Vancouver Realtors (GVR), not the Fraser Valley board, so Fraser Valley benchmark figures aren't a fair comparison. "
-                   f"Prices in {name} vary widely by property type, size, and age; recent sold comparables for the specific type of home you're considering are the reliable guide, and Manan can pull them for you.")
-        elif c['board'] == 'delta-split':
-            ans = (f"Delta's price data is split between two boards: North Delta is covered by the Fraser Valley Real Estate Board, while Ladner and Tsawwassen are covered by Greater Vancouver Realtors. "
-                   f"For reference, {FVREB_LABEL} showed {FVREB_FIGURES} across the Fraser Valley. Within Delta, prices differ meaningfully between the three communities, so comparables from the exact neighbourhood matter.")
+        keys = [k for k in market_keys(area['slug'], c['group']) if k in MARKET]
+        if keys:
+            names = {'fvreb': 'Fraser Valley Real Estate Board', 'gvr': 'Greater Vancouver Realtors'}
+            boards = sorted({MARKET[k]['board'] for k in keys})
+            src = names[boards[0]] if len(boards) == 1 else 'Fraser Valley Real Estate Board and Greater Vancouver Realtors'
+            covers = '' if keys == [name] else (f" ({name} falls within " + ('these board areas' if len(keys) > 1 else f"the {keys[0]} area") + ")")
+            label = (lambda k: k) if len(boards) == 1 else (lambda k: f"{k} ({'FVREB' if MARKET[k]['board'] == 'fvreb' else 'GVR'})")
+            ans = (f"According to the {MARKET_MONTH} {src} benchmarks{covers}, typical prices were \u2014 " +
+                   '; '.join(_bench_sentence(k).replace(k + ':', label(k) + ':', 1) for k in keys) + ". "
+                   f"Benchmarks describe a typical home, so a specific property can sit well above or below them depending on size, age, lot, and location; recent sold comparables are the reliable guide.")
         elif c['board'] == 'cadreb':
             ans = (f"{name}'s home prices are tracked by the Chilliwack and District Real Estate Board, separately from the Fraser Valley and Greater Vancouver boards. "
                    f"Prices vary by property type, lot size, and age, so recent sold comparables are the reliable guide, and Manan can pull them for you.")
@@ -2009,7 +2064,7 @@ def _auto_supplement_faqs(area, target=6):
     elif c['board'] == 'fvreb':
         candidates.append((
             f"Is now a good time to buy or sell in {name}?",
-            f"As of {FVREB_LABEL}, conditions across the Fraser Valley favoured buyers, with inventory near decade highs and sales below year-ago levels. For {name}, that generally means more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions change month to month, so check the latest {name} numbers before committing either way."
+            f"As of {FVREB_LABEL}, the board described the Fraser Valley as having spent most of the last two years in a buyer's market, with active listings 31% above the 10-year seasonal average and sales down 4% from a year earlier. For {name}, that generally means more negotiating room for buyers and a need for sharper pricing and presentation for sellers. Conditions change month to month, so check the latest {name} numbers before committing either way."
         ))
     else:
         candidates.append((
@@ -2276,9 +2331,9 @@ ft_body += step_section(
     "What Your Budget Actually Buys Right Now",
     "Real Fraser Valley benchmark prices by property type \u2014 a starting point for setting expectations before you shop.",
     [
-        dict(title="Under the Condo Benchmark", desc="At a $469,500 benchmark, apartments in Surrey City Centre, Whalley, and parts of Newton remain the most accessible entry point, especially near SkyTrain."),
-        dict(title="Around the Townhome Benchmark", desc="At a $764,100 benchmark, townhomes in Cloverdale, Clayton, and parts of Langley offer more space than a condo without stretching to a detached home."),
-        dict(title="Approaching the Detached Benchmark", desc="At a $1,350,200 benchmark, detached homes are within reach in Abbotsford, Chilliwack, and select North Surrey pockets, particularly with a larger down payment."),
+        dict(title="Under the Condo Benchmark", desc="At the Fraser Valley's $461,800 condo benchmark (FVREB, September 2026), apartments in Surrey City Centre, Whalley, and parts of Newton remain the most accessible entry point, especially near SkyTrain."),
+        dict(title="Around the Townhome Benchmark", desc="At the $745,300 townhome benchmark, townhomes in Cloverdale, Clayton, and parts of Langley offer more space than a condo without stretching to a detached home."),
+        dict(title="Approaching the Detached Benchmark", desc="At the $1,300,000 detached benchmark, detached homes are within reach in Abbotsford, Chilliwack, and select North Surrey pockets, particularly with a larger down payment."),
     ],
     dark=True
 )
@@ -3805,11 +3860,16 @@ write_page(
 BLOG_CATEGORIES = ['All Posts', 'Market Updates', 'Neighbourhood Guides', 'Commercial Real Estate', 'Buying Guide', 'Selling Guide']
 
 ARTICLES = [
+    dict(slug='fraser-valley-vancouver-market-update-september-2026', tag='Market Updates',
+         title="Fraser Valley & Metro Vancouver Market Update \u2014 September 2026",
+         desc="September 2026 benchmark prices, sales, and inventory for the Fraser Valley and Metro Vancouver, city by city, and what they mean for buyers and sellers.",
+         tags=['Market Update', 'Benchmark Prices', 'Fraser Valley', 'Metro Vancouver'],
+         img='blog-market-update-sept-2026', img_real='/assets/photos/blog-market-update.jpg', featured=True),
     dict(slug='fraser-valley-market-update-august-2026', tag='Market Updates',
          title="Fraser Valley Real Estate Market Update \u2014 August 2026",
          desc="Benchmark prices, interest rates, and how the US-Canada tariff dispute is showing up in the Fraser Valley housing market right now.",
          tags=['Market Update', 'Interest Rates', 'Tariffs'],
-         img='blog-market-update-2026', img_real='/assets/photos/blog-market-update.jpg', featured=True),
+         img='blog-market-update-2026', img_real='/assets/photos/blog-market-update.jpg'),
     dict(slug='first-time-buyer-programs-bc', tag='Buying Guide',
          title="BC First-Time Buyer Programs, Explained",
          desc="A plain-language walkthrough of the PTT exemption, FHSA, and RRSP Home Buyers' Plan.",
@@ -4028,6 +4088,65 @@ def article_page(art, body_html):
 
 _art_by_slug = {a['slug']: a for a in ARTICLES}
 
+article_page(_art_by_slug['fraser-valley-vancouver-market-update-september-2026'], """
+<p><strong>The short version:</strong> both the Fraser Valley and Metro Vancouver stayed in buyer-friendly territory in September 2026. Benchmark prices slipped again month over month, inventory is well above its 10-year average in both regions, and sales are below last year's pace. All figures below come from the Fraser Valley Real Estate Board (FVREB) and Greater Vancouver Realtors (GVR) September 2026 reports.</p>
+<h2>Fraser Valley: September 2026 at a Glance</h2>
+<ul>
+<li><strong>Detached benchmark:</strong> $1,300,000 &mdash; down 1.5% from August and 8.8% from September 2025, and $460,000 below its March 2022 peak.</li>
+<li><strong>Townhome benchmark:</strong> $745,300 &mdash; down 0.7% from August and 6.2% year over year.</li>
+<li><strong>Apartment/condo benchmark:</strong> $461,800 &mdash; down 0.9% from August and 9.3% year over year.</li>
+<li><strong>Sales:</strong> 922 homes sold on the MLS&reg;, down 4% year over year.</li>
+<li><strong>New listings:</strong> 2,818, up 19% from August and down 18% from a year earlier.</li>
+<li><strong>Active listings:</strong> 9,763 &mdash; 31% above the 10-year seasonal average.</li>
+<li><strong>Average days on market:</strong> 45 for detached homes, 38 for townhomes, and 46 for condos.</li>
+</ul>
+<p>The board described the Fraser Valley as having spent most of the last two years in a buyer's market, with no change in September. With 922 sales against 9,763 active listings, the sales-to-active ratio works out to roughly 9%, below the 12&ndash;20% range the board treats as balanced.</p>
+<h2>Fraser Valley Benchmarks by City</h2>
+<table>
+<thead><tr><th>Area</th><th>Detached</th><th>Townhome</th><th>Apartment</th></tr></thead>
+<tbody>
+<tr><td><a href="/communities/surrey/">Surrey</a></td><td>$1,386,200</td><td>$758,600</td><td>$447,600</td></tr>
+<tr><td><a href="/communities/north-delta/">North Delta</a></td><td>$1,159,600</td><td>$845,600</td><td>$479,000</td></tr>
+<tr><td><a href="/communities/south-surrey/">White Rock</a></td><td>$1,542,600</td><td>$720,800</td><td>$543,200</td></tr>
+<tr><td><a href="/communities/langley/">Langley</a></td><td>$1,471,100</td><td>$802,600</td><td>$525,900</td></tr>
+<tr><td><a href="/communities/abbotsford/">Abbotsford</a></td><td>$1,087,000</td><td>$592,600</td><td>$370,200</td></tr>
+<tr><td><a href="/communities/mission/">Mission</a></td><td>$889,200</td><td>$621,700</td><td>$411,500</td></tr>
+</tbody>
+</table>
+<h2>Metro Vancouver: September 2026 at a Glance</h2>
+<ul>
+<li><strong>Composite benchmark (all home types):</strong> $1,075,900 &mdash; down 0.6% from August and 5.5% year over year.</li>
+<li><strong>Detached benchmark:</strong> $1,784,700 &mdash; down 0.8% from August and 7.3% year over year.</li>
+<li><strong>Townhome benchmark:</strong> $1,016,700 &mdash; down 1.2% from August and 4.7% year over year.</li>
+<li><strong>Apartment benchmark:</strong> $682,500 &mdash; down 0.5% from August and 6.2% year over year.</li>
+<li><strong>Sales:</strong> 1,717, down 8.4% from September 2025.</li>
+<li><strong>Active listings:</strong> 16,394 &mdash; 24.3% above the 10-year seasonal average.</li>
+<li><strong>Sales-to-active ratio:</strong> 10.9%. GVR notes that sustained ratios below 12% have historically been associated with downward pressure on prices.</li>
+</ul>
+<h2>Metro Vancouver Benchmarks by Area</h2>
+<table>
+<thead><tr><th>Area</th><th>Composite</th><th>Detached</th><th>Townhome</th><th>Apartment</th></tr></thead>
+<tbody>
+<tr><td><a href="/communities/vancouver/">Vancouver West</a></td><td>$1,206,600</td><td>$2,916,100</td><td>$1,298,500</td><td>$761,800</td></tr>
+<tr><td><a href="/communities/vancouver/">Vancouver East</a></td><td>$1,120,200</td><td>$1,630,500</td><td>$980,400</td><td>$634,800</td></tr>
+<tr><td><a href="/communities/burnaby/">Burnaby South</a></td><td>$972,800</td><td>$1,894,600</td><td>$942,100</td><td>$723,000</td></tr>
+<tr><td><a href="/communities/burnaby/">Burnaby North</a></td><td>$877,100</td><td>$1,808,500</td><td>$880,400</td><td>$662,400</td></tr>
+<tr><td><a href="/communities/coquitlam/">Coquitlam</a></td><td>$971,700</td><td>$1,584,400</td><td>$976,600</td><td>$640,100</td></tr>
+<tr><td><a href="/communities/richmond/">Richmond</a></td><td>$1,015,800</td><td>$1,871,100</td><td>$1,025,000</td><td>$635,600</td></tr>
+<tr><td><a href="/communities/north-vancouver/">North Vancouver</a></td><td>$1,290,400</td><td>$2,042,000</td><td>$1,230,400</td><td>$769,000</td></tr>
+<tr><td><a href="/communities/new-westminster/">New Westminster</a></td><td>$719,600</td><td>$1,356,900</td><td>$854,200</td><td>$579,900</td></tr>
+<tr><td><a href="/communities/ladner/">Ladner</a></td><td>$1,033,700</td><td>$1,284,100</td><td>$919,800</td><td>$586,400</td></tr>
+<tr><td><a href="/communities/tsawwassen/">Tsawwassen</a></td><td>$1,113,100</td><td>$1,508,500</td><td>$886,000</td><td>$556,000</td></tr>
+</tbody>
+</table>
+<h2>What This Means If You're Buying</h2>
+<p>With inventory well above average in both regions and prices still easing, buyers have more selection and more room to negotiate on price and conditions than they've had in years. That doesn't mean every property is discounted &mdash; well-priced homes in popular areas still sell &mdash; but it does mean there's less pressure to waive subjects or rush a decision.</p>
+<h2>What This Means If You're Selling</h2>
+<p>Price against what has actually sold recently, not against last year's numbers or the list prices of homes that are still sitting. In a market where buyers have options, a realistic price plus strong presentation and marketing is what gets a listing noticed in its first few weeks.</p>
+<p>Benchmarks describe a typical home in each area; your street, building, and property type can differ meaningfully. Manan can pull recent comparable sales for the specific home you're buying or selling.</p>
+<p style="font-size:0.85rem;">Sources: Fraser Valley Real Estate Board September 2026 market report and municipal market report; Greater Vancouver Realtors September 2026 MLS&reg; statistics package.</p>
+""")
+
 article_page(_art_by_slug['first-time-buyer-programs-bc'], """
 <p>Buying a first home in BC comes with more financial moving parts than most buyers expect. Here's a plain-language summary of the main programs currently available \u2014 always confirm current details with your mortgage broker or lawyer before relying on them.</p>
 <h2>BC Property Transfer Tax First-Time Home Buyers' Exemption</h2>
@@ -4117,7 +4236,7 @@ article_page(_art_by_slug['first-time-home-buyer-guide-fraser-valley-2026'], """
 article_page(_art_by_slug['affordable-homes-surrey-bc-2026'], """
 <p>"Affordable" is relative in the Fraser Valley, but real value still exists in Surrey if you know where to look. Here's an honest breakdown by property type and area.</p>
 <h2>Start With the Benchmark Numbers</h2>
-<p>As of the Fraser Valley Real Estate Board's most recent report, the composite benchmark across all residential types sits at $877,600, with apartments/condos at $469,500 &mdash; the single most accessible entry point &mdash; and townhomes at $764,100. Detached homes, at a $1,350,200 benchmark, are out of reach for most first-time buyers without a suite or a significant down payment.</p>
+<p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's benchmark prices were $447,600 for apartments/condos &mdash; the single most accessible entry point &mdash; and $758,600 for townhomes. Detached homes, at a $1,386,200 benchmark in Surrey, are out of reach for most first-time buyers without a suite or a significant down payment.</p>
 <h2>Where Condos Offer the Best Relative Value</h2>
 <p>Surrey City Centre, near King George and Gateway SkyTrain stations, has some of the deepest condo inventory in the city, drawing steady demand from SFU Surrey students and young professionals &mdash; and correspondingly more competitive pricing than comparable stock in Vancouver or Burnaby. Newton and Whalley more broadly also offer accessible condo and townhome entry points.</p>
 <h2>Where Townhomes and Suited Homes Stretch Further</h2>
@@ -4139,7 +4258,7 @@ article_page(_art_by_slug['south-surrey-vs-white-rock'], """
 """)
 
 article_page(_art_by_slug['townhouses-surrey-under-600k-2026'], """
-<p>Surrey's city-wide townhome benchmark price currently sits at $764,100 &mdash; well above a $600,000 budget. That doesn't mean a sub-$600K townhome search is hopeless, but it does mean being realistic about where and what you'll find.</p>
+<p>Surrey's townhome benchmark was $758,600 as of the Fraser Valley Real Estate Board's September 2026 report &mdash; well above a $600,000 budget. That doesn't mean a sub-$600K townhome search is hopeless, but it does mean being realistic about where and what you'll find.</p>
 <h2>Where a $600K Budget Actually Goes</h2>
 <p>Older townhome stock in Newton, Whalley/City Centre, and parts of North Surrey is where a sub-$600K budget is most likely to find real options &mdash; typically smaller units, older buildings, or complexes further from SkyTrain access. Newer, larger townhomes in Cloverdale, Fleetwood, or South Surrey are generally priced well above this range.</p>
 <h2>What You're Trading Off</h2>
@@ -4154,7 +4273,7 @@ article_page(_art_by_slug['townhouses-surrey-under-600k-2026'], """
 article_page(_art_by_slug['surrey-bc-house-prices-2026'], """
 <p>Surrey house prices have softened over the past year, in line with the broader Fraser Valley market. Here's where things stand across property types, and what's likely to move prices from here.</p>
 <h2>Current Benchmark Prices</h2>
-<p>The Fraser Valley Real Estate Board's composite benchmark &mdash; covering all residential property types across the board's territory, which includes Surrey &mdash; sits at $877,600. Broken down by type: single-family detached at $1,350,200, townhomes at $764,100, and apartments/condos at $469,500. Prices are down on a year-over-year basis across every category.</p>
+<p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's own benchmark prices were $1,386,200 for a single-family detached home, $758,600 for a townhome, and $447,600 for an apartment or condo. Across the board's whole territory the benchmarks were $1,300,000, $745,300, and $461,800, and region-wide prices were down year over year in every category: detached 8.8%, townhomes 6.2%, and apartments 9.3%.</p>
 <h2>It's a Buyer's Market Right Now</h2>
 <p>Sales-to-active-listings ratios are running below the 12&ndash;20% range that typically signals a balanced market &mdash; inventory is elevated relative to buyer demand, which is the core reason prices have softened even as interest rates have come down from their peak.</p>
 <h2>What Could Move Prices From Here</h2>
@@ -4210,7 +4329,7 @@ article_page(_art_by_slug['panorama-ridge-surrey-hidden-gem'], """
 article_page(_art_by_slug['surrey-condo-market-2026'], """
 <p>Surrey's condo market looks different than it did a couple of years ago &mdash; more inventory, more developer incentives, and genuinely better conditions for a first-time buyer than the peak-market years.</p>
 <h2>Current Benchmark Pricing</h2>
-<p>The Fraser Valley Real Estate Board's apartment/condo benchmark sits at $469,500 &mdash; the most accessible property type in the region, and down on a year-over-year basis along with every other category.</p>
+<p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's apartment/condo benchmark was $447,600, and the region-wide condo benchmark was $461,800, down 9.3% from a year earlier &mdash; still the most accessible property type in the region.</p>
 <h2>The Presale Market Has Softened Meaningfully</h2>
 <p>Greater Vancouver has a near-record number of completed, unsold condo units, and developers across the region &mdash; Surrey included, where well over 100 active presale developments are currently marketing &mdash; are responding with real incentives: price reductions, cash-back credits at closing, reduced deposit requirements, and in some cases furniture allowances or rental guarantees. Specific incentive terms vary by project and change frequently, so confirm current offers directly rather than assuming last month's promotion still applies.</p>
 <h2>Best Areas for a First-Time Buyer</h2>
