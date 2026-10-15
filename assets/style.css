@@ -967,3 +967,9 @@
 .short-answer .sa-label{font-size:0.74rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 6px;}
 .short-answer .sa-q{font-size:1.25rem;margin:0 0 8px;color:var(--ink);}
 .short-answer .sa-a{margin:0;color:var(--ink-soft);line-height:1.7;font-size:1rem;}
+
+/* City pages: linked list of the city's neighbourhoods in the About section */
+.area-hoods{margin-top:16px;font-size:0.95rem;line-height:1.75;color:#C7C5C0;}
+.area-hoods strong{color:#fff;font-weight:600;}
+.area-hoods a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.35);text-underline-offset:3px;}
+.area-hoods a:hover{text-decoration-color:var(--accent-on-dark);color:var(--accent-on-dark);}

@@ -3441,11 +3441,17 @@ for a in AREAS:
     else:
         _street_src, _street_w, _street_h = f"https://picsum.photos/seed/{_street_seed}/800/600", 800, 600
         _street_alt = f"{a['name']} street view (sample photo)"
+    # City pages list their own neighbourhoods (linked) right in the About section
+    _hood_group = SLUG_TO_GROUP.get(a['slug'])
+    _hood_slugs = AREA_GROUPS.get(_hood_group, [])[1:] if _hood_group and AREA_GROUPS[_hood_group][0] == a['slug'] else []
+    _hood_links = [f'<a href="/communities/{h}/">{_AREA_CARD_BY_SLUG[h]["name"]}</a>' for h in _hood_slugs if h in _AREA_CARD_BY_SLUG]
+    _hoods_html = (f'<p class="area-hoods"><strong>{a["name"]} neighbourhoods:</strong> ' + ', '.join(_hood_links) + '</p>') if _hood_links else ''
     body += f"""<section class="content-section dark" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>
       <h2>About {a['name']}</h2>
       <p style="margin-top:14px;">{a['desc']}</p>
+      {_hoods_html}
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
@@ -3492,7 +3498,7 @@ for a in AREAS:
     _sub_slugs = [s for s in _group_slugs if s != a['slug']]
     if a['slug'] == 'vancouver':
         _sub_slugs += ['north-vancouver', 'west-vancouver']  # separate cities, but buyers search them as "Vancouver"
-    if _sub_slugs:
+    if _sub_slugs and not _hood_links:
         _pill_html = ''
         for ss in _sub_slugs:
             _sub = _AREA_CARD_BY_SLUG.get(ss)
