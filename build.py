@@ -885,12 +885,19 @@ AREAS = [
          ],
          entertainment=["Restaurants throughout Uptown and along Columbia Street"]),
     dict(slug='vancouver', name='Vancouver', note="BC's largest city",
+         housing="condos, townhomes, character houses, and detached homes",
          stats={'population': '700,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
          tags=['Diverse Neighbourhoods', 'Downtown Core', 'Transit-Connected'],
-         desc="Vancouver real estate spans an enormous range, from dense downtown condo towers and Yaletown lofts to established west-side neighbourhoods like Shaughnessy and Point Grey, plus east-side communities like Mount Pleasant — each with its own character, price point, and community feel.",
+         desc="Vancouver real estate spans an enormous range, from dense downtown condo towers and Yaletown lofts to established west-side neighbourhoods like Shaughnessy, Kerrisdale, and Point Grey, plus east-side communities like Mount Pleasant, Grandview-Woodland, and Hastings-Sunrise \u2014 each with its own character, price point, and community feel.",
+         schools=["School District 39 (Vancouver) runs the city's public schools \u2014 catchments are set by address", "University of British Columbia (Point Grey)", "SFU's Vancouver campus at Harbour Centre", "Langara College", "Emily Carr University of Art + Design"],
+         shopping=["Pacific Centre and the Robson Street retail corridor (downtown)", "Granville Island Public Market", "South Granville, Kerrisdale Village, and Dunbar Village on the westside", "Main Street and Commercial Drive on the east side"],
+         recreation=["Stanley Park and the seawall", "Queen Elizabeth Park and VanDusen Botanical Garden", "Pacific Spirit Regional Park", "City beaches including English Bay, Kitsilano, and Spanish Banks", "Hastings Park"],
          area_faq=[
-            ("Does Manan work in Vancouver specifically, or mainly the Fraser Valley?", "Manan is a licensed BC REALTOR® who works with buyers and sellers across the Lower Mainland, including Vancouver and all of its neighbourhoods. Given how varied Vancouver's dozens of communities are, it's worth a direct conversation about the specific area you're considering."),
-         ]),
+            ("What's the difference between Vancouver West and Vancouver East?", "They're the two halves of the city as the real estate boards divide it, split roughly along Main Street and Ontario Street. The west side (Kitsilano, Point Grey, Dunbar, Kerrisdale, Shaughnessy, Fairview, and downtown) generally carries higher prices, while the east side (Mount Pleasant, Grandview-Woodland, Hastings-Sunrise, and others) offers more character homes and a wider range of price points."),
+            ("Are North Vancouver and West Vancouver part of the City of Vancouver?", "No. They're separate municipalities on the North Shore \u2014 the City of North Vancouver, the District of North Vancouver, and the District of West Vancouver \u2014 each with its own council, taxes, and school district. They connect to Vancouver by the Lions Gate and Ironworkers Memorial bridges and the SeaBus."),
+            ("How do people get around Vancouver without a car?", "Three SkyTrain lines serve the city: the Expo and Millennium Lines through East Vancouver, and the Canada Line from downtown south through Cambie to Richmond and the airport. The SeaBus links downtown to North Vancouver, and an extension of the Millennium Line along Broadway is under construction."),
+         ],
+         entertainment=["Rogers Arena and BC Place (Canucks, BC Lions, Whitecaps)", "The Orpheum and downtown theatres", "Granville Island's theatres and studios", "Restaurants across Yaletown, Gastown, Main Street, and Commercial Drive"]),
     dict(slug='north-vancouver', name='North Vancouver', note='Mountains meet the waterfront',
          stats={'population': '170,000+', 'benchmark': '$779,700', 'benchmark_label': 'Condo Benchmark (REBGV 2026)'},
          tags=['North Shore Mountains', 'Lonsdale Quay', 'SeaBus Connected'],
@@ -970,6 +977,72 @@ AREAS = [
             ("What price range does Shaughnessy typically trade at?", "Shaughnessy is consistently one of Vancouver's highest-value residential neighbourhoods, with detached homes on the larger First Shaughnessy lots typically trading well above the city-wide average. Exact pricing varies significantly by lot size, heritage status, and condition — contact Manan for current market context."),
          ],
          entertainment=["South Granville's restaurants and galleries", "VanDusen Festival of Lights (seasonal)", "Queen Elizabeth Park's Seasons in the Park restaurant"]),
+    dict(slug='west-end', name='West End', note='Beaches, Stanley Park &amp; the seawall',
+         tags=['English Bay', 'Stanley Park', 'Davie Village'],
+         desc="The West End is the residential half of Vancouver's downtown peninsula, set between Stanley Park, English Bay, and the downtown core. Mid-century rental apartment towers, strata condos, and a few preserved heritage houses sit within walking distance of the seawall, the beaches, and the shops and restaurants along Robson, Denman, and Davie Streets.",
+         schools=["King George Secondary (grades 8–12, Barclay Street)", "Lord Roberts Elementary and Lord Roberts Annex", "SD39 Vancouver — confirm your specific catchment with the district"],
+         shopping=["Robson Street retail", "Denman Street and Davie Street shops, grocers, and restaurants", "Pacific Centre (a short walk east)"],
+         recreation=["Stanley Park and the seawall", "English Bay, Second Beach, and Sunset Beach", "West End Community Centre (fitness centre, ice rink, pottery studio)", "Joe Fortes Library branch"],
+         area_faq=[
+            ("Is the West End mostly rentals or condos?", "Both. Much of the West End's housing is purpose-built rental apartment buildings from the post-war decades, alongside strata condos and newer towers, so buyers here are mostly looking at condos while a large share of residents rent. In older strata buildings, read the depreciation report and recent meeting minutes for upcoming repairs and special levies."),
+            ("What's planned for the West End Community Centre and King George Secondary?", "The City of Vancouver is leading a joint redevelopment of the West End Community Centre, King George Secondary, and the Joe Fortes library branch, with the school being rebuilt to add space and meet seismic requirements. Check the City's project page for the current timeline."),
+         ],
+         entertainment=["Restaurants and cafés along Denman, Davie, and Robson Streets", "Davie Village", "The summer Celebration of Light fireworks over English Bay"]),
+    dict(slug='kerrisdale', name='Kerrisdale', note='Village shopping on the westside',
+         tags=['Kerrisdale Village', 'Arbutus Greenway', 'Westside Schools'],
+         desc="Kerrisdale is an established westside neighbourhood centred on Kerrisdale Village, the shopping district along West 41st Avenue and West Boulevard. Tree-lined streets of detached homes surround a core of low-rise apartments and condos near the village, with well-regarded public and independent schools close by.",
+         schools=["Magee Secondary (Maple Street)", "Point Grey Secondary (East Boulevard)", "Crofton House School (independent girls' school, West 41st Avenue)", "SD39 Vancouver elementary schools — confirm your specific catchment with the district"],
+         shopping=["Kerrisdale Village along West 41st Avenue and West Boulevard — independent shops, cafés, banks, and services"],
+         recreation=["Kerrisdale Community Centre (indoor pool, gym, fitness centre, library branch)", "Kerrisdale Cyclone Taylor Arena (ice from September to March, an indoor playground in summer)", "Arbutus Greenway walking and cycling path"],
+         area_faq=[
+            ("What is Kerrisdale Village?", "It's the neighbourhood's shopping district, running along West 41st Avenue roughly between Larch and Maple Streets and along West Boulevard between 37th and 49th Avenues. Its business association is the longest-running in Vancouver, and most of the neighbourhood is within walking distance of its shops, cafés, and services."),
+            ("Which secondary schools serve Kerrisdale?", "Magee Secondary and Point Grey Secondary are the main public high schools, both run by SD39 Vancouver, and Crofton House, an independent girls' school, sits on West 41st Avenue. Catchments depend on the exact address, so confirm with the district before buying."),
+         ],
+         entertainment=["Kerrisdale Village cafés and restaurants"]),
+    dict(slug='dunbar-southlands', name='Dunbar &amp; Southlands', note='Quiet westside streets, urban equestrian',
+         tags=['Dunbar Village', 'Pacific Spirit Park', 'Southlands Equestrian'],
+         desc="Dunbar–Southlands covers Vancouver's southwest corner, from Dunbar's quiet, tree-lined residential streets and the Dunbar Village shops down to Southlands along the Fraser River, where estate-sized lots and horse paddocks form a protected urban equestrian area. It's mostly single-family homes, with Pacific Spirit Regional Park along its western edge and the Musqueam reserve in the south.",
+         schools=["Lord Byng Secondary (West 16th Avenue, at the Dunbar/West Point Grey edge)", "St. George's School (independent boys' school)", "Lord Kitchener and Queen Elizabeth Elementary — confirm your specific catchment with SD39 Vancouver"],
+         shopping=["Dunbar Village along Dunbar Street"],
+         recreation=["Pacific Spirit Regional Park (along the western edge)", "Dunbar Community Centre", "McCleery Golf Course", "Southlands' equestrian community along the Fraser River"],
+         area_faq=[
+            ("What is Southlands known for?", "Southlands, the southern part of the neighbourhood along the Fraser River, has estate-sized properties and horse paddocks and has been protected as an urban equestrian area under the Southlands Plan since 1988. Properties there are a very different purchase from a typical Vancouver lot, so zoning and permitted uses deserve a close look."),
+            ("Is Dunbar a family neighbourhood?", "Yes. It's a mature area of quiet residential streets, mostly single-family homes, and census-based profiles put it among the Vancouver neighbourhoods with the highest share of households with children. Lord Byng Secondary, St. George's School, and several elementary schools are close by."),
+         ],
+         entertainment=["Dunbar Village cafés and restaurants"]),
+    dict(slug='fairview', name='Fairview &amp; South Granville', note='Central westside, near VGH &amp; Granville Island',
+         tags=['South Granville', 'Granville Island', 'False Creek Seawall'],
+         desc="Fairview runs from False Creek up to 16th Avenue between Burrard and Cambie Streets, taking in the Fairview Slopes, False Creek South, and the South Granville shopping district. It's a central, largely condo and townhome market, home to Vancouver General Hospital and a short walk from Granville Island.",
+         schools=["False Creek Elementary (near the seawall and Charleson Park)", "Kitsilano Secondary (False Creek Elementary is part of the Kitsilano family of schools)", "SD39 Vancouver — confirm your specific catchment with the district"],
+         shopping=["South Granville's galleries, home décor stores, and restaurants", "Granville Island Public Market", "Broadway corridor retail and services"],
+         recreation=["False Creek seawall", "Charleson Park", "Granville Island"],
+         area_faq=[
+            ("Why do people buy in Fairview?", "Location. It sits between downtown and the westside, with Vancouver General Hospital, South Granville, Granville Island, and the False Creek seawall all within walking distance, which suits buyers who want a central condo or townhome without living in a downtown tower."),
+            ("What should I know about buying in False Creek South?", "Most of False Creek South is on City of Vancouver-owned land, and many of its strata homes are leasehold, with leases that begin expiring between 2036 and 2046. The City has been negotiating extensions with some buildings, but lease length affects both financing and resale value, so review the lease terms and the current status with your lawyer before you buy."),
+         ],
+         entertainment=["Granville Island's theatres, studios, and market", "South Granville restaurants"]),
+    dict(slug='grandview-woodland', name='Grandview-Woodland', note='Commercial Drive, East Van character',
+         tags=['Commercial Drive', 'SkyTrain Hub', 'Trout Lake Nearby'],
+         desc="Grandview-Woodland is the East Vancouver neighbourhood around Commercial Drive — 'The Drive' — with blocks of cafés, restaurants, and independent shops, a long Italian-Canadian heritage, and an artistic, counter-culture streak. Commercial–Broadway station, where the Expo and Millennium SkyTrain lines meet, sits at its southern edge.",
+         schools=["Britannia Secondary (grades 8–12, offers the IB program)", "SD39 Vancouver elementary schools — confirm your specific catchment with the district"],
+         shopping=["Commercial Drive's shops, grocers, and cafés", "Trout Lake Farmers Market (seasonal, just south)"],
+         recreation=["Britannia Community Centre (pool, ice rink, library)", "Trout Lake / John Hendry Park, just south (swimming beach, off-leash dog beach, community centre with ice rink)", "Grandview Park"],
+         area_faq=[
+            ("What is Commercial Drive like?", "'The Drive' is the neighbourhood's main street, with around 21 blocks of shops, restaurants, bars, and cafés, a long Italian-Canadian heritage, and a reputation for an artistic, counter-culture community. It's one of Vancouver's most walkable streets."),
+            ("How is transit from Grandview-Woodland?", "Commercial–Broadway station, where the Expo and Millennium SkyTrain lines meet, is at the south end of Commercial Drive, so downtown Vancouver, Burnaby, and Surrey are all a direct SkyTrain ride. That transit access is a big part of the area's appeal for condo buyers and investors."),
+         ],
+         entertainment=["Commercial Drive's restaurants, cafés, and bars"]),
+    dict(slug='hastings-sunrise', name='Hastings-Sunrise', note='East Van, home of the PNE',
+         tags=['Hastings Park', 'PNE &amp; Playland', 'New Brighton Park'],
+         desc="Hastings-Sunrise is Vancouver's northeast corner, bounded by Burrard Inlet, Nanaimo Street, Broadway, and Boundary Road. It's built around Hastings Park — the city's second-largest green space and home of the PNE and Playland — with East Hastings Street's shops and restaurants, a long Italian-Canadian history, and a growing community of young professionals and artists.",
+         schools=["Templeton Secondary", "SD39 Vancouver elementary schools — confirm your specific catchment with the district"],
+         shopping=["East Hastings Street's shops, grocers, and restaurants"],
+         recreation=["Hastings Park (PNE, Playland, Hastings Racecourse, Pacific Coliseum)", "New Brighton Park (outdoor pool and the neighbourhood's Burrard Inlet waterfront)", "Hastings Community Centre and Thunderbird Community Centre"],
+         area_faq=[
+            ("What is Hastings Park?", "It's Vancouver's second-largest green space and the home of the Pacific National Exhibition (PNE) fair and its Playland amusement park, along with Hastings Racecourse and the Pacific Coliseum. For nearby homeowners it means a large park on the doorstep, plus busy event days to factor in."),
+            ("Where is the waterfront in Hastings-Sunrise?", "New Brighton Park on Burrard Inlet is the neighbourhood's access to the water, with an outdoor swimming pool and views across to the North Shore mountains."),
+         ],
+         entertainment=["The PNE fair and Playland (seasonal)", "East Hastings Street restaurants"]),
     dict(slug='richmond', name='Richmond', note='Historic charm meets urban energy',
          stats={'population': '225,000+', 'benchmark': '$1,088,800', 'benchmark_label': 'Composite Benchmark (REBGV Jul 2026)'},
          tags=['Steveston Village', 'Canada Line', 'YVR Access'],
@@ -1620,7 +1693,9 @@ def _oxford_join(items):
     if len(items) == 2: return f"{items[0]} and {items[1]}"
     return ", ".join(items[:-1]) + f", and {items[-1]}"
 
-def _housing_type(desc, tags):
+def _housing_type(desc, tags, override=None):
+    if override:
+        return override
     text = (desc + ' ' + ' '.join(tags)).lower().replace('real estate', '')
     has = lambda pat: re.search(pat, text) is not None
     types = []
@@ -1676,7 +1751,8 @@ AREA_GROUPS = {
     'Coquitlam': ['coquitlam'],
     'Port Coquitlam': ['port-coquitlam'],
     'New Westminster': ['new-westminster'],
-    'Vancouver': ['vancouver', 'kitsilano', 'point-grey', 'downtown-vancouver', 'mount-pleasant', 'shaughnessy'],
+    'Vancouver': ['vancouver', 'downtown-vancouver', 'west-end', 'kitsilano', 'fairview', 'point-grey', 'dunbar-southlands',
+                  'kerrisdale', 'shaughnessy', 'mount-pleasant', 'grandview-woodland', 'hastings-sunrise'],
     'North Vancouver': ['north-vancouver'],
     'West Vancouver': ['west-vancouver'],
     'Richmond': ['richmond'],
@@ -1850,7 +1926,7 @@ def _auto_supplement_faqs(area, target=6):
     existing_q = ' '.join(q.lower() for q, _ in faqs)
     name = area['name']
     c = _area_ctx(area)
-    housing = _housing_type(area['desc'], area['tags'])
+    housing = _housing_type(area['desc'], area['tags'], area.get('housing'))
     residential = 'industrial' not in housing
     candidates = []
     if c['out_of_town'] and 'investment' not in existing_q and 'commercial' not in existing_q:
@@ -1958,7 +2034,7 @@ def area_glance_html(area):
         rows.append(("Location", f"{'City' if c['group'] else 'Community'} in {c['region']}, BC"))
     if c['neighbours'] and c['is_city'] and not c['out_of_town']:
         rows.append(("Neighbouring cities", _oxford_join(c['neighbours'])))
-    housing = _housing_type(area['desc'], area['tags'])
+    housing = _housing_type(area['desc'], area['tags'], area.get('housing'))
     if housing != "a mix of housing types":
         rows.append(("Property types", housing[0].upper() + housing[1:]))
     if c['district']:
@@ -3301,6 +3377,8 @@ for a in AREAS:
     _current_group = SLUG_TO_GROUP.get(a['slug'])
     _group_slugs = AREA_GROUPS.get(_current_group, []) if _current_group else []
     _sub_slugs = [s for s in _group_slugs if s != a['slug']]
+    if a['slug'] == 'vancouver':
+        _sub_slugs += ['north-vancouver', 'west-vancouver']  # separate cities, but buyers search them as "Vancouver"
     if _sub_slugs:
         _pill_html = ''
         for ss in _sub_slugs:

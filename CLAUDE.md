@@ -294,9 +294,11 @@ doing this — don't ship based on reading the HTML source alone.
    (industrial / transit rental / retail & businesses / farm & ALR / suites fallback)
    and linking to the matching /commercial/ guides. Out-of-town areas already lead
    with the investment/commercial question.
-4. **Vancouver page needs real sub-areas** (North Vancouver, West Vancouver,
-   etc.) — currently intentionally generic/thin, client wants it built out
-   properly now.
+4. ~~Vancouver page needs real sub-areas~~ **DONE 2026-10-14.** Vancouver city page now
+   has Life-in data, 3 custom FAQs, and a `housing` override (areas can set `housing=`
+   to bypass the keyword classifier). Added West End, Kerrisdale, Dunbar & Southlands,
+   Fairview & South Granville, Grandview-Woodland, Hastings-Sunrise (facts web-verified
+   2026-10-14). Vancouver's guide pills also link the separate North/West Vancouver pages.
 5. **Area page template redesign** to match client-provided Langley/White
    Rock reference screenshots specifically:
    - Median home price + population stat bar in the hero itself.
