@@ -4792,7 +4792,7 @@ def _page_faqs(rel):
     return title, pairs
 
 hub_body = subhero("", '<span class="gradient-text">BC Real Estate Questions, Answered</span>',
-                   "Straight answers to the questions buyers, sellers, and investors in Surrey and the Lower Mainland ask most — each linked to a full guide.",
+                   "Answers to the questions buyers, sellers, and investors in Surrey and the Lower Mainland ask most — each linked to a full guide.",
                    CALL_CTA + CONTACT_CTA)
 _hub_count = 0
 for _sec_title, _picks in HUB_SECTIONS:
@@ -4814,7 +4814,7 @@ hub_body += cta_band('Have a Question <span class="accent-warm">That Isn’t Her
                      "Manan answers real estate questions for free, with no obligation.", CALL_CTA + CONTACT_CTA)
 write_page('/real-estate-questions/',
            "BC Real Estate Questions Answered | Manan Bhullar",
-           f"Straight answers to {_hub_count} common BC real estate questions on buying, selling, strata, taxes, investment, and commercial property, from Manan Bhullar.",
+           f"Answers to {_hub_count} common BC real estate questions on buying, selling, strata, taxes, investment, and commercial property, from Manan Bhullar.",
            crumbs(("Questions Answered", None)), hub_body)
 
 GLOSSARY = [

@@ -448,6 +448,8 @@
        of clipping. Applies to all three anchored dropdowns. */
     .mega--anchored{max-height:calc(100vh - 90px);overflow-y:auto;}
     .mega--anchored.mega--cols-3{left:50%;right:auto;transform:translateX(-50%) translateY(-6px);}
+    .mega--anchored.mega--centered{left:50%;right:auto;transform:translateX(-50%) translateY(-6px);}
+    .nav-item:hover .mega--anchored.mega--centered,.nav-item:focus-within .mega--anchored.mega--centered{transform:translateX(-50%) translateY(0);}
     .nav-item:hover .mega--anchored.mega--cols-3,.nav-item:focus-within .mega--anchored.mega--cols-3{transform:translateX(-50%) translateY(0);}
   }
   .mega--anchored.mega--cols-3 .mega-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:600px;}
