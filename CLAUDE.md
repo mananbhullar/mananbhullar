@@ -293,7 +293,10 @@ doing this — don't ship based on reading the HTML source alone.
 1. ~~FAQ "familiar with X area" rewrite~~ **DONE 2026-10-13.** `_auto_supplement_faqs()`
    now builds area-specific answers from `_area_ctx()` (parent city, school district,
    price board). An "At a glance" fact box was tried under each About section and
-   removed at the client's request (2026-10-14) — too basic/repetitive; don't re-add. Price board mapping matters: FVREB = Surrey, South Surrey/White Rock,
+   removed at the client's request (2026-10-14) — too basic/repetitive; don't re-add.
+   Replaced by `area_quick_facts()`: Typical prices (board benchmarks, no date shown),
+   Population (only where `stats` has it), Known for (tags, minus transit), Attractions
+   (filtered recreation). Client asked: no SkyTrain row, no month/year on prices. Price board mapping matters: FVREB = Surrey, South Surrey/White Rock,
    Langley, Abbotsford, Mission, North Delta; GVR = Burnaby, Tri-Cities, New West,
    Vancouver, North/West Van, Richmond, Maple Ridge, Pitt Meadows, Ladner, Tsawwassen;
    Chilliwack = CADREB. Never quote FVREB benchmarks as the comparison for GVR areas.

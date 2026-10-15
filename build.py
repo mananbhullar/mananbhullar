@@ -825,7 +825,7 @@ print("helpers ready")
 # ============================================================
 AREAS = [
     dict(slug='surrey', name='Surrey', note='BC\'s second-largest city',
-         stats={'population': '732,000+', 'benchmark': '$1,386,200', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
+         stats={'population': '732,000+', 'benchmark': '$1,386,200', 'benchmark_label': 'Detached Benchmark (FVREB)'},
          tags=['SkyTrain Connectivity', 'Cultural Diversity', 'Growing Tech Hub'],
          desc="Surrey is British Columbia's second-largest city, offering diverse neighbourhoods, excellent transit connectivity, and a booming local economy. From established family neighbourhoods to rapidly densifying town centres, Surrey covers an enormous range of housing types and price points.",
          schools=["SFU Surrey and KPU Civic Plaza campuses in City Centre", "School District 36 Surrey \u2014 the province's largest, with 50+ elementary and nearly 30 secondary schools"],
@@ -902,7 +902,7 @@ AREAS = [
             ("What areas make up Surrey's industrial corridor?", "Campbell Heights is the flagship large-format industrial park, alongside established industrial land around Cloverdale and the Highway 10 corridor \u2014 see Manan's dedicated Industrial &amp; Warehouse commercial page for full detail on this market."),
          ]),
     dict(slug='delta', name='Delta', note='Three distinct communities',
-         stats={'population': '115,000+', 'benchmark': '$1,159,600', 'benchmark_label': 'North Delta Detached Benchmark (FVREB Sept 2026)'},
+         stats={'population': '115,000+', 'benchmark': '$1,159,600', 'benchmark_label': 'North Delta Detached Benchmark (FVREB)'},
          tags=['Waterfront Living', 'BC Ferries Terminal', 'Ladner & Tsawwassen'],
          desc="Delta is a diverse municipality comprising three distinct communities — Ladner, Tsawwassen, and North Delta — offering everything from waterfront living and rural acreages to the Tsawwassen ferry terminal connecting to Vancouver Island.",
          schools=["Delta School District (SD37) \u2014 24 elementary and 7 secondary schools, including District French Immersion"],
@@ -910,7 +910,7 @@ AREAS = [
          entertainment=["Restaurants in Ladner Village and dining at Tsawwassen Mills"],
          shopping=["Ladner Village shops", "Tsawwassen Mills and Tsawwassen Commons"]),
     dict(slug='langley', name='Langley', note='Small-town charm, modern amenities',
-         stats={'population': '198,000+', 'benchmark': '$1,471,100', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
+         stats={'population': '198,000+', 'benchmark': '$1,471,100', 'benchmark_label': 'Detached Benchmark (FVREB)'},
          tags=['Fort Langley Heritage', 'Wine Country', 'Equestrian Community'],
          desc="Langley combines small-town charm with modern amenities, featuring the historic Fort Langley village, an established wine and agritourism scene, and a strong equestrian community alongside newer master-planned residential development.",
          schools=["School District 35 Langley covers all of Langley Township and City", "Willoughby's newer schools include Lynn Fripps, Richard Bulpitt, and Yorkson Creek Middle \u2014 confirm your specific catchment with SD35"],
@@ -923,7 +923,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Langley", "Restaurants in Fort Langley's historic village and Willoughby Town Centre"]),
     dict(slug='burnaby', name='Burnaby', note='Geographic centre of Metro Vancouver',
-         stats={'population': '310,000+', 'benchmark': '$972,800', 'benchmark_label': 'Burnaby South Composite (GVR Sept 2026)'},
+         stats={'population': '310,000+', 'benchmark': '$972,800', 'benchmark_label': 'Burnaby South Composite (GVR)'},
          tags=['Metrotown', 'SFU & BCIT', 'SkyTrain Lines'],
          desc="Burnaby sits at the geographic centre of Metro Vancouver, offering everything from Metrotown's high-rise energy to quieter, tree-lined family neighbourhoods, with two major universities (SFU and BCIT) and extensive SkyTrain coverage.",
          schools=["Burnaby South Secondary (IB Diploma Programme &amp; French Immersion)", "Simon Fraser University (Burnaby Mountain campus)", "British Columbia Institute of Technology (BCIT)", "School District 41 Burnaby covers the whole city \u2014 elementary catchment depends on exact address"],
@@ -936,7 +936,7 @@ AREAS = [
          ],
          entertainment=["Cineplex Cinemas Metropolis at Metrotown", "Cineplex VIP Cinemas &amp; The Rec Room (bowling, arcade, dining) at The Amazing Brentwood"]),
     dict(slug='coquitlam', name='Coquitlam', note='SkyTrain-connected, mountain-backed',
-         stats={'population': '160,000+', 'benchmark': '$971,700', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
+         stats={'population': '160,000+', 'benchmark': '$971,700', 'benchmark_label': 'Composite Benchmark (GVR)'},
          tags=['Evergreen SkyTrain Line', 'Coquitlam Centre', 'Lafarge Lake'],
          desc="Coquitlam pairs SkyTrain-connected town centres with mountain-backed family neighbourhoods, from Burquitlam's newer towers to the established communities around Lafarge Lake and Westwood Plateau.",
          shopping=["Coquitlam Centre Mall (200+ shops, restaurants, and services)", "Austin Heights, Sunwood Square, and Burquitlam Plaza shopping areas", "Como Lake Village and Pinetree Village"],
@@ -970,7 +970,7 @@ AREAS = [
          entertainment=["Restaurants throughout Uptown and along Columbia Street"]),
     dict(slug='vancouver', name='Vancouver', note="BC's largest city",
          housing="condos, townhomes, character houses, and detached homes",
-         stats={'population': '700,000+', 'benchmark': '$1,206,600', 'benchmark_label': 'Vancouver West Composite (GVR Sept 2026)'},
+         stats={'population': '700,000+', 'benchmark': '$1,206,600', 'benchmark_label': 'Vancouver West Composite (GVR)'},
          tags=['Diverse Neighbourhoods', 'Downtown Core', 'Transit-Connected'],
          desc="Vancouver real estate spans an enormous range, from dense downtown condo towers and Yaletown lofts to established west-side neighbourhoods like Shaughnessy, Kerrisdale, and Point Grey, plus east-side communities like Mount Pleasant, Grandview-Woodland, and Hastings-Sunrise \u2014 each with its own character, price point, and community feel.",
          schools=["School District 39 (Vancouver) runs the city's public schools \u2014 catchments are set by address", "University of British Columbia (Point Grey)", "SFU's Vancouver campus at Harbour Centre", "Langara College", "Emily Carr University of Art + Design"],
@@ -983,7 +983,7 @@ AREAS = [
          ],
          entertainment=["Rogers Arena and BC Place (Canucks, BC Lions, Whitecaps)", "The Orpheum and downtown theatres", "Granville Island's theatres and studios", "Restaurants across Yaletown, Gastown, Main Street, and Commercial Drive"]),
     dict(slug='north-vancouver', name='North Vancouver', note='Mountains meet the waterfront',
-         stats={'population': '170,000+', 'benchmark': '$1,290,400', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
+         stats={'population': '170,000+', 'benchmark': '$1,290,400', 'benchmark_label': 'Composite Benchmark (GVR)'},
          tags=['North Shore Mountains', 'Lonsdale Quay', 'SeaBus Connected'],
          desc="North Vancouver spans the City and District of North Vancouver on the North Shore, from the urban waterfront energy of Lower Lonsdale and the SeaBus terminal to mountain-backed family neighbourhoods in Lynn Valley, Edgemont Village, and Deep Cove.",
          schools=["Carson Graham Secondary (IB World School — Middle Years and Diploma Programmes)", "Handsworth Secondary (North Vancouver's largest, ~1,600 students)", "Sutherland Secondary", "Seycove Secondary (Deep Cove area)", "Windsor Secondary", "Argyle Secondary", "SD44 North Vancouver serves the whole district"],
@@ -995,7 +995,7 @@ AREAS = [
          ],
          entertainment=["Lonsdale Quay Market food hall", "Restaurants and cafés along Lonsdale Avenue", "Deep Cove's waterfront cafés (Arms Reach Bistro, Deep Cove Pizza)"]),
     dict(slug='west-vancouver', name='West Vancouver', note="Metro Vancouver's premium North Shore",
-         stats={'population': '46,000+', 'benchmark': '$2,822,900', 'benchmark_label': 'Detached Benchmark (GVR Sept 2026)'},
+         stats={'population': '46,000+', 'benchmark': '$2,822,900', 'benchmark_label': 'Detached Benchmark (GVR)'},
          tags=['Waterfront Living', 'Park Royal', 'Cypress Mountain'],
          desc="West Vancouver is one of Metro Vancouver's most established luxury residential communities, stretching along the North Shore waterfront from Ambleside and Dundarave through the British Properties and out to Horseshoe Bay's BC Ferries terminal.",
          schools=["Rockridge Secondary (IB Middle Years Programme, Advanced Placement)", "Sentinel Secondary (French Immersion, Advanced Placement, ~1,160 students)", "West Vancouver Secondary (IB Diploma, Arts, Trades)", "West Vancouver Schools (SD45) — 14 elementary and 3 secondary schools district-wide"],
@@ -1128,7 +1128,7 @@ AREAS = [
          ],
          entertainment=["The PNE fair and Playland (seasonal)", "East Hastings Street restaurants"]),
     dict(slug='richmond', name='Richmond', note='Historic charm meets urban energy',
-         stats={'population': '225,000+', 'benchmark': '$1,015,800', 'benchmark_label': 'Composite Benchmark (GVR Sept 2026)'},
+         stats={'population': '225,000+', 'benchmark': '$1,015,800', 'benchmark_label': 'Composite Benchmark (GVR)'},
          tags=['Steveston Village', 'Canada Line', 'YVR Access'],
          desc="Richmond pairs the historic charm of Steveston Village with City Centre's urban energy along the Canada Line, plus proximity to YVR and Highway 99 — a diverse, well-connected city on the Fraser River delta.",
          schools=["Steveston-London Secondary (public, grades 8-12)", "School District 38 Richmond serves the whole city \u2014 confirm your specific catchment"],
@@ -1157,7 +1157,7 @@ AREAS = [
          entertainment=["Restaurants along the Harris Road commercial strip"],
          shopping=["Pitt Meadows' town centre shops along Harris Road"]),
     dict(slug='abbotsford', name='Abbotsford', note="'City in the Country'",
-         stats={'population': '160,000+', 'benchmark': '$1,087,000', 'benchmark_label': 'Detached Benchmark (FVREB Sept 2026)'},
+         stats={'population': '160,000+', 'benchmark': '$1,087,000', 'benchmark_label': 'Detached Benchmark (FVREB)'},
          tags=['Mountain Views', 'University Town', 'International Airport'],
          desc="Known as the 'City in the Country,' Abbotsford offers mountain views and relatively more affordable housing than Vancouver, alongside a growing urban centre, University of the Fraser Valley, and its own international airport.",
          schools=["Abbotsford Senior Secondary", "Robert Bateman Secondary", "University of the Fraser Valley (UFV)", "SD34 Abbotsford runs 46 schools \u2014 note that popular schools like Yale and Robert Bateman restrict non-catchment enrolment when over capacity, so confirm your specific catchment"],
@@ -2162,6 +2162,49 @@ def _auto_supplement_faqs(area, target=6):
             break
         faqs.append((q, a))
     area['area_faq'] = faqs
+
+def _money_short(v):
+    n = int(v.replace('$', '').replace(',', ''))
+    return f"${n/1_000_000:.2f}M" if n >= 1_000_000 else f"${round(n/1000):,}K"
+
+def _price_span(keys, field):
+    vals = sorted({int(MARKET[k][field].replace('$', '').replace(',', '')) for k in keys if MARKET[k].get(field)})
+    if not vals: return None
+    lo, hi = _money_short(f"{vals[0]:,}"), _money_short(f"{vals[-1]:,}")
+    return lo if lo == hi else f"{lo}\u2013{hi}"
+
+_QF_SKIP_TAG = re.compile(r'skytrain|transit|seabus|canada line|west coast express', re.I)
+_QF_SKIP_ATTR = re.compile(r'skytrain|west coast express|commuter|station|programs|amenities|throughout the city|within reach', re.I)
+
+def area_quick_facts(a):
+    """Price / population / known-for / attractions -- only rows backed by real data."""
+    rows = []
+    keys = [k for k in market_keys(a['slug'], SLUG_TO_GROUP.get(a['slug'])) if k in MARKET]
+    if keys:
+        parts = [f"{lbl} {span}" for lbl, f in (("Detached", 'det'), ("Townhome", 'th'), ("Condo", 'apt'))
+                 if (span := _price_span(keys, f))]
+        boards = {MARKET[k]['board'] for k in keys}
+        src = ' and '.join(sorted({'FVREB' if b == 'fvreb' else 'GVR' for b in boards}))
+        areas = '' if keys == [a['name']] else f" for {_oxford_join(keys)}"
+        rows.append(("Typical prices",
+                     '<br>'.join(parts) + f'<span class="qf-src">{src} benchmark{areas}</span>'))
+    pop = (a.get('stats') or {}).get('population')
+    if pop:
+        rows.append(("Population", pop))
+    tags = [t for t in a.get('tags', []) if not _QF_SKIP_TAG.search(t)]
+    if tags:
+        rows.append(("Known for", ', '.join(tags)))
+    attrs = []
+    for r in a.get('recreation') or []:
+        name = re.split(r' \(| \u2014 |, ', _html.unescape(r))[0].strip()
+        if name and not _QF_SKIP_ATTR.search(r):
+            attrs.append(name.replace('&', '&amp;'))
+    if attrs:
+        rows.append(("Attractions", ', '.join(attrs[:3])))
+    if not rows:
+        return ''
+    items = ''.join(f'<div class="qf-row"><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
+    return f'<dl class="quick-facts" aria-label="{a["name"]} quick facts">{items}</dl>'
 
 for _area in AREAS:
     _auto_supplement_faqs(_area)
@@ -3446,8 +3489,8 @@ for a in AREAS:
     <div>
       <h2>About {a['name']}</h2>
       <p style="margin-top:14px;">{a['desc']}</p>
+      {area_quick_facts(a)}
       {_hoods_html}
-      <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
     <img class="imgblock" src="{_street_src}" alt="{_street_alt}" loading="lazy" width="{_street_w}" height="{_street_h}">
