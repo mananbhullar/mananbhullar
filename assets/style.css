@@ -973,3 +973,10 @@
 .area-hoods strong{color:#fff;font-weight:600;}
 .area-hoods a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.35);text-underline-offset:3px;}
 .area-hoods a:hover{text-decoration-color:var(--accent-on-dark);color:var(--accent-on-dark);}
+
+/* Amenity icons in the About section jump to their "Life in" column */
+a.amenity-item{text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:color .15s ease,border-color .15s ease;}
+.content-section.dark a.amenity-item:hover{color:#fff;border-bottom-color:var(--accent-on-dark);}
+.local-info-col{scroll-margin-top:110px;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}

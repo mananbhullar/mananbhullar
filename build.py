@@ -783,18 +783,18 @@ def market_snapshot_section(dark=False, raised=True):
 </section>"""
 
 def local_info_section(name, schools=None, shopping=None, recreation=None, entertainment=None):
-    def col(title, icon, items):
+    def col(title, icon, items, anchor):
         lis = ''.join(f'<li>{i}</li>' for i in items)
-        return f"""<div class="local-info-col">
+        return f"""<div class="local-info-col" id="{anchor}">
           <div class="local-info-head"><span class="ico">{icon}</span><strong>{title}</strong></div>
           <ul>{lis}</ul>
         </div>"""
     cols = ''
     col_count = 0
-    if schools: cols += col("Schools", "\U0001F3EB", schools); col_count += 1
-    if shopping: cols += col("Shopping &amp; Grocery", "\U0001F6D2", shopping); col_count += 1
-    if entertainment: cols += col("Entertainment &amp; Dining", "\U0001F37D\uFE0F", entertainment); col_count += 1
-    if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation); col_count += 1
+    if schools: cols += col("Schools", "\U0001F3EB", schools, "life-schools"); col_count += 1
+    if shopping: cols += col("Shopping &amp; Grocery", "\U0001F6D2", shopping, "life-shopping"); col_count += 1
+    if entertainment: cols += col("Entertainment &amp; Dining", "\U0001F37D\uFE0F", entertainment, "life-dining"); col_count += 1
+    if recreation: cols += col("Recreation &amp; Parks", "\U0001F3DE\uFE0F", recreation, "life-recreation"); col_count += 1
     grid_cls = 'local-info-grid even-cols' if col_count == 4 else 'local-info-grid'
     return f"""<section class="content-section dark">
   <div class="wrap">
@@ -3418,16 +3418,11 @@ for a in AREAS:
     area_photo_src = REAL_PHOTOS.get(f"area-{a['slug']}", (f"https://picsum.photos/seed/{_photo_seed}/800/600", 800, 600))
     # Amenities strip -- icon-based at-a-glance summary
     _amenity_items = []
-    if a.get('schools'):   _amenity_items.append(('\U0001F3EB', 'Schools'))
-    if a.get('shopping'):  _amenity_items.append(('\U0001F6D2', 'Shopping'))
-    if a.get('entertainment'): _amenity_items.append(('\U0001F37D\ufe0f', 'Dining'))
-    if a.get('recreation'): _amenity_items.append(('\U0001F3DE\ufe0f', 'Parks &amp; Recreation'))
-    for tag in a.get('tags', []):
-        tl = tag.lower()
-        if 'skytrain' in tl or 'seabus' in tl or 'transit' in tl or 'canada line' in tl or 'west coast express' in tl:
-            _amenity_items.append(('\U0001F689', tag))
-            break
-    _amenities_html = ''.join(f'<div class="amenity-item"><span class="a-icon">{ic}</span>{lb}</div>' for ic, lb in _amenity_items) if _amenity_items else ''
+    if a.get('schools'):   _amenity_items.append(('\U0001F3EB', 'Schools', 'life-schools'))
+    if a.get('shopping'):  _amenity_items.append(('\U0001F6D2', 'Shopping', 'life-shopping'))
+    if a.get('entertainment'): _amenity_items.append(('\U0001F37D\ufe0f', 'Dining', 'life-dining'))
+    if a.get('recreation'): _amenity_items.append(('\U0001F3DE\ufe0f', 'Parks &amp; Recreation', 'life-recreation'))
+    _amenities_html = ''.join(f'<a class="amenity-item" href="#{anc}"><span class="a-icon">{ic}</span>{lb}</a>' for ic, lb, anc in _amenity_items) if _amenity_items else ''
 
     _map_q = f"{a['name']}, BC, Canada".replace(' ', '+').replace('&amp;', '%26')
     if GOOGLE_MAPS_KEY:
