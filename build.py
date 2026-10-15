@@ -2186,8 +2186,8 @@ def area_quick_facts(a):
         boards = {MARKET[k]['board'] for k in keys}
         src = ' and '.join(sorted({'FVREB' if b == 'fvreb' else 'GVR' for b in boards}))
         areas = '' if keys == [a['name']] else f" for {_oxford_join(keys)}"
-        rows.append(("Typical prices",
-                     '<br>'.join(parts) + f'<span class="qf-src">{src} benchmark{areas}</span>'))
+        rows.append(("Average home price",
+                     '<br>'.join(parts) + f'<span class="qf-src">MLS\u00ae benchmark: the price of a typical home ({src}{areas})</span>'))
     pop = (a.get('stats') or {}).get('population')
     if pop:
         rows.append(("Population", pop))
