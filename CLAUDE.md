@@ -19,6 +19,12 @@ Surrey and the Lower Mainland.
   manually sync the same change into `index.html`'s own copies of those blocks —
   it does NOT auto-include them. This has caused real bugs before (see Gotchas).
 - `assets/style.css` — all site CSS, one file.
+- `indexnow.py` — after a push has gone live, run `python3 indexnow.py` (pages
+  changed in the last commit) or `python3 indexnow.py --all` to ping Bing via
+  IndexNow. The key file `c3f4ac60083b05d9eba775a579132b3c.txt` at the repo root
+  must stay in place.
+- Market data lives in the `MARKET` dict + `MARKET_MONTH` in build.py (official
+  FVREB municipal report + GVR stats package). Refresh monthly; never interpolate.
 - `assets/site.js` — mobile nav toggle, FAQ accordion, mortgage calculator,
   Realtor.ca deep-link search (`data-realtor-search` attribute).
 - 138 pages currently generated. Sitemap.xml and robots.txt are auto-generated
