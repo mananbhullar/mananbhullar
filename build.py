@@ -2016,10 +2016,10 @@ def _area_ctx(area):
     neighbours = GROUP_NEIGHBORS.get(group, [])
     if group in OUT_OF_TOWN_GROUPS:
         reach = f"{name} and elsewhere in {GROUP_REGION.get(group, 'BC')}"
-    elif is_city or not group:
-        reach = f"{name} and neighbouring {_oxford_join(neighbours)}" if neighbours else name
+    elif group and not is_city:
+        reach = f"{name}, across {group}, and throughout the Lower Mainland and Fraser Valley"
     else:
-        reach = f"{name}, the rest of {group}" + (f", and neighbouring {_oxford_join(neighbours)}" if neighbours else "")
+        reach = f"{name} and throughout the Lower Mainland and Fraser Valley"
     return dict(group=group, is_city=is_city, neighbours=neighbours, reach=reach,
                 region=GROUP_REGION.get(group), district=GROUP_SCHOOL_DISTRICT.get(group),
                 board=_price_board(slug, group), out_of_town=group in OUT_OF_TOWN_GROUPS)
@@ -2162,31 +2162,6 @@ def _auto_supplement_faqs(area, target=6):
             break
         faqs.append((q, a))
     area['area_faq'] = faqs
-
-def area_glance_html(area):
-    """Short fact list under the About text -- self-contained facts answer engines can lift."""
-    c = _area_ctx(area)
-    rows = []
-    if c['group'] and not c['is_city']:
-        rows.append(("Location", f"Neighbourhood in {c['group']}" + (f", {c['region']}" if c['region'] else '')))
-    elif c['region']:
-        rows.append(("Location", f"{'City' if c['group'] else 'Community'} in {c['region']}, BC"))
-    if c['neighbours'] and c['is_city'] and not c['out_of_town']:
-        rows.append(("Neighbouring cities", _oxford_join(c['neighbours'])))
-    housing = _housing_type(area['desc'], area['tags'], area.get('housing'))
-    if housing != "a mix of housing types":
-        rows.append(("Property types", housing[0].upper() + housing[1:]))
-    if c['district']:
-        rows.append(("Public schools", c['district']))
-    board = {'fvreb': 'Fraser Valley Real Estate Board', 'gvr': 'Greater Vancouver Realtors',
-             'delta-split': 'FVREB (North Delta) and Greater Vancouver Realtors (Ladner, Tsawwassen)',
-             'cadreb': 'Chilliwack and District Real Estate Board'}.get(c['board'])
-    if board:
-        rows.append(("Price data", board))
-    if not rows:
-        return ''
-    items = ''.join(f'<div class="glance-row"><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
-    return f'<dl class="area-glance" aria-label="{area["name"]} at a glance">{items}</dl>'
 
 for _area in AREAS:
     _auto_supplement_faqs(_area)
@@ -3471,7 +3446,6 @@ for a in AREAS:
     <div>
       <h2>About {a['name']}</h2>
       <p style="margin-top:14px;">{a['desc']}</p>
-      {area_glance_html(a)}
       <div class="tags" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">{tags_html}</div>
       {f'<div class="amenities-strip">{_amenities_html}</div>' if _amenities_html else ''}
     </div>
