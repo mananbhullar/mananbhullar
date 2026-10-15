@@ -4791,7 +4791,7 @@ def _page_faqs(rel):
     pairs = re.findall(r'<button class="faq-q"><span>(.*?)</span>.*?<div class="faq-a"><p>(.*?)</p>', h, re.S)
     return title, pairs
 
-hub_body = subhero("", '<span class="gradient-text">BC Real Estate Questions, Answered</span>',
+hub_body = subhero("", '<span class="gradient-text">Real Estate FAQ</span>',
                    "Answers to the questions buyers, sellers, and investors in Surrey and the Lower Mainland ask most — each linked to a full guide.",
                    CALL_CTA + CONTACT_CTA)
 _hub_count = 0
@@ -4813,9 +4813,9 @@ hub_body += f"""<section class="content-section">
 hub_body += cta_band('Have a Question <span class="accent-warm">That Isn’t Here</span>?',
                      "Manan answers real estate questions for free, with no obligation.", CALL_CTA + CONTACT_CTA)
 write_page('/real-estate-questions/',
-           "BC Real Estate Questions Answered | Manan Bhullar",
+           "Real Estate FAQ: Buying, Selling &amp; Commercial in BC | Manan Bhullar",
            f"Answers to {_hub_count} common BC real estate questions on buying, selling, strata, taxes, investment, and commercial property, from Manan Bhullar.",
-           crumbs(("Questions Answered", None)), hub_body)
+           crumbs(("Real Estate FAQ", None)), hub_body)
 
 GLOSSARY = [
     ("Additional Property Transfer Tax", "apptt", "A 20% tax that foreign nationals pay on top of the regular Property Transfer Tax when buying residential property in designated BC regions, including Metro Vancouver and parts of the Fraser Valley. It doesn't apply to Canadian citizens or permanent residents."),
@@ -4871,7 +4871,7 @@ gl_body += f"""<section class="content-section">
   <div class="wrap article-body">
     <p class="glossary-jump">{_jump}</p>
     <dl class="glossary">{_items}</dl>
-    <p style="margin-top:32px;font-size:0.88rem;">Definitions are general information, not legal or tax advice, and program rules change. For common questions with fuller answers, see <a href="/real-estate-questions/">BC Real Estate Questions, Answered</a>.</p>
+    <p style="margin-top:32px;font-size:0.88rem;">Definitions are general information, not legal or tax advice, and program rules change. For common questions with fuller answers, see <a href="/real-estate-questions/">the Real Estate FAQ</a>.</p>
   </div>
 </section>"""
 gl_body += cta_band('Questions About a <span class="accent-warm">Specific Property</span>?',
