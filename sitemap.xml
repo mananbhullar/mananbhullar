@@ -847,6 +847,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.mananbhullar.com/glossary/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.mananbhullar.com/listings/</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -866,6 +872,12 @@
   </url>
   <url>
     <loc>https://www.mananbhullar.com/property-search/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.mananbhullar.com/real-estate-questions/</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

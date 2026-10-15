@@ -173,6 +173,7 @@ def page_jsonld(path, title, meta_desc, crumb_html, body):
         page["breadcrumb"] = {"@id": url + "#breadcrumb"}
     # FAQPage, from the rendered .faq-item blocks
     faqs = re.findall(r'<button class="faq-q"><span>(.*?)</span>.*?<div class="faq-a">(.*?)</div>', body, re.S)
+    faqs = [(q, re.sub(r'\s*<a [^>]*>More in [^<]*</a>', '', a)) for q, a in faqs]
     if faqs:
         graph.append({"@type": "FAQPage", "@id": url + "#faq", "mainEntity": [
             {"@type": "Question", "name": _strip_tags(q), "acceptedAnswer": {"@type": "Answer", "text": _strip_tags(a)}}
@@ -189,13 +190,95 @@ def page_jsonld(path, title, meta_desc, crumb_html, body):
         if img:
             post["image"] = img.group(1) if img.group(1).startswith('http') else SITE + img.group(1)
         graph.append(post)
+    terms = re.findall(r'<div class="glossary-entry" id="([^"]+)"><dt>(.*?)</dt><dd>(.*?)</dd>', body, re.S)
+    if terms:
+        graph.append({"@type": "DefinedTermSet", "@id": url + "#terms", "name": "BC Real Estate Glossary",
+                      "hasDefinedTerm": [{"@type": "DefinedTerm", "@id": url + "#" + sid, "name": _strip_tags(t),
+                                          "description": _strip_tags(d), "url": url + "#" + sid} for sid, t, d in terms]})
     graph.append(page)
     return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(',', ':'))
+
+# ---------- Answer-first summaries ----------
+# One self-contained question + 2-3 sentence answer shown right under the hero, drawn
+# only from facts already on that page. Answer engines quote the first direct answer
+# they find, so it goes before any marketing copy.
+SHORT_ANSWERS = {
+    '/buyers/': ("How does buying a home with Manan work?",
+        "You start with a free consultation about budget, financing, and areas, then get a tailored search, guidance on what to offer, and help through subjects and completion. Buyer representation is typically paid from the seller's side of the commission, and as a first-time buyer you may also qualify for BC's Property Transfer Tax exemption, the FHSA, and the RRSP Home Buyers' Plan."),
+    '/buyers/first-time/': ("What do first-time buyers in BC need to know?",
+        "The minimum down payment is 5% on the first $500,000 and 10% on the portion up to $1.5 million, and you should budget roughly 1.5–4% for closing costs. Eligible first-time buyers pay no Property Transfer Tax on homes up to $835,000 and can combine the FHSA ($8,000 a year, $40,000 lifetime) with up to $60,000 from the RRSP Home Buyers' Plan."),
+    '/buyers/condos-townhomes/': ("What should I check before buying a condo or townhome in BC?",
+        "Both are usually strata-titled, so the strata's health matters as much as the unit. Before removing subjects, review the depreciation report, the contingency reserve fund, recent meeting minutes, the bylaws (rental and pet rules), and the Form B for any approved special levies."),
+    '/buyers/investment/': ("What do I need to buy an investment property in BC?",
+        "A non-owner-occupied rental needs at least 20% down, since it doesn't qualify for an insured high-ratio mortgage. Run the numbers on net operating income, not just rent, check whether any suite is legal or non-conforming, and plan for taxes: rental income is taxable and a sale is subject to capital gains."),
+    '/buyers/luxury/': ("What's different about buying a luxury home in South Surrey or White Rock?",
+        "The luxury threshold there typically starts around $2 million. Homes above $1.5 million need at least 20% down and can't use insured mortgages, the buyer pool is smaller so properties take longer to sell, and many sales happen discreetly, so a private inspection and a realtor with an off-market network matter more."),
+    '/buyers/relocation/': ("Can I buy a home in BC before I move here?",
+        "Yes. Canadian citizens and permanent residents can buy anywhere in BC regardless of where they live now, and you can view homes by video and sign documents remotely. Lenders will want proof your income continues after the move, and BC's 20% foreign buyer tax doesn't apply to Canadians relocating from another province."),
+    '/sellers/': ("How do I sell my home in BC?",
+        "Start with a pricing analysis based on recent comparable sales, prepare and market the home, then negotiate offers through subjects to completion. The main cost is the commission, which is negotiable, plus legal fees and any prep; there's no Property Transfer Tax on the sale side, and a home that was always your principal residence is generally exempt from capital gains tax."),
+    '/sellers/home-evaluation/': ("How much is my home worth?",
+        "The most reliable answer comes from recent sales of comparable homes nearby, adjusted for size, age, lot, condition, and location, not from BC Assessment's assessed value. Manan's evaluation is free, with no obligation to list."),
+    '/sellers/downsizing/': ("How do I downsize without the stress?",
+        "Decide early whether to sell first or buy first; options like a subject-to-sale offer, a rent-back, or bridge financing can bridge the gap. Then plan the timeline around sorting belongings, light preparation rather than a renovation, and the type of home you're moving to."),
+    '/marketing/': ("How is a home marketed for sale?",
+        "With professional photography (plus drone or video where it adds value), staging or styling where it helps, targeted social media promotion, outreach to buyers beyond the local market, and an asking price based on recent comparable sales. Manan's BBA in Marketing from SFU's Beedie School of Business shapes the plan behind every listing."),
+    '/commercial/': ("What commercial real estate does Manan handle?",
+        "Sales and leasing across 17 categories in Surrey, the Fraser Valley, and the Lower Mainland, including industrial and warehouse space, retail, apartment buildings, hotels and motels, gas stations, liquor stores, restaurants, land, and farms and ALR land. Most commercial deals are valued on income and need category-specific due diligence, covered on each category page below."),
+    '/commercial/apartment-buildings/': ("How do you buy an apartment building in BC?",
+        "Value comes from the rent roll: compare current rents with market rents and review tenancy start dates and vacancy history, since BC's Residential Tenancy Act limits rent increases for existing tenants. Buildings with five or more units can often use CMHC-insured multi-family financing, which offers better rates and longer amortizations."),
+    '/commercial/auto-dealerships/': ("What does it take to buy a car dealership in BC?",
+        "A new-car franchise sale needs the manufacturer's approval of the new owner, a separate process that can take significant time, and every dealer needs a Vehicle Sales Authority (VSA) licence. Dealerships are valued as businesses as much as real estate, so financial review matters as much as the property."),
+    '/commercial/banquet-halls/': ("How is a banquet hall valued?",
+        "On its booking revenue history, its forward bookings and deposits, profit margins after catering and staffing, and the real estate or lease terms. Liquor licensing, parking, and occupancy capacity also need checking before you buy."),
+    '/commercial/car-washes/': ("How is a car wash valued?",
+        "Mainly on wash volume, membership subscribers and retention, and the age and condition of the equipment, since replacing major equipment is a large capital cost. Tunnel washes do the most volume; self-serve bays need the least capital but earn the least per square foot."),
+    '/commercial/convenience-stores/': ("What should I check before buying a convenience store in BC?",
+        "Most are leasehold businesses, so the lease, including its remaining term and whether it can be assigned, is often the most important document. You'll also need a tobacco retail licence, a BCLC lottery agreement if applicable, and a municipal business licence, and you should verify the real financials before committing."),
+    '/commercial/daycares-childcare/': ("What do I need to buy a daycare in BC?",
+        "Child care facilities are licensed under BC's Community Care and Assisted Living Act through the local health authority, and a licence doesn't simply transfer with a sale. Check staffing and ECE certification, licensed capacity, and whether the facility participates in the $10 a Day program, which directly shapes its revenue."),
+    '/commercial/farms-alr-land/': ("What should I know before buying farmland in the Fraser Valley?",
+        "Most farmland is in the Agricultural Land Reserve, where the Agricultural Land Commission limits subdivision, non-farm uses, and homes. Check water licences, whether the property qualifies for farm class property tax, and, for dairy or poultry, whether production quota is included, since it's a separate asset."),
+    '/commercial/gas-stations/': ("What's involved in buying a gas station in BC?",
+        "Environmental due diligence comes first: a Phase I Environmental Site Assessment at minimum, and often a Phase II, to check for contamination from underground tanks, which also affects financing. Then review fuel volumes, any branded supply agreement, and the convenience store and other revenue on site."),
+    '/commercial/hotels-motels/': ("How is a hotel or motel valued?",
+        "As a business as well as a property: buyers review at least three years of financial statements, occupancy by season, average daily rate (ADR), and revenue per available room (RevPAR), on top of standard property due diligence. Sales are often marketed discreetly to protect operations and staff."),
+    '/commercial/industrial/': ("Should I lease or buy industrial space in Surrey?",
+        "Buying builds equity and locks in your occupancy costs but ties up capital; leasing keeps capital free and lets you resize as the business grows. Either way, match the space's clear height, loading, power, and zoning to your actual use."),
+    '/commercial/land/': ("How do I know if land can be subdivided?",
+        "It depends on the current municipal zoning, the Official Community Plan designation, minimum lot sizes, servicing, and whether the land is in the Agricultural Land Reserve, all of which need checking directly with the municipality. Budget for studies, servicing, and development cost charges beyond the purchase price."),
+    '/commercial/liquor-stores/': ("How do you buy a liquor store in BC?",
+        "Through either an asset sale or a share sale, and in both cases the licence change needs approval from BC's Liquor and Cannabis Regulation Branch, which can take weeks to months. Licences are scarce, which is a big part of a store's value, so review the financials and lease carefully."),
+    '/commercial/restaurants/': ("What should I check before buying a restaurant in BC?",
+        "The lease (term, renewal options, and assignment), the real financials, and the liquor licence, which does not transfer automatically and needs provincial approval. Franchise purchases also need franchisor approval and come with ongoing royalty and marketing fees."),
+    '/commercial/retail/': ("What should I know before leasing retail space?",
+        "Strip-mall leases commonly run three to five years with renewal options. Check whether it's a triple net or gross lease, which decides who pays taxes, insurance, and maintenance, and whether the landlord offers a tenant improvement allowance toward your build-out. Visibility and foot traffic drive both rent and value."),
+    '/commercial/self-storage/': ("How is a self-storage facility valued?",
+        "On net operating income, driven by occupancy, average rate per square foot, and expense ratio, capitalized at a rate reflecting the facility's quality and location. Check new supply planned for the submarket, since it directly affects future occupancy and rates."),
+    '/commercial/truck-yards/': ("What should I check before buying a truck yard?",
+        "Confirm the current zoning allows outdoor truck and trailer storage; don't assume it from the existing use, since municipalities have been tightening these permissions. Yard space is getting scarcer as industrial land values rise, and surface condition, drainage, and access all affect value."),
+}
+
+def short_answer_html(q, a):
+    return f"""<section class="short-answer">
+  <div class="wrap">
+    <div class="short-answer-box">
+      <p class="sa-label">Short answer</p>
+      <h2 class="sa-q">{q}</h2>
+      <p class="sa-a">{a}</p>
+    </div>
+  </div>
+</section>"""
 
 PAGES = []  # (path, title, meta_desc) for llms.txt
 
 def write_page(path, title, meta_desc, crumb_html, body):
     PAGES.append((path, _html.unescape(title.split(' | ')[0]), _html.unescape(meta_desc)))
+    if path in SHORT_ANSWERS:
+        # right after the hero, whether it's a <header class="subhero"> or a <section class="subhero ...">
+        m = re.search(r'<(header|section) class="subhero[^"]*">.*?</\1>', body, re.S)
+        assert m, f"no hero found for short answer on {path}"
+        body = body[:m.end()] + '\n' + short_answer_html(*SHORT_ANSWERS[path]) + body[m.end():]
     full_html = SHELL.format(
         title=title, meta_desc=meta_desc, og_title=title.split(' | ')[0],
         path=path, nav=NAV, footer=FOOTER, crumbs=crumb_html, body=body,
@@ -4165,7 +4248,7 @@ article_page(_art_by_slug['fraser-valley-vancouver-market-update-september-2026'
 
 article_page(_art_by_slug['surrey-vs-langley-2026'], """
 <p><strong>The short answer:</strong> Surrey is the bigger, more urban choice, with SkyTrain today and lower condo prices. Langley costs a little more across every home type but offers Fort Langley's village character, newer master-planned neighbourhoods in Willoughby, and more acreage and equestrian land. Here's how they compare on price, schools, transit, and lifestyle, using the Fraser Valley Real Estate Board's September 2026 benchmarks.</p>
-<h2>Price: Surrey vs Langley</h2>
+<h2>Is Surrey or Langley Cheaper?</h2>
 <table>
 <thead><tr><th>Benchmark (Sept 2026)</th><th>Surrey</th><th>Langley</th></tr></thead>
 <tbody>
@@ -4178,9 +4261,9 @@ article_page(_art_by_slug['surrey-vs-langley-2026'], """
 <h2>Size and Character</h2>
 <p><a href="/communities/surrey/">Surrey</a> is British Columbia's second-largest city, with more than 732,000 residents and an enormous range of neighbourhoods, from City Centre's high-rise towers to established family areas like <a href="/communities/fleetwood/">Fleetwood</a> and <a href="/communities/cloverdale/">Cloverdale</a> and the oceanside <a href="/communities/south-surrey/">South Surrey and White Rock</a>.</p>
 <p><a href="/communities/langley/">Langley</a> is actually two municipalities, the City of Langley and the Township of Langley, with about 198,000 residents combined. It's known for the historic <a href="/communities/fort-langley/">Fort Langley</a> village, an established wine and agritourism scene, a strong equestrian community, and fast-growing <a href="/communities/willoughby/">Willoughby</a>, its largest neighbourhood.</p>
-<h2>Schools</h2>
+<h2>Which School Districts Serve Surrey and Langley?</h2>
 <p>Surrey is served by School District 36, the largest district in the province, plus SFU Surrey and Kwantlen Polytechnic University. Langley is served by School District 35 and is home to Trinity Western University. In both cities catchments are set by address, so confirm a specific home's schools with the district before you buy.</p>
-<h2>Transit and Commuting</h2>
+<h2>How Do Transit and Commuting Compare?</h2>
 <p>Surrey has Expo Line SkyTrain service today, running through City Centre to downtown Vancouver. The Surrey&ndash;Langley SkyTrain extension along Fraser Highway is under construction and will connect the two cities by rapid transit. Until it opens, Langley is more car-dependent, with Highway 1 as the main commuting route.</p>
 <h2>Which One Fits You?</h2>
 <ul>
@@ -4206,12 +4289,12 @@ article_page(_art_by_slug['burnaby-vs-new-westminster-2026'], """
 </tbody>
 </table>
 <p>New Westminster's typical condo came in at $579,900, between about $82,000 and $143,000 below Burnaby's three areas. The gap is even larger for detached homes.</p>
-<h2>Character</h2>
+<h2>How Do Burnaby and New Westminster Feel Different?</h2>
 <p><a href="/communities/burnaby/">Burnaby</a> sits at the geographic centre of Metro Vancouver. It ranges from the high-rise town centres of <a href="/communities/metrotown/">Metrotown</a> and <a href="/communities/brentwood/">Brentwood</a> to quiet, tree-lined family streets, and it's home to Simon Fraser University and BCIT. Green space is a real strength: Central Park, Deer Lake, Burnaby Lake, and Burnaby Mountain.</p>
 <p><a href="/communities/new-westminster/">New Westminster</a> is BC's original capital: compact, historic, and on the Fraser River. Uptown has a modern mix of towers, shops, and restaurants; Columbia Street is the heritage downtown; and Sapperton is anchored by Royal Columbian Hospital. Douglas College is here too.</p>
-<h2>Transit</h2>
+<h2>Which Has Better SkyTrain Access?</h2>
 <p>Both cities are well served by SkyTrain. Burnaby has stations on the Expo and Millennium Lines, including Metrotown, Brentwood, and Lougheed. New Westminster has five SkyTrain stations across the Expo and Millennium Lines, unusually good coverage for a city its size.</p>
-<h2>Schools</h2>
+<h2>Which School Districts Serve Burnaby and New Westminster?</h2>
 <p>Burnaby is served by School District 41, including Burnaby South Secondary with its IB Diploma Programme and French Immersion. New Westminster is served by School District 40. Catchments are set by address in both, so confirm a specific home's schools with the district.</p>
 <h2>Which One Fits You?</h2>
 <ul>
@@ -4227,7 +4310,7 @@ article_page(_art_by_slug['fraser-valley-vs-metro-vancouver-budget-2026'], """
 <p><strong>The short answer:</strong> the same budget buys considerably more in the Fraser Valley. In September 2026, a typical detached home cost about $485,000 less in the Fraser Valley board's area than in Greater Vancouver's, and a typical condo about $221,000 less. The trade-off is usually commute time. Here's the full comparison.</p>
 <h2>A Note on Boundaries</h2>
 <p>Real estate prices are reported by board area, not by regional district. The Fraser Valley Real Estate Board (FVREB) covers Surrey, White Rock, North Delta, Langley, Abbotsford, and Mission; several of those are in the Metro Vancouver regional district but report through the Fraser Valley board. Greater Vancouver Realtors (GVR) covers Vancouver, Burnaby, the Tri-Cities, New Westminster, the North Shore, Richmond, Ladner, Tsawwassen, Maple Ridge, and Pitt Meadows, among others.</p>
-<h2>Price: Fraser Valley vs Greater Vancouver</h2>
+<h2>How Much Cheaper Is the Fraser Valley Than Greater Vancouver?</h2>
 <table>
 <thead><tr><th>Benchmark (Sept 2026)</th><th>Fraser Valley (FVREB)</th><th>Greater Vancouver (GVR)</th><th>Difference</th></tr></thead>
 <tbody>
@@ -4250,13 +4333,13 @@ article_page(_art_by_slug['fraser-valley-vs-metro-vancouver-budget-2026'], """
 
 article_page(_art_by_slug['first-time-buyer-programs-bc'], """
 <p>Buying a first home in BC comes with more financial moving parts than most buyers expect. Here's a plain-language summary of the main programs currently available \u2014 always confirm current details with your mortgage broker or lawyer before relying on them.</p>
-<h2>BC Property Transfer Tax First-Time Home Buyers' Exemption</h2>
+<h2>What Is BC's First-Time Home Buyers' Property Transfer Tax Exemption?</h2>
 <p>Eligible first-time buyers can receive a full exemption from BC's Property Transfer Tax on homes valued up to $835,000, with a partial exemption phasing out up to $860,000. To qualify, you generally need to be a Canadian citizen or permanent resident, have lived in BC or filed BC tax returns for a minimum period, and never have owned a principal residence anywhere in the world.</p>
-<h2>First Home Savings Account (FHSA)</h2>
+<h2>What Is the First Home Savings Account (FHSA)?</h2>
 <p>The FHSA lets eligible Canadians contribute up to $8,000 per year, to a $40,000 lifetime maximum, toward a first home. Contributions are tax-deductible, and qualifying withdrawals are tax-free \u2014 combining features of an RRSP and a TFSA.</p>
-<h2>RRSP Home Buyers' Plan (HBP)</h2>
+<h2>What Is the RRSP Home Buyers' Plan (HBP)?</h2>
 <p>The Home Buyers' Plan allows eligible first-time buyers to withdraw funds from an RRSP tax-free toward a home purchase, repayable back into the RRSP over 15 years. The FHSA and HBP can generally be used together on the same purchase.</p>
-<h2>CMHC Mortgage Insurance</h2>
+<h2>When Do You Need CMHC Mortgage Insurance?</h2>
 <p>Buyers putting down less than 20% will typically require mortgage default insurance through CMHC or a similar insurer, which is added to the mortgage rather than paid upfront.</p>
 <p>Every buyer's situation is different, and program rules do change. Manan can help you confirm exactly what you qualify for as part of a free, no-pressure consultation.</p>
 """)
@@ -4267,7 +4350,7 @@ article_page(_art_by_slug['preparing-your-home-to-sell'], """
 <p>Before anything else, a genuinely thorough clean and a significant decluttering pass \u2014 including closets and storage areas buyers will open \u2014 makes the single biggest visual difference for the least cost.</p>
 <h2>Handle Small Repairs</h2>
 <p>Sticking doors, leaky faucets, chipped paint, and burnt-out bulbs are inexpensive to fix and can otherwise plant doubt about how well the rest of the home has been maintained.</p>
-<h2>Neutralize, Don't Necessarily Renovate</h2>
+<h2>Should You Renovate Before Selling?</h2>
 <p>Bold paint colours and heavy personalization can make it harder for buyers to picture themselves in the space. Neutral, fresh paint in key rooms is often a better return than a full renovation.</p>
 <h2>Let the Light In</h2>
 <p>Clean windows, open curtains, and well-placed lighting for showings make a measurable difference in how bright and welcoming a home feels in photos and in person.</p>
@@ -4336,13 +4419,13 @@ article_page(_art_by_slug['first-time-home-buyer-guide-fraser-valley-2026'], """
 
 article_page(_art_by_slug['affordable-homes-surrey-bc-2026'], """
 <p>"Affordable" is relative in the Fraser Valley, but real value still exists in Surrey if you know where to look. Here's an honest breakdown by property type and area.</p>
-<h2>Start With the Benchmark Numbers</h2>
+<h2>What Do Homes Cost in Surrey Right Now?</h2>
 <p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's benchmark prices were $447,600 for apartments/condos &mdash; the single most accessible entry point &mdash; and $758,600 for townhomes. Detached homes, at a $1,386,200 benchmark in Surrey, are out of reach for most first-time buyers without a suite or a significant down payment.</p>
-<h2>Where Condos Offer the Best Relative Value</h2>
+<h2>Where Are the Best-Value Condos in Surrey?</h2>
 <p>Surrey City Centre, near King George and Gateway SkyTrain stations, has some of the deepest condo inventory in the city, drawing steady demand from SFU Surrey students and young professionals &mdash; and correspondingly more competitive pricing than comparable stock in Vancouver or Burnaby. Newton and Whalley more broadly also offer accessible condo and townhome entry points.</p>
-<h2>Where Townhomes and Suited Homes Stretch Further</h2>
+<h2>Where Do Townhomes and Suited Homes Stretch a Budget Further?</h2>
 <p>Newton is one of Surrey's most diverse and densely populated neighbourhoods, with a mix of older single-family homes, townhomes, and newer condo development at a relatively accessible price point given its central location. A detached home with a legal or conforming secondary suite &mdash; common in Newton and Whalley &mdash; is often the most realistic path to a detached home while offsetting the mortgage with rental income.</p>
-<h2>Don't Overlook the Buyer's Market Itself</h2>
+<h2>Does Today's Buyer's Market Help Affordability?</h2>
 <p>Beyond specific neighbourhoods, the current market condition matters: with sales-to-active-listings ratios well below balanced-market territory, sellers across Surrey are generally more open to negotiating on price and conditions than they were a couple of years ago.</p>
 <p>"Affordable" always depends on what you're comparing it to and what trade-offs you're willing to make. Manan can walk through real, current comparables for your specific budget rather than general averages.</p>
 """)
@@ -4360,7 +4443,7 @@ article_page(_art_by_slug['south-surrey-vs-white-rock'], """
 
 article_page(_art_by_slug['townhouses-surrey-under-600k-2026'], """
 <p>Surrey's townhome benchmark was $758,600 as of the Fraser Valley Real Estate Board's September 2026 report &mdash; well above a $600,000 budget. That doesn't mean a sub-$600K townhome search is hopeless, but it does mean being realistic about where and what you'll find.</p>
-<h2>Where a $600K Budget Actually Goes</h2>
+<h2>Where Can You Find a Surrey Townhouse Under $600,000?</h2>
 <p>Older townhome stock in Newton, Whalley/City Centre, and parts of North Surrey is where a sub-$600K budget is most likely to find real options &mdash; typically smaller units, older buildings, or complexes further from SkyTrain access. Newer, larger townhomes in Cloverdale, Fleetwood, or South Surrey are generally priced well above this range.</p>
 <h2>What You're Trading Off</h2>
 <p>At this budget, expect to weigh: older building age (meaning more attention to the depreciation report and reserve fund), smaller square footage, two bedrooms rather than three, and possibly a longer commute to SkyTrain or major employment centres. None of these are dealbreakers &mdash; they're just the realistic trade-offs at this price point in today's market.</p>
@@ -4373,11 +4456,11 @@ article_page(_art_by_slug['townhouses-surrey-under-600k-2026'], """
 
 article_page(_art_by_slug['surrey-bc-house-prices-2026'], """
 <p>Surrey house prices have softened over the past year, in line with the broader Fraser Valley market. Here's where things stand across property types, and what's likely to move prices from here.</p>
-<h2>Current Benchmark Prices</h2>
+<h2>What Do Homes Cost in Surrey in 2026?</h2>
 <p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's own benchmark prices were $1,386,200 for a single-family detached home, $758,600 for a townhome, and $447,600 for an apartment or condo. Across the board's whole territory the benchmarks were $1,300,000, $745,300, and $461,800, and region-wide prices were down year over year in every category: detached 8.8%, townhomes 6.2%, and apartments 9.3%.</p>
-<h2>It's a Buyer's Market Right Now</h2>
+<h2>Is Surrey a Buyer's Market Right Now?</h2>
 <p>Sales-to-active-listings ratios are running below the 12&ndash;20% range that typically signals a balanced market &mdash; inventory is elevated relative to buyer demand, which is the core reason prices have softened even as interest rates have come down from their peak.</p>
-<h2>What Could Move Prices From Here</h2>
+<h2>What Could Move Surrey House Prices From Here?</h2>
 <p>A few forces are worth watching: the Bank of Canada's rate decisions (currently held at 2.25% for six straight decisions, with room to cut further if the economy weakens); the resolution &mdash; or further escalation &mdash; of the US-Canada tariff dispute, which affects both construction costs and broader economic confidence; and whether buyer demand responds to the affordability improvement that's already happened, or continues to wait on the sidelines.</p>
 <h2>Price Varies Enormously by Sub-Area</h2>
 <p>City-wide averages hide real variation &mdash; South Surrey and White Rock command a significant premium over Newton or Whalley, and even within a single neighbourhood, lot size, view, and condition can shift value substantially. Whole-city benchmark numbers are a useful starting point, not a substitute for an actual comparative market analysis on a specific property.</p>
@@ -4386,13 +4469,13 @@ article_page(_art_by_slug['surrey-bc-house-prices-2026'], """
 
 article_page(_art_by_slug['fleetwood-vs-cloverdale'], """
 <p>Fleetwood and Cloverdale are both established, family-oriented Surrey neighbourhoods that come up together in a lot of buyer searches. Here's how they actually compare.</p>
-<h2>Character and Feel</h2>
+<h2>How Do Fleetwood and Cloverdale Feel Different?</h2>
 <p>Fleetwood is known for tree-lined streets and a mix of single-family homes with newer townhome development woven in &mdash; a classic, quieter residential feel. Cloverdale blends small-town heritage charm &mdash; it's home to the Cloverdale Rodeo and Country Fair &mdash; with some of Surrey's fastest new-home development around its historic downtown core, which hosts over 200 independent businesses.</p>
-<h2>Schools</h2>
+<h2>What Schools Serve Fleetwood and Cloverdale?</h2>
 <p>Fleetwood draws on multiple SD36 Surrey elementary and secondary schools plus Surrey Christian School (private, K-12). Cloverdale's secondary catchments are anchored by Lord Tweedsmuir and Salish Secondary, fed by several SD36 elementary schools. Both offer solid public school access &mdash; confirm your specific catchment address with the district, since boundaries can shift block to block.</p>
-<h2>Shopping and Amenities</h2>
+<h2>Where Do Fleetwood and Cloverdale Residents Shop?</h2>
 <p>Fleetwood residents lean on Fleetwood Park Village, Evergreen Mall, and Fresh St Market locally, with Guildford Town Centre a short drive away. Cloverdale offers Willowbrook Shopping Centre, Central City Shopping Centre (SkyTrain-accessible), and its own historic downtown retail core &mdash; giving Cloverdale a more distinct "town centre" feel than Fleetwood's more suburban layout.</p>
-<h2>Access and Commute</h2>
+<h2>How Do the Commutes Compare?</h2>
 <p>Fleetwood has easy access to Fraser Highway and Highway 1, making it a solid commuter location. Cloverdale similarly benefits from Highway 15 and Fraser Highway access, with the added draw of nearby SkyTrain access via Central City.</p>
 <h2>Which Fits You?</h2>
 <p>If you want a quieter, established residential feel, Fleetwood likely fits better. If you want small-town character with a genuine downtown core and faster-growing new-home inventory, Cloverdale is the stronger match.</p>
@@ -4401,9 +4484,9 @@ article_page(_art_by_slug['fleetwood-vs-cloverdale'], """
 
 article_page(_art_by_slug['newton-surrey-real-estate-guide'], """
 <p>Newton is one of Surrey's most diverse, densely populated, and accessible neighbourhoods &mdash; a common starting point for buyers who want central Surrey access without South Surrey or Fleetwood pricing.</p>
-<h2>What Makes Newton Different</h2>
+<h2>What Makes Newton Different From the Rest of Surrey?</h2>
 <p>Newton offers a genuine mix of older single-family homes, townhomes, and newer condo development, reflecting decades of organic growth rather than a single master-planned identity. Its central location and relative affordability, compared to Surrey's premium neighbourhoods, make it a popular entry point for first-time buyers and growing families alike.</p>
-<h2>East Newton vs. West Newton</h2>
+<h2>What's the Difference Between East and West Newton?</h2>
 <p>Newton splits into distinct East and West sub-areas with different school zones &mdash; East Newton offers family homes close to shopping and recreation with more established streets, while West Newton is a diverse, densely built pocket close to Scott Road and King George Boulevard, known for its South Asian grocers, sweet shops, and jewellers along the Scott Road corridor.</p>
 <h2>Shopping and Daily Life</h2>
 <p>King's Cross Shopping Centre, Newton Town Centre (anchored by Chalo FreshCo), and Strawberry Hill Shopping Centre cover most day-to-day needs, alongside the Scott Road corridor's concentration of South Asian grocers and restaurants &mdash; a genuine cultural and culinary draw, not just a practical amenity.</p>
@@ -4416,24 +4499,24 @@ article_page(_art_by_slug['newton-surrey-real-estate-guide'], """
 
 article_page(_art_by_slug['panorama-ridge-surrey-hidden-gem'], """
 <p>Panorama Ridge doesn't get the attention that Fleetwood or Cloverdale do in most Surrey buyer searches &mdash; but for the right buyer, that's part of the appeal.</p>
-<h2>What Panorama Ridge Offers</h2>
+<h2>What Is Panorama Ridge Like to Live In?</h2>
 <p>An established, family-oriented Surrey neighbourhood known for elevated lots with valley views and a quiet, residential feel. It's the kind of area where homes were largely built out a generation ago, giving it a settled, mature character that newer master-planned communities don't have yet.</p>
 <h2>Location and Access</h2>
 <p>Panorama Ridge sits close to Bear Creek Park and Newton's recreation facilities, with Newton Town Centre nearby for shopping and everyday needs. It's genuinely central within Surrey without carrying the density or traffic of Whalley or Newton's busiest corridors.</p>
-<h2>Why It Flies Under the Radar</h2>
+<h2>Why Is Panorama Ridge Often Overlooked?</h2>
 <p>Panorama Ridge doesn't have a single defining landmark or town centre the way Cloverdale has its rodeo grounds or White Rock has its pier &mdash; it's simply a solid, quiet residential neighbourhood, which means it doesn't generate the same search volume as more "branded" Surrey areas. For buyers who care more about the home and lot than the neighbourhood's profile, that's an opportunity rather than a drawback.</p>
-<h2>Who It Suits</h2>
+<h2>Who Is Panorama Ridge a Good Fit For?</h2>
 <p>Buyers who want an established, quiet, family-friendly setting with valley views and don't need to be walking distance to a bustling town centre tend to do well here &mdash; particularly those upgrading from a starter home who want more lot and more quiet without leaving Surrey.</p>
 <p>Because it's less searched, Panorama Ridge sometimes offers relative value compared to more heavily marketed neighbourhoods nearby. Manan can walk through current listings to see what's actually available.</p>
 """)
 
 article_page(_art_by_slug['surrey-condo-market-2026'], """
 <p>Surrey's condo market looks different than it did a couple of years ago &mdash; more inventory, more developer incentives, and genuinely better conditions for a first-time buyer than the peak-market years.</p>
-<h2>Current Benchmark Pricing</h2>
+<h2>How Much Does a Condo Cost in Surrey?</h2>
 <p>As of the Fraser Valley Real Estate Board's September 2026 report, Surrey's apartment/condo benchmark was $447,600, and the region-wide condo benchmark was $461,800, down 9.3% from a year earlier &mdash; still the most accessible property type in the region.</p>
 <h2>The Presale Market Has Softened Meaningfully</h2>
 <p>Greater Vancouver has a near-record number of completed, unsold condo units, and developers across the region &mdash; Surrey included, where well over 100 active presale developments are currently marketing &mdash; are responding with real incentives: price reductions, cash-back credits at closing, reduced deposit requirements, and in some cases furniture allowances or rental guarantees. Specific incentive terms vary by project and change frequently, so confirm current offers directly rather than assuming last month's promotion still applies.</p>
-<h2>Best Areas for a First-Time Buyer</h2>
+<h2>Where Should First-Time Buyers Look for a Surrey Condo?</h2>
 <p>Surrey City Centre, anchored by Central City Mall, SFU Surrey, and direct SkyTrain access via the Expo Line, remains the deepest and most liquid condo market in the city &mdash; strong for both resale value and rental demand from students and young professionals. Newton and Whalley more broadly also offer accessible entry points at a relative discount to City Centre's SkyTrain premium.</p>
 <h2>What to Watch For With Presale Purchases</h2>
 <p>Presale contracts carry real risk if your financing or life circumstances change before completion &mdash; some buyers in the current market have needed to assign their contracts, in some cases at a loss. Resale condos offer more certainty (you know exactly what you're buying, today) even if presale incentives look attractive on paper.</p>
@@ -4470,24 +4553,24 @@ article_page(_art_by_slug['commercial-real-estate-surrey-investment-2026'], """
 
 article_page(_art_by_slug['how-to-buy-a-gas-station-bc-2026'], """
 <p>Buying a gas station in BC means underwriting three distinct things at once: the real estate, the operating business, and environmental risk from decades of underground fuel storage. Here's how to approach it.</p>
-<h2>Understand Branded vs. Independent</h2>
+<h2>Should You Buy a Branded or Independent Gas Station?</h2>
 <p>Branded stations (Esso, Shell, Petro-Canada, Chevron) come with supply agreements and marketing support but restrict your fuel supplier flexibility. Independents offer more pricing freedom on fuel but rely entirely on their own reputation and location to drive traffic. Neither is inherently better &mdash; it depends on your operating model and risk tolerance.</p>
-<h2>Environmental Due Diligence Is Non-Negotiable</h2>
+<h2>What Environmental Due Diligence Does a Gas Station Need?</h2>
 <p>A Phase I Environmental Site Assessment is the baseline requirement on any gas station purchase, checking for soil and groundwater contamination risk from underground storage tanks. If Phase I flags concerns, a Phase II assessment with further soil and groundwater testing follows before closing. Lenders typically won't finance a fuel retail site without a clean Phase I in hand.</p>
 <h2>Verify the Full Revenue Picture</h2>
 <p>Fuel volume and margin are only part of the picture &mdash; convenience store, car wash, and any liquor add-on revenue all factor into valuation. Cross-check convenience store financials against POS reports and supplier invoices rather than relying on owner-provided summaries alone.</p>
 <h2>Review the Supply Agreement and Tank Condition</h2>
 <p>For branded sites, understand the exclusivity terms and remaining length on the fuel supply agreement before you commit. Separately, review underground storage tank age, materials, and whether any upgrades are required under current regulations &mdash; this directly affects both environmental risk and your future capital budget.</p>
-<h2>Confirm Permits Are Transferable</h2>
+<h2>Do Gas Station Permits Transfer to a New Owner?</h2>
 <p>Municipal and provincial fuel retail permits need to be current and properly transferable to you as the new owner &mdash; confirm this early rather than assuming it's automatic.</p>
 <p>Gas station transactions carry more moving parts than most commercial real estate purchases. Manan can walk through the specific due diligence for a property you're considering.</p>
 """)
 
 article_page(_art_by_slug['buying-a-motel-bc-due-diligence'], """
 <p>Buying a motel in BC means buying a business as much as a building &mdash; the due diligence checklist reflects that from the start.</p>
-<h2>Financial Performance, Not Just the List Price</h2>
+<h2>How Should You Evaluate a Motel's Financial Performance?</h2>
 <p>Review at least three years of financial statements, occupancy rates by season, average daily rate (ADR), and revenue per available room (RevPAR) to assess true profitability &mdash; a motel's seasonal swings can make a single year's numbers misleading on their own.</p>
-<h2>Licensing and Permits</h2>
+<h2>What Licences and Permits Does a BC Motel Need?</h2>
 <p>Confirm exactly which business licences, health authority permits, liquor licences (if applicable), and tourism accommodation compliance requirements transfer with the sale versus need fresh applications under your ownership &mdash; this can materially affect your closing timeline.</p>
 <h2>Zoning and Land Use</h2>
 <p>Confirm the property is properly zoned for hospitality use, and understand any restrictions on future expansion or rezoning potential if that factors into your investment plan.</p>
@@ -4495,39 +4578,39 @@ article_page(_art_by_slug['buying-a-motel-bc-due-diligence'], """
 <p>For branded properties, understand any Property Improvement Plan (PIP) requirements tied to the brand affiliation, along with deferred maintenance and whether the capital reserve is adequate for near-term repairs.</p>
 <h2>Staffing and Operational Continuity</h2>
 <p>Review staffing levels and management structure, and think through how operations continue through the ownership transition &mdash; a motel with strong repeat business can lose momentum fast if service quality dips during a changeover.</p>
-<h2>Financing Looks Different Here</h2>
+<h2>How Is Motel Financing Different?</h2>
 <p>Hospitality financing evaluates the operating business's income and management track record alongside the real estate itself &mdash; a different conversation than a standard commercial mortgage, so start that conversation with a lender who understands the category early.</p>
 <p>Fraser Valley hospitality demand is real &mdash; from Harrison Hot Springs and Cultus Lake tourism to steady Highway 1 corridor motel traffic. Manan can walk through what solid due diligence looks like for a specific property.</p>
 """)
 
 article_page(_art_by_slug['convenience-store-acquisition-bc-guide'], """
 <p>Most convenience stores in BC are leasehold businesses rather than real estate purchases, which shifts where the real due diligence work needs to happen.</p>
-<h2>The Lease Is Often the Most Important Document</h2>
+<h2>Why Is the Lease So Important When Buying a Convenience Store?</h2>
 <p>Since most c-stores are leasehold businesses, review the remaining lease term, renewal options, and rent escalation clauses closely &mdash; a short remaining term or an unfavourable escalation clause can undermine an otherwise solid business.</p>
-<h2>Understand the Licensing Requirements</h2>
+<h2>What Licences Does a Convenience Store Need?</h2>
 <p>A tobacco retail licence, a lottery terminal agreement with BCLC if applicable, and a standard municipal business licence are all typically required &mdash; confirm what transfers automatically and what needs a fresh application.</p>
-<h2>Verify Sales the Right Way</h2>
+<h2>How Do You Verify a Convenience Store's Sales?</h2>
 <p>Tobacco and lottery revenue carry structurally different, more predictable margins than general merchandise &mdash; and they're also easier to verify. Cross-check reported sales against supplier invoices and BCLC lottery commission statements, which are much harder for a seller to misstate than general retail figures.</p>
 <h2>Confirm Lease Assignment Is Actually Possible</h2>
 <p>Most commercial leases require landlord consent to assign the lease to a new tenant. Confirm this early in your process &mdash; a landlord can decline or attach conditions, and finding out late can derail an otherwise-agreed deal.</p>
 <h2>Check the Competitive Landscape</h2>
 <p>Nearby convenience and grocery competition, and any upcoming developments in the immediate area, can materially affect future sales &mdash; worth a genuine look at the surrounding block, not just the store's own numbers.</p>
-<h2>Timeline Expectations</h2>
+<h2>How Long Does a Convenience Store Purchase Take?</h2>
 <p>Once financials are verified and lease assignment is confirmed, convenience store transactions typically move faster than real estate deals &mdash; often four to eight weeks to close.</p>
 <p>Manan works regularly with c-store buyers across the Fraser Valley and can walk through what to prioritize for a specific listing.</p>
 """)
 
 article_page(_art_by_slug['buying-a-restaurant-bc-liquor-licence'], """
 <p>Restaurant transactions weigh goodwill and location more heavily than most commercial categories &mdash; and if liquor is involved, the licence transfer process adds its own timeline to plan around.</p>
-<h2>Underwriting: Adjusted EBITDA, Not Owner Estimates</h2>
+<h2>How Should You Underwrite a Restaurant Purchase?</h2>
 <p>Restaurant valuation is generally based on a multiple of adjusted EBITDA (seller's discretionary earnings) from verified financials &mdash; not owner-provided summaries. Watch for cash-heavy sales that are hard to verify, declining year-over-year trends, and rent that represents a disproportionately high share of revenue.</p>
 <h2>Goodwill and Location Carry Real Weight</h2>
 <p>A strong location with an established customer base can represent a meaningful share of a restaurant's total value beyond the equipment and lease alone &mdash; which is also why a change of concept after purchase carries real risk if you're counting on that existing customer base.</p>
 <h2>Kitchen and Lease Condition</h2>
 <p>Confirm the remaining lease term, whether existing kitchen and hood infrastructure suits your concept without major buildout, and whether the landlord's use clause allows a change of concept if you're planning one.</p>
-<h2>The Liquor Licence Transfer Process</h2>
+<h2>How Does a Liquor Licence Transfer Work in BC?</h2>
 <p>A liquor licence does not transfer automatically with a restaurant sale &mdash; it goes through a formal approval process with BC's Liquor and Cannabis Regulation Branch. The application fee is $330, the buyer doesn't need to be a Canadian citizen or resident but does need a CRA Business Number and Business BCeID, and the establishment can generally stay open during the transfer process. BC modernized its rules in 2026 to also permit licensee-to-licensee alcohol sales, worth asking about if that's relevant to your deal structure.</p>
-<h2>Franchise vs. Independent</h2>
+<h2>Should You Buy a Franchise or an Independent Restaurant?</h2>
 <p>Franchise purchases require franchisor approval of the buyer and come with ongoing royalty and marketing fees and brand-standard requirements, in exchange for established brand recognition and operational support. Independent restaurants offer full operational freedom but rely entirely on their own reputation.</p>
 <h2>Labour Costs Are a Real, Current Factor</h2>
 <p>BC's minimum wage rose to $18.25/hour on June 1, 2026 &mdash; a genuine, ongoing pressure on restaurant margins worth building into your underwriting rather than assuming last year's numbers still hold.</p>
@@ -4642,6 +4725,161 @@ legal_page('/fair-housing-notice/', 'Fair Housing Notice', 'Fair Housing Notice'
 <h2>Questions or Concerns</h2>
 <p>If you have a question about this commitment or a concern about the service you received, please contact Manan Bhullar directly at <a href="mailto:mb_realestate@outlook.com">mb_realestate@outlook.com</a> or <a href="tel:+16047279542">(604) 727-9542</a>. You can also contact the <a href="https://www.bchrt.bc.ca/" rel="noopener" target="_blank">BC Human Rights Tribunal</a>.</p>
 """, meta_desc="Manan Bhullar's commitment to equal professional service under the BC Human Rights Code and the REALTOR® Code.")
+
+# ============================================================
+# /real-estate-questions/ — answer hub built from the FAQs already on the source pages
+# (read back from the generated HTML, so answers can never drift from the originals)
+# and /glossary/ — plain-language definitions of BC real estate terms.
+# ============================================================
+HUB_SECTIONS = [
+    ("Buying a Home", [
+        ('buyers/first-time', 'minimum down payment for a first home'),
+        ('buyers/first-time', 'closing costs'),
+        ('buyers/first-time', 'FHSA and Home Buyers'),
+        ('buyers/first-time', 'pre-approved and pre-qualified'),
+        ('buyers/first-time', 'How long does the buying process'),
+        ('buyers/relocation', 'not yet living here'),
+        ('buyers/relocation', 'foreign buyer tax'),
+        ('buyers/luxury', 'luxury home financing'),
+    ]),
+    ("Condos, Townhomes &amp; Strata", [
+        ('buyers/condos-townhomes', 'difference between a condo and a townhouse'),
+        ('buyers/condos-townhomes', 'strata fees'),
+        ('buyers/condos-townhomes', 'depreciation report'),
+        ('buyers/condos-townhomes', 'special levy'),
+        ('buyers/condos-townhomes', 'rent out my condo'),
+    ]),
+    ("Selling a Home", [
+        ('sellers', 'cost to sell'),
+        ('sellers', 'pay tax on the sale'),
+        ('sellers', 'How long does it typically take to sell'),
+        ('sellers', 'renovate before selling'),
+        ('sellers', 'list price and assessed value'),
+        ('sellers', 'sell and buy at the same time'),
+        ('sellers/home-evaluation', 'compared to a formal appraisal'),
+        ('sellers/home-evaluation', "affect my home's value"),
+        ('marketing', 'stage my home'),
+        ('marketing', 'asking price actually determined'),
+    ]),
+    ("Investment Property", [
+        ('buyers/investment', 'down payment for an investment property'),
+        ('buyers/investment', 'tax implications'),
+        ('buyers/investment', 'legal and a non-conforming'),
+        ('commercial/apartment-buildings', 'raising rent'),
+    ]),
+    ("Commercial &amp; Business Property", [
+        ('commercial/industrial', 'lease or buy industrial'),
+        ('commercial/industrial', 'net lease and a gross lease'),
+        ('commercial/retail', 'tenant improvement allowance'),
+        ('commercial/retail', 'triple net'),
+        ('commercial/liquor-stores', 'asset sale and a share sale'),
+        ('commercial/liquor-stores', 'liquor licence transfer automatically'),
+        ('commercial/gas-stations', 'environmental due diligence'),
+        ('commercial/hotels-motels', 'How is a motel or hotel valued'),
+        ('commercial/daycares-childcare', 'Does the licence transfer'),
+    ]),
+    ("Land, Farms &amp; the ALR", [
+        ('commercial/farms-alr-land', 'What is the Agricultural Land Reserve'),
+        ('commercial/farms-alr-land', 'build a house on ALR land'),
+        ('commercial/farms-alr-land', 'farm status affect property taxes'),
+        ('commercial/land', 'subdivision potential'),
+    ]),
+]
+
+def _page_faqs(rel):
+    h = open(os.path.join(ROOT, rel, 'index.html')).read()
+    title = re.search(r'<title>(.*?)</title>', h).group(1).split(' | ')[0]
+    pairs = re.findall(r'<button class="faq-q"><span>(.*?)</span>.*?<div class="faq-a"><p>(.*?)</p>', h, re.S)
+    return title, pairs
+
+hub_body = subhero("", '<span class="gradient-text">BC Real Estate Questions, Answered</span>',
+                   "Straight answers to the questions buyers, sellers, and investors in Surrey and the Lower Mainland ask most — each linked to a full guide.",
+                   CALL_CTA + CONTACT_CTA)
+_hub_count = 0
+for _sec_title, _picks in HUB_SECTIONS:
+    _items = []
+    for _rel, _needle in _picks:
+        _title, _pairs = _page_faqs(_rel)
+        _hit = [(q, a) for q, a in _pairs if _needle.lower() in _html.unescape(q).lower()]
+        assert len(_hit) == 1, f"hub pick not found or ambiguous: {_rel} / {_needle}"
+        q, a = _hit[0]
+        _items.append((q, f'{a} <a href="/{_rel}/">More in {_title} →</a>'))
+    _hub_count += len(_items)
+    hub_body += faq_section(_sec_title, _items)
+hub_body += f"""<section class="content-section">
+  <div class="wrap" style="text-align:center;">
+    <p>Looking for a definition? See the <a href="/glossary/">BC real estate glossary</a>. Have a question that isn't here? <a href="/contact/">Ask Manan directly</a>.</p>
+  </div>
+</section>"""
+hub_body += cta_band('Have a Question <span class="accent-warm">That Isn’t Here</span>?',
+                     "Manan answers real estate questions for free, with no obligation.", CALL_CTA + CONTACT_CTA)
+write_page('/real-estate-questions/',
+           "BC Real Estate Questions Answered | Manan Bhullar",
+           f"Straight answers to {_hub_count} common BC real estate questions on buying, selling, strata, taxes, investment, and commercial property, from Manan Bhullar.",
+           crumbs(("Questions Answered", None)), hub_body)
+
+GLOSSARY = [
+    ("Additional Property Transfer Tax", "apptt", "A 20% tax that foreign nationals pay on top of the regular Property Transfer Tax when buying residential property in designated BC regions, including Metro Vancouver and parts of the Fraser Valley. It doesn't apply to Canadian citizens or permanent residents."),
+    ("Agricultural Land Reserve (ALR)", "alr", "Provincially protected farmland where agriculture is the priority use. ALR land has strict limits on subdivision, non-farm uses, and the size and number of homes, regulated by the Agricultural Land Commission. <a href=\"/commercial/farms-alr-land/\">More on ALR land</a>."),
+    ("Assessed value", "assessed-value", "BC Assessment's estimate of a property's market value, used to calculate property taxes. It's a mass appraisal based on a past valuation date, so it often differs from what a home would sell for today."),
+    ("Assignment", "assignment", "Selling your contract to buy a property, usually a presale condo or townhome, to another buyer before the purchase completes. Most developers must approve an assignment and many charge a fee, so check the contract terms first."),
+    ("Bare land strata", "bare-land-strata", "A strata where owners own their land and the home on it, while roads, landscaping, and other common areas are shared and managed by the strata corporation. Common in newer detached and townhome communities."),
+    ("Benchmark price", "benchmark-price", "The price of a typical home with common features in a given area, from the MLS® Home Price Index. It tracks price trends more reliably than average prices, which a few expensive sales can skew. <a href=\"/updates/fraser-valley-vancouver-market-update-september-2026/\">Current benchmarks</a>."),
+    ("Cap rate (capitalization rate)", "cap-rate", "A property's net operating income divided by its price. A $1,000,000 building earning $50,000 a year after operating expenses has a 5% cap rate. Investors use it to compare income properties."),
+    ("CMHC mortgage insurance", "cmhc", "Mortgage default insurance required when you put down less than 20%. The premium is added to your mortgage rather than paid up front. CMHC is the main insurer; private insurers offer the same coverage."),
+    ("Common property", "common-property", "The parts of a strata owned collectively by all owners, such as hallways, roofs, grounds, and amenities. Limited common property is common property set aside for one owner's use, like a parking stall or balcony."),
+    ("Completion, possession, and adjustment dates", "dates", "The three key dates in a BC purchase contract. Completion is when the money changes hands and ownership transfers; possession is when the buyer gets the keys, usually a day or so later; and the adjustment date is when property taxes and other costs are split between buyer and seller."),
+    ("Contingency reserve fund (CRF)", "crf", "A strata's savings account for major repairs and replacements, such as a new roof or elevator. A healthy CRF makes a special levy less likely."),
+    ("Deposit", "deposit", "The money a buyer pays toward the purchase price once a deal is firm, held in trust by a brokerage or lawyer until completion. The contract sets the amount and due date."),
+    ("Depreciation report", "depreciation-report", "A professional study projecting a strata building's major repair and replacement costs over 30 years. It shows whether the contingency reserve fund is adequate or a special levy is likely."),
+    ("Dual agency", "dual-agency", "One licensee representing both the buyer and the seller in the same deal. BC has largely prohibited it since 2018, so in most cases each side has its own representation."),
+    ("FINTRAC identity verification", "fintrac", "Federal anti-money-laundering rules require real estate professionals to verify their clients' identity and keep certain records. That's why your REALTOR® asks for government ID."),
+    ("First Home Savings Account (FHSA)", "fhsa", "A registered account for first-time buyers: contribute up to $8,000 a year, to a $40,000 lifetime maximum. Contributions are tax-deductible and qualifying withdrawals are tax-free. It can be combined with the Home Buyers' Plan."),
+    ("First-time home buyers' exemption", "fthb-exemption", "A BC program that fully exempts eligible first-time buyers from Property Transfer Tax on homes valued up to $835,000, with a partial exemption up to $860,000."),
+    ("Form B information certificate", "form-b", "A document from the strata corporation summarizing key facts about a unit: strata fees, any approved special levies, the contingency reserve balance, bylaw restrictions such as rentals or pets, and any legal action. Buyers should review it before removing subjects."),
+    ("Freehold vs leasehold", "leasehold", "Freehold means you own the land and building outright. Leasehold means you own the right to use a property for a fixed term on land someone else owns, often a government or First Nation. Lease length affects financing and resale value."),
+    ("Home Buyers' Plan (HBP)", "hbp", "Lets first-time buyers withdraw up to $60,000 from their RRSP tax-free toward a home, repayable over 15 years."),
+    ("Home Buyer Rescission Period", "rescission", "In BC, buyers of most residential property can cancel an accepted offer within three business days, for a fee of 0.25% of the purchase price. It can't be waived."),
+    ("Home flipping tax", "flipping-tax", "A BC tax on profits from selling a home within 730 days of buying it: up to 20% of the profit in the first year, sliding to zero at two years, with limited exemptions."),
+    ("Net lease and triple net (NNN) lease", "nnn-lease", "Commercial leases where the tenant pays some or all of the property's operating costs on top of base rent. In a triple net lease, the tenant pays property taxes, insurance, and maintenance. In a gross lease, the landlord covers them. <a href=\"/commercial/retail/\">More on retail leases</a>."),
+    ("Pre-approval", "pre-approval", "A lender's conditional commitment to lend up to a set amount at a held rate, based on a review of your income and credit. It's stronger than a pre-qualification, which is only an estimate."),
+    ("Principal Residence Exemption", "pre", "The federal rule that generally makes the gain on selling your home tax-free if it was your principal residence for the entire time you owned it."),
+    ("Property Disclosure Statement (PDS)", "pds", "A form where the seller describes what they know about the property's condition, such as leaks, renovations, and permits. It's based on the seller's knowledge, so it doesn't replace a home inspection."),
+    ("Property Transfer Tax (PTT)", "ptt", "BC's tax on buying property, paid by the buyer at completion: 1% on the first $200,000, 2% on the portion up to $2 million, 3% above $2 million, and an additional 2% on residential property above $3 million. On an $800,000 home, that's $14,000."),
+    ("Secondary suite (legal vs non-conforming)", "secondary-suite", "A self-contained unit within a house. A legal suite is permitted and meets building code; a non-conforming or unpermitted one isn't registered with the city. That affects whether lenders count its rent and whether insurers will cover it."),
+    ("Special levy", "special-levy", "A one-time charge to strata owners when the strata needs more money than its reserve fund holds, usually for a major repair. Whoever owns the unit when the levy comes due pays it, unless the contract says otherwise."),
+    ("Speculation and Vacancy Tax", "svt", "An annual BC tax on residential property in designated areas that's left vacant or owned by certain non-residents. Most owners who live in their home or rent it out long-term are exempt but still must file a declaration."),
+    ("Strata corporation", "strata", "The legal entity made up of all owners in a strata development. It's run by an elected strata council, manages common property, sets fees, and enforces bylaws."),
+    ("Strata fees", "strata-fees", "Monthly payments each strata owner makes to cover shared costs: building insurance, maintenance, management, and contributions to the contingency reserve fund."),
+    ("Subjects and subject removal", "subjects", "Conditions written into an offer, such as financing, inspection, or strata document review, that must be satisfied before the deal is firm. Removing subjects makes the contract binding."),
+    ("Tenant improvement (TI) allowance", "ti-allowance", "Money a commercial landlord gives a tenant to build out or renovate a space, usually expressed per square foot and tied to the lease term."),
+    ("Title search", "title-search", "A check of the BC Land Title Office record that confirms who owns a property and shows registered charges such as mortgages, liens, easements, and covenants."),
+]
+
+_letters = sorted({t[0][0] for t in GLOSSARY})
+gl_body = subhero("", '<span class="gradient-text">BC Real Estate Glossary</span>',
+                  "Plain-language definitions of the terms you'll run into buying, selling, or investing in British Columbia.",
+                  CALL_CTA + CONTACT_CTA)
+_jump = ' '.join(f'<a href="#letter-{L}">{L}</a>' for L in _letters)
+_items = ''
+_cur = None
+for term, slug, definition in sorted(GLOSSARY, key=lambda t: t[0].lower()):
+    if term[0] != _cur:
+        _cur = term[0]
+        _items += f'<h2 id="letter-{_cur}" class="glossary-letter">{_cur}</h2>'
+    _items += f'<div class="glossary-entry" id="{slug}"><dt>{term}</dt><dd>{definition}</dd></div>'
+gl_body += f"""<section class="content-section">
+  <div class="wrap article-body">
+    <p class="glossary-jump">{_jump}</p>
+    <dl class="glossary">{_items}</dl>
+    <p style="margin-top:32px;font-size:0.88rem;">Definitions are general information, not legal or tax advice, and program rules change. For common questions with fuller answers, see <a href="/real-estate-questions/">BC Real Estate Questions, Answered</a>.</p>
+  </div>
+</section>"""
+gl_body += cta_band('Questions About a <span class="accent-warm">Specific Property</span>?',
+                    "Manan can explain how any of these apply to the home or building you're considering.", CALL_CTA + CONTACT_CTA)
+write_page('/glossary/', "BC Real Estate Glossary | Manan Bhullar",
+           f"Plain-language definitions of {len(GLOSSARY)} BC real estate terms: PTT, strata, depreciation reports, subjects, the ALR, FHSA, cap rates, and more.",
+           crumbs(("Glossary", None)), gl_body)
 
 # ============================================================
 # 404 page \u2014 standalone, sleek dark treatment
@@ -4771,8 +5009,8 @@ Key facts:
 ## Core pages
 - [Home](""" + SITE + """/): Overview, featured listings and areas served.
 """ + ''.join(_llms_line(p, t, d) for p, t, d in PAGES
-              if p in ('/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/'))
-_seen = {'/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/'}
+              if p in ('/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/', '/real-estate-questions/', '/glossary/'))
+_seen = {'/about/', '/why-manan/', '/contact/', '/marketing/', '/property-search/', '/real-estate-questions/', '/glossary/'}
 for label, prefix in LLMS_SECTIONS:
     rows = [(p, t, d) for p, t, d in PAGES if p.startswith(prefix) and p not in _seen]
     _seen.update(p for p, _, _ in rows)

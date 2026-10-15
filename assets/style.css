@@ -953,3 +953,20 @@
 .hero-path-btn:hover::after, .hero-search button:hover::after, .cta-form-pills a:hover::after{
   transform:scaleX(1);
 }
+
+/* Glossary */
+.glossary-jump{display:flex;flex-wrap:wrap;gap:8px 14px;font-weight:600;margin-bottom:8px;}
+.glossary-jump a{color:var(--accent-deep);}
+.glossary-letter{margin-top:36px;padding-bottom:6px;border-bottom:2px solid var(--ink);}
+.glossary{margin:0;}
+.glossary-entry{padding:16px 0;border-bottom:1px solid var(--line);scroll-margin-top:110px;}
+.glossary-entry dt{font-weight:600;color:var(--ink);font-size:1.02rem;}
+.glossary-entry dd{margin:6px 0 0;color:var(--ink-soft);line-height:1.7;}
+.glossary-entry dd a,.faq-a a{color:var(--accent-deep);}
+
+/* Answer-first summary under the hero */
+.short-answer{background:#fff;padding:36px 0 8px;}
+.short-answer-box{max-width:820px;margin:0 auto;border-left:4px solid var(--accent-deep);padding:4px 0 4px 22px;}
+.short-answer .sa-label{font-size:0.74rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 6px;}
+.short-answer .sa-q{font-size:1.25rem;margin:0 0 8px;color:var(--ink);}
+.short-answer .sa-a{margin:0;color:var(--ink-soft);line-height:1.7;font-size:1rem;}

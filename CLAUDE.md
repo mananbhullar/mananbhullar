@@ -23,6 +23,11 @@ Surrey and the Lower Mainland.
   changed in the last commit) or `python3 indexnow.py --all` to ping Bing via
   IndexNow. The key file `c3f4ac60083b05d9eba775a579132b3c.txt` at the repo root
   must stay in place.
+- AEO pages: `/real-estate-questions/` is built from `HUB_SECTIONS` (picks are
+  read back from the generated source pages' FAQs, so edit the source FAQ, not the
+  hub); `/glossary/` from the `GLOSSARY` list (DefinedTermSet schema). Buyer/seller/
+  commercial pages get an answer-first box from `SHORT_ANSWERS` (keyed by path),
+  injected after the hero in `write_page()`.
 - Market data lives in the `MARKET` dict + `MARKET_MONTH` in build.py (official
   FVREB municipal report + GVR stats package). Refresh monthly; never interpolate.
 - `assets/site.js` — mobile nav toggle, FAQ accordion, mortgage calculator,
