@@ -18,6 +18,8 @@ Surrey and the Lower Mainland.
   the shared nav (`assets/_nav.html`) or footer (`assets/_footer.html`), you must
   manually sync the same change into `index.html`'s own copies of those blocks —
   it does NOT auto-include them. This has caused real bugs before (see Gotchas).
+  (Exception: build.py now rewrites index.html's `style.css?v=`/`site.js?v=` cache-busting
+  tags to the current hashes on every build — the homepage was stuck on a stale version.)
 - `assets/style.css` — all site CSS, one file.
 - `indexnow.py` — after a push has gone live, run `python3 indexnow.py` (pages
   changed in the last commit) or `python3 indexnow.py --all` to ping Bing via

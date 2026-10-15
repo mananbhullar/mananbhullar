@@ -4945,6 +4945,15 @@ with open(os.path.join(ROOT, '404.html'), 'w') as f:
     f.write(NOT_FOUND_HTML)
 print('wrote /404.html')
 
+# index.html is hand-maintained, but its cache-busting tags must track the real asset hashes
+# or returning visitors keep a stale cached stylesheet on the homepage only.
+_home = open(os.path.join(ROOT, 'index.html')).read()
+_home2 = re.sub(r'/assets/style\.css\?v=[0-9a-f]+', f'/assets/style.css?v={CSS_VERSION}', _home)
+_home2 = re.sub(r'/assets/site\.js\?v=[0-9a-f]+', f'/assets/site.js?v={JS_VERSION}', _home2)
+if _home2 != _home:
+    open(os.path.join(ROOT, 'index.html'), 'w').write(_home2)
+    print('synced asset versions into /index.html')
+
 # ============================================================
 # sitemap.xml \u2014 auto-generated from every index.html on disk
 # ============================================================
