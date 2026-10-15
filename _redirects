@@ -10,3 +10,9 @@
 /education                /why-manan/       301
 /about                    /why-manan/       301
 /about/                   /why-manan/       301
+
+# Neighbourhood pages removed 2026-10-14 (client request); Tynehead is part of Fleetwood / Tynehead
+/communities/tynehead/           /communities/fleetwood/   301
+/communities/chimney-hill/       /communities/surrey/      301
+/communities/south-westminster/  /communities/surrey/      301
+/communities/port-kells/         /communities/surrey/      301

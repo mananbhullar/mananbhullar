@@ -835,7 +835,7 @@ AREAS = [
             ("What makes Surrey attractive compared to Vancouver?", "Meaningfully more affordable housing across every property type, strong SkyTrain connectivity via the Expo Line with the Surrey-Langley extension underway, and genuine neighbourhood diversity \u2014 from high-rise City Centre living to acreage properties in the south."),
          ],
          entertainment=["Landmark Cinemas 12 Guildford", "Diverse dining along the King George Boulevard and Fraser Highway corridor"]),
-    dict(slug='fleetwood', name='Fleetwood', note='Established residential, strong schools',
+    dict(slug='fleetwood', name='Fleetwood / Tynehead', note='Established residential, strong schools',
          tags=['Tree-Lined Streets', 'Family Homes', 'Fraser Hwy Access'],
          desc="Fleetwood is one of Surrey's long-established residential neighbourhoods, known for tree-lined streets, a mix of single-family homes and newer townhome developments, and easy access to Fraser Highway and Highway 1. It's a popular choice for families looking for more space without leaving Surrey.",
          schools=["Surrey Christian School (private, K-12)", "Multiple SD36 Surrey elementary and secondary schools serve Fleetwood \u2014 confirm your specific catchment with the district"],
@@ -1339,11 +1339,6 @@ AREAS = [
          desc="The King George Corridor runs through the heart of Surrey, offering strong transit access along with a mix of residential and commercial properties.",
          shopping=["Central City Shopping Centre and Surrey City Centre amenities along the corridor"],
          entertainment=["Restaurants along the King George corridor into City Centre"]),
-    dict(slug='port-kells', name='Port Kells', note='Rural-residential, industrial proximity',
-         tags=['Industrial Proximity', 'Rural-Residential Mix', 'Highway Access'],
-         desc="Port Kells is a rural-residential pocket of North Surrey bordering major industrial land, offering larger lots and easy highway access.",
-         shopping=["Guildford and Cloverdale shopping within a short drive"],
-         entertainment=["Restaurants in nearby Cloverdale and Guildford"]),
     dict(slug='bridgeview', name='Bridgeview', note='Affordable entry, riverfront industrial',
          tags=['Industrial Access', 'Affordable Entry', 'Riverfront'],
          desc="Bridgeview is a North Surrey neighbourhood along the Fraser River, offering some of the more affordable residential entry points in the city alongside nearby industrial land.",
@@ -1377,12 +1372,6 @@ AREAS = [
          recreation=["Green Timbers Urban Forest (trails through second-growth forest)"],
          entertainment=["Restaurants at nearby Guildford Town Centre"],
          shopping=["Guildford Town Centre nearby"]),
-    dict(slug='tynehead', name='Tynehead', note='Semi-rural, larger lots',
-         tags=['Tynehead Regional Park', 'Semi-Rural', 'Larger Lots'],
-         desc="Tynehead is a semi-rural pocket of Surrey bordering Tynehead Regional Park, known for larger lots and a quieter, nature-oriented setting.",
-         recreation=["Tynehead Regional Park (Fraser River access, off-leash dog area, salmon-bearing streams)"],
-         entertainment=["Restaurants at nearby Guildford Town Centre"],
-         shopping=["Guildford Town Centre nearby"]),
     dict(slug='hazelmere', name='Hazelmere', note='Rural acreage, golf courses',
          tags=['Rural Acreage', 'Golf Courses', 'Agricultural Land'],
          desc="Hazelmere is a rural South Surrey area known for acreage properties, several golf courses, and agricultural land near the US border.",
@@ -1394,12 +1383,6 @@ AREAS = [
          desc="Campbell Heights is Surrey's premier industrial park, home to modern large-format warehouses and manufacturing operations with strong demand and highway access.",
          shopping=["Primarily industrial; nearby South Surrey shopping via Highway 99"],
          entertainment=["Limited on-site dining; South Surrey restaurants a short drive away"]),
-    dict(slug='chimney-hill', name='Chimney Hill', note='Established Newton-area homes',
-         tags=['Established Homes', 'Newton Area', 'Family Neighbourhood'],
-         desc="Chimney Hill is an established, family-oriented neighbourhood in the Newton area of Surrey with a mix of single-family homes.",
-         recreation=["Newton Recreation Centre and Bear Creek Park both nearby"],
-         entertainment=["Restaurants in nearby Newton"],
-         shopping=["Newton Town Centre nearby"]),
     dict(slug='bear-creek', name='Bear Creek', note='Parkside, central Surrey',
          tags=['Bear Creek Park', 'Central Surrey', 'Family Amenities'],
          desc="Bear Creek is a central Surrey neighbourhood named for the adjacent Bear Creek Park, offering family amenities and established housing.",
@@ -1414,13 +1397,6 @@ AREAS = [
          desc="Strawberry Hill is a central Surrey neighbourhood bordering Newton, offering established homes and convenient access to shopping and transit.",
          shopping=["Strawberry Hill Shopping Centre", "Newton Town Centre nearby"],
          entertainment=["Restaurants at Strawberry Hill Shopping Centre and nearby Newton"]),
-    dict(slug='south-westminster', name='South Westminster', note='Riverfront industrial, North Surrey',
-         tags=['Riverfront Industrial', 'North Surrey', 'Fraser River'],
-         desc="South Westminster is a North Surrey area along the Fraser River with a strong industrial and logistics presence alongside pockets of residential property.",
-         shopping=["North Surrey shopping via the King George corridor"],
-         entertainment=["Restaurants along the nearby Scott Road corridor"]),
-
-    # -------- Langley neighbourhoods (expanded) --------
     dict(slug='fort-langley', name='Fort Langley', note='Historic riverside village',
          tags=['Historic Village', 'National Historic Site', 'Fraser River'],
          desc="Fort Langley is a historic riverside village known for its national historic site, boutique shops, and charming small-town atmosphere along the Fraser River.",
@@ -1818,8 +1794,8 @@ def _good_fit(name, note, tags):
 AREA_GROUPS = {
     'Surrey': ['surrey', 'fleetwood', 'cloverdale', 'city-centre', 'newton', 'industrial-corridor',
                'guildford', 'east-newton', 'west-newton', 'east-clayton', 'clayton', 'fraser-heights',
-               'panorama-ridge', 'sullivan-heights', 'port-kells', 'bridgeview', 'bolivar-heights', 'cedar-hills',
-               'royal-heights', 'johnston-heights', 'green-timbers', 'tynehead', 'hazelmere', 'chimney-hill', 'bear-creek', 'strawberry-hill', 'south-westminster'],
+               'panorama-ridge', 'sullivan-heights', 'bridgeview', 'bolivar-heights', 'cedar-hills',
+               'royal-heights', 'johnston-heights', 'green-timbers', 'hazelmere', 'bear-creek', 'strawberry-hill'],
     'South Surrey / White Rock': ['south-surrey', 'grandview-heights', 'sunnyside', 'king-george-corridor', 'campbell-heights',
                                   'morgan-creek', 'elgin-chantrell', 'ocean-park', 'crescent-beach'],
     'Langley': ['langley', 'fort-langley', 'willoughby', 'walnut-grove', 'langley-city', 'brookswood',
@@ -2129,19 +2105,19 @@ def _auto_supplement_faqs(area, target=6):
         else:
             ans = f"Prices in {name} vary by property type, lot size, and age; recent sold comparables are the reliable guide, and Manan can pull them for you."
         candidates.append((f"How much do homes cost in {name}?", ans))
-    if area.get('schools') and 'school' not in existing_q:
+    if False and area.get('schools') and 'school' not in existing_q:
         caveat = '' if 'catchment' in ' '.join(area['schools']).lower() else " School catchments are set by address, so confirm a specific home's catchment with the district before you buy."
         district = f"{name} is in {c['district']}. " if c['district'] else ''
         candidates.append((
             f"What schools serve {name}?",
             f"{district}Schools and campuses serving the area include: {_oxford_join(area['schools'])}.{caveat}"
         ))
-    if area.get('shopping') and 'shop' not in existing_q and 'grocery' not in existing_q:
+    if False and area.get('shopping') and 'shop' not in existing_q and 'grocery' not in existing_q:
         candidates.append((
             f"Where do {name} residents shop?" if residential else f"What shopping and services are near {name}?",
             f"For day-to-day shopping and groceries, {name} residents typically use: {_oxford_join(area['shopping'])}."
         ))
-    if area.get('recreation') and 'recreation' not in existing_q and 'park' not in existing_q:
+    if False and area.get('recreation') and 'recreation' not in existing_q and 'park' not in existing_q:
         candidates.append((
             f"What parks and recreation are near {name}?",
             f"Parks and recreation in and around {name} include: {_oxford_join(area['recreation'])}."
@@ -3583,7 +3559,9 @@ for a in AREAS:
         "Manan can share more on pricing, inventory, and what to expect in this market.",
         CALL_CTA + CONTACT_CTA
     )
-    body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
+    _pill_hrefs = {f"/communities/{x}/" for x in _sub_slugs} if (_sub_slugs and not _hood_links) else set()
+    if not others or any(o['href'] not in _pill_hrefs for o in others):
+        body += community_grid_section("Other Communities", "Explore more of the areas Manan serves.", others, dark=True)
     title_name = a['name']
     if a['slug'] == 'sullivan-heights':
         title_name = 'Sullivan Heights (Surrey)'
