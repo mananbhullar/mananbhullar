@@ -1853,6 +1853,15 @@ AREA_GROUPS = {
     'Prince George': ['prince-george'],
 }
 SLUG_TO_GROUP = {slug: group for group, slugs in AREA_GROUPS.items() for slug in slugs}
+# Best-known neighbourhoods shown first on each city page (the rest go behind "Show all")
+FEATURED_HOODS = {
+    'surrey': ['fleetwood', 'cloverdale', 'city-centre', 'newton', 'guildford', 'clayton', 'fraser-heights', 'panorama-ridge'],
+    'south-surrey': ['grandview-heights', 'morgan-creek', 'ocean-park', 'crescent-beach', 'elgin-chantrell', 'sunnyside'],
+    'langley': ['willoughby', 'walnut-grove', 'fort-langley', 'langley-city', 'brookswood', 'murrayville', 'aldergrove'],
+    'burnaby': ['metrotown', 'brentwood', 'lougheed', 'deer-lake', 'capitol-hill', 'edmonds', 'burnaby-heights'],
+    'vancouver': ['downtown-vancouver', 'west-end', 'kitsilano', 'mount-pleasant', 'point-grey', 'kerrisdale', 'shaughnessy'],
+    'delta': ['ladner', 'tsawwassen', 'north-delta', 'sunshine-hills'],
+}
 # Real city-center coordinates for the hero/area-page Realtor.ca deep-link search dropdown.
 GROUP_COORDS = [
     ("Delta", "49.0847,-123.0587"),
@@ -2173,7 +2182,8 @@ def _price_span(keys, field):
     return lo if lo == hi else f"{lo}\u2013{hi}"
 
 _QF_SKIP_TAG = re.compile(r'skytrain|transit|seabus|canada line|west coast express', re.I)
-_QF_SKIP_ATTR = re.compile(r'skytrain|west coast express|commuter|station|programs|amenities|throughout the city|within reach', re.I)
+_QF_SKIP_ATTR = re.compile(r'skytrain|west coast express|commuter|station|programs|amenities|throughout|within reach|restaurants|caf[e\u00e9]s|dining', re.I)
+_QF_GENERIC = re.compile(r'(restaurants|diverse|local|multiple|several|independent|cafés|caf\u00e9s|dining|shops|grocery|downtown|various|nearby)\b', re.I)
 
 def area_quick_facts(a):
     """Price / population / known-for / attractions -- only rows backed by real data."""
@@ -2193,13 +2203,23 @@ def area_quick_facts(a):
     tags = [t for t in a.get('tags', []) if not _QF_SKIP_TAG.search(t)]
     if tags:
         rows.append(("Known for", ', '.join(tags)))
+    def _named(items):
+        out = []
+        for r in items or []:
+            name = re.split(r' \(| \u2014 |, ', _html.unescape(r))[0].strip()
+            if name and not _QF_SKIP_ATTR.search(name) and not _QF_GENERIC.match(name):
+                out.append(name.replace('&', '&amp;'))
+        return out
+    # interleave so it's a mix: a park/rec spot, a shopping destination, an entertainment spot, ...
+    pools = [_named(a.get('recreation')), _named(a.get('shopping')), _named(a.get('entertainment'))]
     attrs = []
-    for r in a.get('recreation') or []:
-        name = re.split(r' \(| \u2014 |, ', _html.unescape(r))[0].strip()
-        if name and not _QF_SKIP_ATTR.search(r):
-            attrs.append(name.replace('&', '&amp;'))
+    while len(attrs) < 4 and any(pools):
+        for p in pools:
+            if p and len(attrs) < 4:
+                x = p.pop(0)
+                if not any(x.startswith(y) or y.startswith(x) for y in attrs): attrs.append(x)
     if attrs:
-        rows.append(("Attractions", ', '.join(attrs[:3])))
+        rows.append(("Attractions", ', '.join(attrs)))
     if not rows:
         return ''
     items = ''.join(f'<div class="qf-row"><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
@@ -3482,7 +3502,17 @@ for a in AREAS:
     _hood_group = SLUG_TO_GROUP.get(a['slug'])
     _hood_slugs = AREA_GROUPS.get(_hood_group, [])[1:] if _hood_group and AREA_GROUPS[_hood_group][0] == a['slug'] else []
     _hood_links = [f'<a href="/communities/{h}/">{_AREA_CARD_BY_SLUG[h]["name"]}</a>' for h in _hood_slugs if h in _AREA_CARD_BY_SLUG]
-    _hoods_html = (f'<p class="area-hoods"><strong>{a["name"]} neighbourhoods:</strong> ' + ', '.join(_hood_links) + '</p>') if _hood_links else ''
+    # Show the best-known neighbourhoods; the rest sit behind a "Show all" toggle (still in the HTML for crawlers)
+    _featured = [h for h in FEATURED_HOODS.get(a['slug'], []) if h in _hood_slugs]
+    _rest = [h for h in _hood_slugs if h not in _featured]
+    _link = lambda h: f'<a href="/communities/{h}/">{_AREA_CARD_BY_SLUG[h]["name"]}</a>'
+    if _hood_links and _featured and _rest:
+        _hoods_html = (f'<div class="area-hoods"><strong>Popular {a["name"]} neighbourhoods:</strong> ' + ', '.join(_link(h) for h in _featured) +
+                       f'<details><summary>Show all {len(_hood_slugs)} neighbourhoods</summary><p>' + ', '.join(_link(h) for h in _rest) + '</p></details></div>')
+    elif _hood_links:
+        _hoods_html = f'<div class="area-hoods"><strong>{a["name"]} neighbourhoods:</strong> ' + ', '.join(_hood_links) + '</div>'
+    else:
+        _hoods_html = ''
     body += f"""<section class="content-section dark" style="padding:48px 0 56px;">
   <div class="wrap two-col">
     <div>

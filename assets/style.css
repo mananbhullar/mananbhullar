@@ -970,6 +970,10 @@
 
 /* City pages: linked list of the city's neighbourhoods in the About section */
 .area-hoods{margin-top:16px;font-size:0.95rem;line-height:1.75;color:#C7C5C0;}
+.area-hoods details{margin-top:6px;}
+.area-hoods summary{cursor:pointer;color:var(--accent-on-dark);font-weight:600;font-size:0.88rem;width:fit-content;}
+.area-hoods summary:hover{text-decoration:underline;}
+.area-hoods details p{margin:6px 0 0;}
 .area-hoods strong{color:#fff;font-weight:600;}
 .area-hoods a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.35);text-underline-offset:3px;}
 .area-hoods a:hover{text-decoration-color:var(--accent-on-dark);color:var(--accent-on-dark);}

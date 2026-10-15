@@ -296,7 +296,8 @@ doing this — don't ship based on reading the HTML source alone.
    removed at the client's request (2026-10-14) — too basic/repetitive; don't re-add.
    Replaced by `area_quick_facts()`: "Average home price" (shows board benchmarks with a note saying so — no per-area true averages exist; no date shown),
    Population (only where `stats` has it), Known for (tags, minus transit), Attractions
-   (filtered recreation). Client asked: no SkyTrain row, no month/year on prices. Price board mapping matters: FVREB = Surrey, South Surrey/White Rock,
+   (interleaved recreation/shopping/entertainment, named places only, max 4). City pages show
+   `FEATURED_HOODS` first with the rest behind a <details> "Show all" toggle. Client asked: no SkyTrain row, no month/year on prices. Price board mapping matters: FVREB = Surrey, South Surrey/White Rock,
    Langley, Abbotsford, Mission, North Delta; GVR = Burnaby, Tri-Cities, New West,
    Vancouver, North/West Van, Richmond, Maple Ridge, Pitt Meadows, Ladner, Tsawwassen;
    Chilliwack = CADREB. Never quote FVREB benchmarks as the comparison for GVR areas.
