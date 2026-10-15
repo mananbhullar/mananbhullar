@@ -212,8 +212,12 @@ doing this — don't ship based on reading the HTML source alone.
   preparing-your-home-to-sell — **client wants a full sweep of ~16 more**,
   see Pending Work for the exact list from their reference screenshots).
 - `/about/`, `/why-manan/`, `/contact/`, `/property-search/`, `/listings/`
-- `/privacy-policy/`, `/terms-of-use/`, `/fair-housing-notice/` — stub legal
-  pages, explicitly marked "to be finalized before launch," don't treat as done.
+- `/privacy-policy/`, `/terms-of-use/`, `/fair-housing-notice/` — rewritten
+  2026-10-14 (PIPA/CASL privacy policy naming the real service providers:
+  Formspree, Google Analytics, Cloudflare, Google Maps, fonts; CREA trademark
+  notice; BC Human Rights Code grounds). Drafted by Claude, not lawyer-reviewed —
+  client should have brokerage compliance review them. Every form carries a
+  `.form-privacy` consent note linking the policy.
 - `/404.html` — standalone dark-themed 404, not part of build.py's normal
   page loop (written directly, has its own inline `<style>` block).
 
