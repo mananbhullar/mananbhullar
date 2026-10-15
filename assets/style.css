@@ -992,3 +992,9 @@ html{scroll-behavior:smooth;}
 .quick-facts dd{margin:0;color:#C7C5C0;}
 .quick-facts .qf-src{display:block;font-size:0.76rem;color:#8A8884;margin-top:2px;}
 @media (max-width:480px){.quick-facts .qf-row{grid-template-columns:1fr;gap:2px;}}
+
+/* Area hero with stats: search pinned left (aligned with the content below), stats right */
+@media (min-width:861px){
+  .subhero .hero-ctas:has(.hero-stat-bar){justify-content:space-between;align-items:flex-end;text-align:left;}
+  .subhero .hero-ctas:has(.hero-stat-bar) .hero-search{margin-left:0;margin-right:0;}
+}
