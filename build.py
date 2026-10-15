@@ -3871,6 +3871,21 @@ ARTICLES = [
          desc="Benchmark prices, interest rates, and how the US-Canada tariff dispute is showing up in the Fraser Valley housing market right now.",
          tags=['Market Update', 'Interest Rates', 'Tariffs'],
          img='blog-market-update-2026', img_real='/assets/photos/blog-market-update.jpg'),
+    dict(slug='surrey-vs-langley-2026', tag='Neighbourhood Guides',
+         title="Surrey vs Langley: Which Is Right for You in 2026?",
+         desc="Surrey and Langley compared on September 2026 benchmark prices, schools, transit, and lifestyle, with a clear take on which suits which buyer.",
+         tags=['Surrey', 'Langley', 'Comparison'],
+         img='blog-surrey-vs-langley', img_real='/assets/photos/fort-langley-street.jpg'),
+    dict(slug='burnaby-vs-new-westminster-2026', tag='Neighbourhood Guides',
+         title="Burnaby vs New Westminster: Prices, Transit, and Lifestyle Compared",
+         desc="Burnaby and New Westminster compared on September 2026 benchmark prices, SkyTrain access, schools, and character.",
+         tags=['Burnaby', 'New Westminster', 'Comparison'],
+         img='blog-burnaby-vs-new-west', img_real='/assets/photos/new-westminster-street.jpg'),
+    dict(slug='fraser-valley-vs-metro-vancouver-budget-2026', tag='Buying Guide',
+         title="Fraser Valley vs Metro Vancouver: How Far Does Your Budget Go?",
+         desc="Fraser Valley and Greater Vancouver benchmark prices side by side for September 2026, and how to weigh price against commute.",
+         tags=['Fraser Valley', 'Metro Vancouver', 'Comparison', 'Budget'],
+         img='blog-fv-vs-metro-van', img_real='/assets/photos/vancouver-street.jpg'),
     dict(slug='first-time-buyer-programs-bc', tag='Buying Guide',
          title="BC First-Time Buyer Programs, Explained",
          desc="A plain-language walkthrough of the PTT exemption, FHSA, and RRSP Home Buyers' Plan.",
@@ -4146,6 +4161,91 @@ article_page(_art_by_slug['fraser-valley-vancouver-market-update-september-2026'
 <p>Price against what has actually sold recently, not against last year's numbers or the list prices of homes that are still sitting. In a market where buyers have options, a realistic price plus strong presentation and marketing is what gets a listing noticed in its first few weeks.</p>
 <p>Benchmarks describe a typical home in each area; your street, building, and property type can differ meaningfully. Manan can pull recent comparable sales for the specific home you're buying or selling.</p>
 <p style="font-size:0.85rem;">Sources: Fraser Valley Real Estate Board September 2026 market report and municipal market report; Greater Vancouver Realtors September 2026 MLS&reg; statistics package.</p>
+""")
+
+article_page(_art_by_slug['surrey-vs-langley-2026'], """
+<p><strong>The short answer:</strong> Surrey is the bigger, more urban choice, with SkyTrain today and lower condo prices. Langley costs a little more across every home type but offers Fort Langley's village character, newer master-planned neighbourhoods in Willoughby, and more acreage and equestrian land. Here's how they compare on price, schools, transit, and lifestyle, using the Fraser Valley Real Estate Board's September 2026 benchmarks.</p>
+<h2>Price: Surrey vs Langley</h2>
+<table>
+<thead><tr><th>Benchmark (Sept 2026)</th><th>Surrey</th><th>Langley</th></tr></thead>
+<tbody>
+<tr><td>Detached</td><td>$1,386,200</td><td>$1,471,100</td></tr>
+<tr><td>Townhome</td><td>$758,600</td><td>$802,600</td></tr>
+<tr><td>Apartment / condo</td><td>$447,600</td><td>$525,900</td></tr>
+</tbody>
+</table>
+<p>Surrey's benchmarks are lower in all three categories, and the gap is widest for condos: a typical Surrey apartment came in about $78,000 below a typical Langley one. For a first condo, that difference matters more than anything else on this list.</p>
+<h2>Size and Character</h2>
+<p><a href="/communities/surrey/">Surrey</a> is British Columbia's second-largest city, with more than 732,000 residents and an enormous range of neighbourhoods, from City Centre's high-rise towers to established family areas like <a href="/communities/fleetwood/">Fleetwood</a> and <a href="/communities/cloverdale/">Cloverdale</a> and the oceanside <a href="/communities/south-surrey/">South Surrey and White Rock</a>.</p>
+<p><a href="/communities/langley/">Langley</a> is actually two municipalities, the City of Langley and the Township of Langley, with about 198,000 residents combined. It's known for the historic <a href="/communities/fort-langley/">Fort Langley</a> village, an established wine and agritourism scene, a strong equestrian community, and fast-growing <a href="/communities/willoughby/">Willoughby</a>, its largest neighbourhood.</p>
+<h2>Schools</h2>
+<p>Surrey is served by School District 36, the largest district in the province, plus SFU Surrey and Kwantlen Polytechnic University. Langley is served by School District 35 and is home to Trinity Western University. In both cities catchments are set by address, so confirm a specific home's schools with the district before you buy.</p>
+<h2>Transit and Commuting</h2>
+<p>Surrey has Expo Line SkyTrain service today, running through City Centre to downtown Vancouver. The Surrey&ndash;Langley SkyTrain extension along Fraser Highway is under construction and will connect the two cities by rapid transit. Until it opens, Langley is more car-dependent, with Highway 1 as the main commuting route.</p>
+<h2>Which One Fits You?</h2>
+<ul>
+<li><strong>First condo or tighter budget:</strong> Surrey, especially near SkyTrain.</li>
+<li><strong>Newer townhome or detached home in a planned community:</strong> both work; compare Willoughby in Langley with Clayton and Cloverdale in Surrey.</li>
+<li><strong>Acreage, hobby farm, or horses:</strong> Langley's rural areas, such as Campbell Valley and Salmon River.</li>
+<li><strong>Small-town, walkable village feel:</strong> Fort Langley.</li>
+</ul>
+<p>Benchmarks describe a typical home; specific streets and buildings can differ a lot. Manan can pull recent sales for the exact neighbourhoods you're comparing.</p>
+<p style="font-size:0.85rem;">Source: Fraser Valley Real Estate Board, September 2026 municipal market report.</p>
+""")
+
+article_page(_art_by_slug['burnaby-vs-new-westminster-2026'], """
+<p><strong>The short answer:</strong> New Westminster is the more affordable of the two, with a lower typical price in every category, a compact walkable layout, and five SkyTrain stations. Burnaby is larger and pricier, with bigger shopping centres, two universities, and more green space. Both are central, transit-connected cities between Vancouver and the Fraser Valley. Here's how they compare using Greater Vancouver Realtors' September 2026 benchmarks.</p>
+<h2>Price: Burnaby vs New Westminster</h2>
+<table>
+<thead><tr><th>Benchmark (Sept 2026)</th><th>Burnaby North</th><th>Burnaby South</th><th>Burnaby East</th><th>New Westminster</th></tr></thead>
+<tbody>
+<tr><td>All home types</td><td>$877,100</td><td>$972,800</td><td>$982,400</td><td>$719,600</td></tr>
+<tr><td>Detached</td><td>$1,808,500</td><td>$1,894,600</td><td>$1,694,900</td><td>$1,356,900</td></tr>
+<tr><td>Townhome</td><td>$880,400</td><td>$942,100</td><td>$857,900</td><td>$854,200</td></tr>
+<tr><td>Apartment / condo</td><td>$662,400</td><td>$723,000</td><td>$708,100</td><td>$579,900</td></tr>
+</tbody>
+</table>
+<p>New Westminster's typical condo came in at $579,900, between about $82,000 and $143,000 below Burnaby's three areas. The gap is even larger for detached homes.</p>
+<h2>Character</h2>
+<p><a href="/communities/burnaby/">Burnaby</a> sits at the geographic centre of Metro Vancouver. It ranges from the high-rise town centres of <a href="/communities/metrotown/">Metrotown</a> and <a href="/communities/brentwood/">Brentwood</a> to quiet, tree-lined family streets, and it's home to Simon Fraser University and BCIT. Green space is a real strength: Central Park, Deer Lake, Burnaby Lake, and Burnaby Mountain.</p>
+<p><a href="/communities/new-westminster/">New Westminster</a> is BC's original capital: compact, historic, and on the Fraser River. Uptown has a modern mix of towers, shops, and restaurants; Columbia Street is the heritage downtown; and Sapperton is anchored by Royal Columbian Hospital. Douglas College is here too.</p>
+<h2>Transit</h2>
+<p>Both cities are well served by SkyTrain. Burnaby has stations on the Expo and Millennium Lines, including Metrotown, Brentwood, and Lougheed. New Westminster has five SkyTrain stations across the Expo and Millennium Lines, unusually good coverage for a city its size.</p>
+<h2>Schools</h2>
+<p>Burnaby is served by School District 41, including Burnaby South Secondary with its IB Diploma Programme and French Immersion. New Westminster is served by School District 40. Catchments are set by address in both, so confirm a specific home's schools with the district.</p>
+<h2>Which One Fits You?</h2>
+<ul>
+<li><strong>Best value close to Vancouver:</strong> New Westminster, especially for condos.</li>
+<li><strong>Big-mall convenience and newer towers:</strong> Burnaby's Metrotown and Brentwood.</li>
+<li><strong>Family home with parks nearby:</strong> North Burnaby or the neighbourhoods around Deer Lake.</li>
+<li><strong>Walkable heritage character:</strong> New Westminster's Queens Park and downtown areas.</li>
+</ul>
+<p style="font-size:0.85rem;">Source: Greater Vancouver Realtors, September 2026 MLS&reg; Home Price Index.</p>
+""")
+
+article_page(_art_by_slug['fraser-valley-vs-metro-vancouver-budget-2026'], """
+<p><strong>The short answer:</strong> the same budget buys considerably more in the Fraser Valley. In September 2026, a typical detached home cost about $485,000 less in the Fraser Valley board's area than in Greater Vancouver's, and a typical condo about $221,000 less. The trade-off is usually commute time. Here's the full comparison.</p>
+<h2>A Note on Boundaries</h2>
+<p>Real estate prices are reported by board area, not by regional district. The Fraser Valley Real Estate Board (FVREB) covers Surrey, White Rock, North Delta, Langley, Abbotsford, and Mission; several of those are in the Metro Vancouver regional district but report through the Fraser Valley board. Greater Vancouver Realtors (GVR) covers Vancouver, Burnaby, the Tri-Cities, New Westminster, the North Shore, Richmond, Ladner, Tsawwassen, Maple Ridge, and Pitt Meadows, among others.</p>
+<h2>Price: Fraser Valley vs Greater Vancouver</h2>
+<table>
+<thead><tr><th>Benchmark (Sept 2026)</th><th>Fraser Valley (FVREB)</th><th>Greater Vancouver (GVR)</th><th>Difference</th></tr></thead>
+<tbody>
+<tr><td>Detached</td><td>$1,300,000</td><td>$1,784,700</td><td>$484,700</td></tr>
+<tr><td>Townhome</td><td>$745,300</td><td>$1,016,700</td><td>$271,400</td></tr>
+<tr><td>Apartment / condo</td><td>$461,800</td><td>$682,500</td><td>$220,700</td></tr>
+</tbody>
+</table>
+<h2>Both Markets Favour Buyers Right Now</h2>
+<p>In September 2026, active listings were 31% above the 10-year seasonal average in the Fraser Valley and 24.3% above it in Greater Vancouver. Prices were down year over year in both: Fraser Valley detached homes by 8.8% and condos by 9.3%; Greater Vancouver's detached benchmark by 7.3% and apartments by 6.2%. For buyers, that means more choice and more room to negotiate in either region.</p>
+<h2>How to Decide</h2>
+<ul>
+<li><strong>Where do you work?</strong> If it's in Vancouver or Burnaby, price out the commute, not just the house. SkyTrain-connected areas like Surrey City Centre narrow the gap.</li>
+<li><strong>What type of home?</strong> The dollar gap is largest for detached homes, so buyers set on a house with a yard often find the Fraser Valley is the only realistic option.</li>
+<li><strong>Space vs time:</strong> the Fraser Valley typically means more square footage and land; Greater Vancouver means shorter trips to downtown, the North Shore, and the airport.</li>
+</ul>
+<p>For city-by-city numbers in both regions, see the <a href="/updates/fraser-valley-vancouver-market-update-september-2026/">September 2026 market update</a>. Manan works on both sides of the boundary and can compare specific neighbourhoods for your budget.</p>
+<p style="font-size:0.85rem;">Sources: Fraser Valley Real Estate Board and Greater Vancouver Realtors, September 2026 reports.</p>
 """)
 
 article_page(_art_by_slug['first-time-buyer-programs-bc'], """
