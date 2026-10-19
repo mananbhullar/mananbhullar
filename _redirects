@@ -16,3 +16,33 @@
 /communities/chimney-hill/       /communities/surrey/      301
 /communities/south-westminster/  /communities/surrey/      301
 /communities/port-kells/         /communities/surrey/      301
+
+# More old GoDaddy URLs from the Search Console 404 export, 2026-10-19.
+# (Query strings like ?currency=USD are ignored for matching.)
+/contact-me                        /contact/            301
+/contact-me/                       /contact/            301
+/profile/*                         /why-manan/          301
+/listings/my-active-listings       /listings/           301
+/listings/my-active-listings/      /listings/           301
+/listing                           /listings/           301
+/listing/                          /listings/           301
+/listing/*                         /listings/           301
+/search                            /property-search/    301
+/search/                           /property-search/    301
+/blog                              /updates/            301
+/blog/                             /updates/            301
+/blog/*                            /updates/            301
+
+# Old French (fr-ca) copies of the GoDaddy pages -> English equivalents
+/fr-ca                             /                    301
+/fr-ca/                            /                    301
+/fr-ca/contact-me                  /contact/            301
+/fr-ca/contact-me/                 /contact/            301
+/fr-ca/privacy-policy              /privacy-policy/     301
+/fr-ca/terms-of-use                /terms-of-use/       301
+/fr-ca/listings/my-active-listings /listings/           301
+/fr-ca/feed                        /updates/            301
+
+# Intentionally left as 404 (GoDaddy app plumbing, never real content):
+# /directory, /fr-ca/directory, /directory/*/${...}, /favorites, /myagent,
+# /associatedagent*, /overlay, /accessibility-statement/
